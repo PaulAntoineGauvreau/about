@@ -44,7 +44,7 @@ Les composants n’utilisent aucune valeur arbitraire Tailwind entre crochets et
 
 ### Typographie
 
-`src/styles/text.css` contient les tokens typographiques universels en `rem`, avec Helvetica comme police principale. La pile alternative `font-mono` utilise Courier pour un rendu monospace de machine à écrire, sans chargement externe. Les tailles et hauteurs de ligne suivent la grille de 4px : `text-overline`, `text-caption`, `text-small`, `text-medium`, `text-large`, `text-title-small`, `text-title-medium`, `text-title-large`, `text-headline-small`, `text-headline-medium`, `text-headline-large` et `text-display`.
+`src/styles/text.css` contient les tokens typographiques universels en `rem`, avec Helvetica comme police principale. La pile alternative `font-mono` utilise Courier pour un rendu monospace de machine à écrire, sans chargement externe. `text-overline` emploie automatiquement cette pile mono et les capitales. Les tailles et hauteurs de ligne fluides suivent la grille de 4px entre 320px et 1440px : `text-overline`, `text-caption`, `text-small`, `text-medium`, `text-large`, `text-title-small`, `text-title-medium`, `text-title-large`, `text-headline-small`, `text-headline-medium`, `text-headline-large` et `text-display`.
 
 Ces tokens sont des utilitaires Tailwind natifs et restent compatibles avec les variantes responsives : `text-title-large md:text-headline-small lg:text-headline-medium`.
 

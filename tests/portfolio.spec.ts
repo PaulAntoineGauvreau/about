@@ -53,6 +53,42 @@ test.describe('portfolio', () => {
     await expect(page.locator('[data-hero-line]').first()).toBeVisible();
   });
 
+  test('applique l’échelle typographique fluide et la mono à overline', async ({ page }) => {
+    await page.goto('/');
+
+    const readOverline = async (width: number) => {
+      await page.setViewportSize({ width, height: 900 });
+
+      return page.evaluate(() => {
+        const sample = document.createElement('p');
+        sample.className = 'text-overline';
+        sample.textContent = 'Overline';
+        document.body.append(sample);
+
+        const styles = getComputedStyle(sample);
+        const result = {
+          fontFamily: styles.fontFamily,
+          fontSize: Number.parseFloat(styles.fontSize),
+          lineHeight: Number.parseFloat(styles.lineHeight),
+          textTransform: styles.textTransform,
+        };
+
+        sample.remove();
+        return result;
+      });
+    };
+
+    const mobile = await readOverline(320);
+    expect(mobile.fontSize).toBeCloseTo(12, 1);
+    expect(mobile.lineHeight).toBeCloseTo(16, 1);
+
+    const desktop = await readOverline(1440);
+    expect(desktop.fontSize).toBeCloseTo(16, 1);
+    expect(desktop.lineHeight).toBeCloseTo(20, 1);
+    expect(desktop.fontFamily).toContain('Courier New');
+    expect(desktop.textTransform).toBe('uppercase');
+  });
+
   test('fournit les métadonnées SEO et les données structurées', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://pagauvreau.com/');
