@@ -1,0 +1,60 @@
+---
+import { Picture } from 'astro:assets';
+import { projects } from '../data/projects';
+---
+
+<project-filter class="project-filter">
+  <div class="project-filter__controls" aria-label="Filtrer les projets">
+    <button type="button" data-filter="all" aria-pressed="true">Tous</button>
+    <button type="button" data-filter="headless" aria-pressed="false">Headless</button>
+    <button type="button" data-filter="wordpress" aria-pressed="false">WordPress</button>
+    <button type="button" data-filter="commerce" aria-pressed="false">Commerce</button>
+  </div>
+  <p class="sr-only" aria-live="polite" data-filter-status></p>
+
+  <div class="project-grid">
+    {
+      projects.map((project, index) => (
+        <article
+          class="project-card"
+          data-project-card
+          data-category={project.category}
+          style={`--project-accent: ${project.accent}`}
+        >
+          <a
+            class="project-card__link"
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div class="project-card__visual">
+              <Picture
+                src={project.image}
+                formats={['avif']}
+                fallbackFormat="webp"
+                widths={[640, 960, 1440]}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                alt={`Aperçu du site ${project.name}`}
+                loading={index < 2 ? 'eager' : 'lazy'}
+                fetchpriority={index === 0 ? 'high' : 'auto'}
+              />
+              <span class="project-card__arrow" aria-hidden="true">↗</span>
+            </div>
+            <div class="project-card__content">
+              <div class="project-card__meta">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <span>{project.role}</span>
+              </div>
+              <h3>{project.name}</h3>
+              <p>{project.summary}</p>
+              <ul aria-label={`Technologies utilisées pour ${project.name}`}>
+                {project.stack.map((item) => <li>{item}</li>)}
+              </ul>
+              <span class="sr-only">Visiter le site de {project.name} dans un nouvel onglet.</span>
+            </div>
+          </a>
+        </article>
+      ))
+    }
+  </div>
+</project-filter>

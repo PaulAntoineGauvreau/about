@@ -1,0 +1,38 @@
+name: Qualité
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Configurer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Vérifier Astro et TypeScript
+        run: npm run check
+
+      - name: Construire le site
+        run: npm run build
+
+      - name: Installer Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Exécuter les tests navigateur
+        run: npm run test:e2e

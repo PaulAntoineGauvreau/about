@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import {
+  complementaryExperiences,
+  education,
+  experiences,
+  profile,
+  stackGroups,
+} from '../../data/profile';
+---
+
+<BaseLayout
+  title="CV — Paul-Antoine Gauvreau, développeur front-end"
+  description="CV de Paul-Antoine Gauvreau : développement front-end, design et gestion de projet à Montréal."
+  canonicalPath="/cv/"
+  bodyClass="cv-page"
+>
+  <main id="contenu" class="cv" tabindex="-1">
+    <header class="cv__hero">
+      <p class="cv__kicker">Curriculum vitæ · 2026</p>
+      <h1>{profile.name}</h1>
+      <p class="cv__role">Développeur front-end · Design · Gestion de projet</p>
+      <p class="cv__summary">{profile.introduction}</p>
+      <address class="cv__contact">
+        <span>{profile.location}</span>
+        <a href={`tel:${profile.phoneHref}`}>{profile.phoneDisplay}</a>
+        <a href={`mailto:${profile.email}`}>{profile.email}</a>
+        <a href={profile.website}>pagauvreau.com</a>
+      </address>
+      <button class="cv__print" type="button" data-print-cv>Imprimer / PDF</button>
+    </header>
+
+    <section class="cv-section" aria-labelledby="experience-title">
+      <h2 id="experience-title"><span>01</span> Expériences de travail</h2>
+      <div class="cv-list">
+        {
+          experiences.map((experience) => (
+            <article class="cv-entry">
+              <p class="cv-entry__period">{experience.period}</p>
+              <div>
+                <h3>{experience.title}</h3>
+                {experience.organizations.map((organization) => <p class="cv-entry__organization">{organization}</p>)}
+                <p class="cv-entry__description">{experience.description}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="cv-section" aria-labelledby="complementary-title">
+      <h2 id="complementary-title"><span>02</span> Expériences complémentaires</h2>
+      <div class="cv-list">
+        {
+          complementaryExperiences.map((experience) => (
+            <article class="cv-entry cv-entry--compact">
+              <p class="cv-entry__period">{experience.period}</p>
+              <div>
+                <h3>{experience.title}</h3>
+                <p class="cv-entry__organization">{experience.organization}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="cv-section" aria-labelledby="education-title">
+      <h2 id="education-title"><span>03</span> Études</h2>
+      <div class="cv-list">
+        {
+          education.map((item) => (
+            <article class="cv-entry cv-entry--compact">
+              <p class="cv-entry__period">{item.period}</p>
+              <div>
+                <h3>{item.title}</h3>
+                <p class="cv-entry__organization">{item.organization}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="cv-section" aria-labelledby="skills-title">
+      <h2 id="skills-title"><span>04</span> Compétences</h2>
+      <div class="cv-skills grid md:grid-cols-2">
+        {
+          stackGroups.map((group) => (
+            <article>
+              <h3>{group.title}</h3>
+              <p>{group.items.join(' · ')}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <p class="cv__back"><a href="/">← Retour au portfolio</a></p>
+  </main>
+
+  <script>
+    function setupPrintButton() {
+      document.querySelector('[data-print-cv]')?.addEventListener('click', () => window.print(), { once: true });
+    }
+    document.addEventListener('astro:page-load', setupPrintButton);
+  </script>
+</BaseLayout>

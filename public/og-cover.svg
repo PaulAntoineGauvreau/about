@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#ff5a3d"/>
+  <path d="M48 54h1104M48 572h1104" stroke="#1d1d1b" stroke-width="2"/>
+  <text x="48" y="93" fill="#1d1d1b" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700">DÉVELOPPEUR FRONT-END · MONTRÉAL</text>
+  <text x="42" y="315" fill="#1d1d1b" font-family="Arial, Helvetica, sans-serif" font-size="142" font-weight="900" letter-spacing="-9">Paul-Antoine</text>
+  <text x="42" y="449" fill="#1d1d1b" font-family="Arial, Helvetica, sans-serif" font-size="142" font-weight="900" letter-spacing="-9">Gauvreau</text>
+  <text x="48" y="552" fill="#1d1d1b" font-family="Arial, Helvetica, sans-serif" font-size="25">Design · Front-end · Gestion de projet</text>
+  <circle cx="1122" cy="531" r="28" fill="#1d1d1b"/>
+  <path d="m1110 531 8 8 17-20" fill="none" stroke="#ff5a3d" stroke-width="5"/>
+</svg>

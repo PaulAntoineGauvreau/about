@@ -1,0 +1,104 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { profile } from '../data/profile';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description,
+  canonicalPath = Astro.url.pathname,
+  bodyClass = '',
+} = Astro.props;
+const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).href;
+const ogImageUrl = new URL('/og-cover.png', Astro.site ?? Astro.url.origin).href;
+const currentPath = Astro.url.pathname;
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  url: profile.website,
+  email: `mailto:${profile.email}`,
+  telephone: profile.phoneHref,
+  jobTitle: profile.role,
+  homeLocation: {
+    '@type': 'Place',
+    name: `${profile.location}, Québec, Canada`,
+  },
+  knowsAbout: [
+    'Développement front-end',
+    'Design web',
+    'Accessibilité web',
+    'WordPress',
+    'Shopify',
+    'Craft CMS',
+  ],
+};
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content={profile.name} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#ff5a3d" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_CA" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Paul-Antoine Gauvreau, développeur front-end à Montréal" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <title>{title}</title>
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(personSchema)}></script>
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <ClientRouter />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <header class="site-header" data-site-header>
+      <a class="site-header__mark" href="/" aria-label="PAG — Accueil de Paul-Antoine Gauvreau">
+        PAG<span aria-hidden="true">↗</span>
+      </a>
+      <nav class="site-header__nav" aria-label="Navigation principale">
+        <a href="/#projets">Projets</a>
+        <a href="/#methode">Méthode</a>
+        <a href="/cv/" aria-current={currentPath.startsWith('/cv') ? 'page' : undefined}>CV</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </header>
+
+    <slot />
+
+    <footer class="site-footer">
+      <p>Paul-Antoine Gauvreau <span aria-hidden="true">—</span> Montréal</p>
+      <p>Conçu et développé avec Astro, sans CMS.</p>
+    </footer>
+
+    <script>
+      import '../scripts/web-components';
+      import '../scripts/motion';
+    </script>
+  </body>
+</html>
