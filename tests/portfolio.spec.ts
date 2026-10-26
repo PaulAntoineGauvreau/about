@@ -30,13 +30,14 @@ test.describe('portfolio', () => {
             precipitation: 0,
             weather_code: 1,
             wind_speed_10m: 12,
+            is_day: 1,
           },
         }),
       });
     });
 
     await page.goto('/');
-    await expect(page.locator('montreal-weather')).toContainText('Montréal, QC · 18 °C · 🚴 Vélo extérieur');
+    await expect(page.locator('montreal-weather')).toContainText('Montréal, QC · 18 °C · 🌤️ Partiellement nuageux. 🚴 Vélo extérieur');
 
     await page.unroute(weatherUrl);
     await page.route(weatherUrl, async (route) => {
@@ -48,13 +49,14 @@ test.describe('portfolio', () => {
             precipitation: 1.2,
             weather_code: 71,
             wind_speed_10m: 18,
+            is_day: 1,
           },
         }),
       });
     });
 
-    await page.reload();
-    await expect(page.locator('montreal-weather')).toContainText('Montréal, QC · -7 °C · 🚴🏠 Vélo intérieur');
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await expect(page.locator('montreal-weather')).toContainText('Montréal, QC · -7 °C · 🌨️ Neige. 🚴🏠 Vélo intérieur');
   });
 
   test('offre un lien d’évitement utilisable au clavier', async ({ page }) => {

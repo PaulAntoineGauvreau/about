@@ -85,7 +85,20 @@ type MontrealWeatherResponse = {
     precipitation?: number;
     weather_code?: number;
     wind_speed_10m?: number;
+    is_day?: number;
   };
+};
+
+const getWeatherCondition = (code: number, isDay: boolean) => {
+  if (code === 0) return { icon: isDay ? '☀️' : '🌙', label: 'Ciel dégagé' };
+  if (code <= 2) return { icon: isDay ? '🌤️' : '☁️', label: 'Partiellement nuageux' };
+  if (code === 3) return { icon: '☁️', label: 'Nuageux' };
+  if (code === 45 || code === 48) return { icon: '🌫️', label: 'Brouillard' };
+  if (code >= 51 && code <= 57) return { icon: '🌦️', label: 'Bruine' };
+  if ((code >= 61 && code <= 67) || (code >= 80 && code <= 82)) return { icon: '🌧️', label: 'Pluie' };
+  if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return { icon: '🌨️', label: 'Neige' };
+  if (code >= 95) return { icon: '⛈️', label: 'Orage' };
+  return { icon: '🌡️', label: 'Conditions météo' };
 };
 
 class MontrealWeather extends HTMLElement {
@@ -100,16 +113,18 @@ class MontrealWeather extends HTMLElement {
   private async loadWeather() {
     const weather = this.querySelector<HTMLElement>('[data-weather]');
     const temperature = this.querySelector<HTMLElement>('[data-temperature]');
+    const weatherIcon = this.querySelector<HTMLElement>('[data-weather-icon]');
+    const weatherLabel = this.querySelector<HTMLElement>('[data-weather-label]');
     const bike = this.querySelector<HTMLElement>('[data-bike]');
     const bikeLabel = this.querySelector<HTMLElement>('[data-bike-label]');
 
-    if (!weather || !temperature || !bike || !bikeLabel) return;
+    if (!weather || !temperature || !weatherIcon || !weatherLabel || !bike || !bikeLabel) return;
 
     try {
       const parameters = new URLSearchParams({
         latitude: '45.5019',
         longitude: '-73.5674',
-        current: 'temperature_2m,precipitation,weather_code,wind_speed_10m',
+        current: 'temperature_2m,precipitation,weather_code,wind_speed_10m,is_day',
         timezone: 'America/Toronto',
       });
       const response = await fetch(`https://api.open-meteo.com/v1/forecast?${parameters}`, {
@@ -132,8 +147,11 @@ class MontrealWeather extends HTMLElement {
         current.precipitation < 0.2 &&
         current.weather_code <= 3 &&
         current.wind_speed_10m <= 35;
+      const condition = getWeatherCondition(current.weather_code, current.is_day !== 0);
 
       temperature.textContent = `${new Intl.NumberFormat('fr-CA', { maximumFractionDigits: 0 }).format(current.temperature_2m)} °C`;
+      weatherIcon.textContent = condition.icon;
+      weatherLabel.textContent = ` ${condition.label}.`;
       bike.textContent = isOutdoorRide ? '🚴' : '🚴🏠';
       bikeLabel.textContent = isOutdoorRide ? ' Vélo extérieur' : ' Vélo intérieur';
       weather.hidden = false;
