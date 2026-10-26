@@ -44,9 +44,11 @@ Les composants n’utilisent aucune valeur arbitraire Tailwind entre crochets et
 
 ### Typographie
 
-`src/styles/text.css` contient les tokens typographiques universels en `rem`, avec Helvetica comme police principale. La pile alternative `font-mono` utilise Courier pour un rendu monospace de machine à écrire, sans chargement externe. `text-overline` emploie automatiquement cette pile mono et les capitales. Les tailles et hauteurs de ligne fluides suivent la grille de 4px entre 320px et 1440px : `text-overline`, `text-caption`, `text-small`, `text-medium`, `text-large`, `text-title-small`, `text-title-medium`, `text-title-large`, `text-headline-small`, `text-headline-medium`, `text-headline-large` et `text-display`.
+`src/styles/text.css` contient les tokens typographiques universels en `rem`, avec Helvetica comme police principale et Courier comme alternative monospace. Les tailles et hauteurs de ligne fluides suivent la grille de 4px entre 320px et 1440px.
 
-Ces tokens sont des utilitaires Tailwind natifs et restent compatibles avec les variantes responsives : `text-title-large md:text-headline-small lg:text-headline-medium`.
+Les composants utilisent uniquement des rôles sémantiques assemblés avec `@apply` : `text-overline`, `text-caption`, `text-body-small`, `text-body`, `text-body-large`, `text-lead`, `text-title-small`, `text-title-medium`, `text-title-large`, `text-heading-small`, `text-heading-medium`, `text-heading-large` et `text-display`. Les styles d’interface réutilisables sont `text-label`, `text-button`, `text-footer`, `text-contact`, `text-link`, `text-icon`, `text-brand` et `text-strong`.
+
+Ainsi, un composant utilise simplement `class="text-heading-medium"` ou `class="text-body"`; la famille, la taille, l’interligne, la graisse et le crénage restent centralisés dans le système typographique.
 
 ## Performance et mesures
 

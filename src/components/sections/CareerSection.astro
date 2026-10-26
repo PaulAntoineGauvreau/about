@@ -9,12 +9,12 @@ import SectionHeading from '../SectionHeading.astro';
     {
       career.map((item) => (
         <li class="grid grid-cols-1 gap-3 border-b border-foreground py-6 md:grid-cols-5 md:gap-6">
-          <p class="m-0 text-3 font-bold tracking-4 uppercase md:col-span-1">{item.period}</p>
-          <h3 class="m-0 text-5 leading-104 -tracking-4 md:col-span-2 md:text-7 lg:text-10">{item.title}</h3>
-          <p class="m-0 max-w-184 md:col-span-2">{item.detail}</p>
+          <p class="text-label m-0 md:col-span-1">{item.period}</p>
+          <h3 class="text-title-medium m-0 md:col-span-2">{item.title}</h3>
+          <p class="text-body m-0 max-w-184 md:col-span-2">{item.detail}</p>
         </li>
       ))
     }
   </ol>
-  <a class="group inline-flex items-center gap-3 font-bold underline-offset-4" href="/cv/">Voir le CV complet <span class="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">→</span></a>
+  <a class="text-link group inline-flex items-center gap-3 underline-offset-4" href="/cv/">Voir le CV complet <span class="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">→</span></a>
 </section>

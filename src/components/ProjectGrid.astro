@@ -5,10 +5,10 @@ import { projects } from '../data/projects';
 
 <project-filter class="block">
   <div class="mb-8 hidden flex-wrap gap-2" aria-label="Filtrer les projets" data-filter-controls>
-    <button class="cursor-pointer rounded-full border border-foreground bg-transparent px-4 py-2 text-3 font-bold tracking-4 uppercase transition-colors duration-150 hover:bg-foreground hover:text-surface aria-pressed:bg-foreground aria-pressed:text-surface" type="button" data-filter="all" aria-pressed="true">Tous</button>
-    <button class="cursor-pointer rounded-full border border-foreground bg-transparent px-4 py-2 text-3 font-bold tracking-4 uppercase transition-colors duration-150 hover:bg-foreground hover:text-surface aria-pressed:bg-foreground aria-pressed:text-surface" type="button" data-filter="headless" aria-pressed="false">Headless</button>
-    <button class="cursor-pointer rounded-full border border-foreground bg-transparent px-4 py-2 text-3 font-bold tracking-4 uppercase transition-colors duration-150 hover:bg-foreground hover:text-surface aria-pressed:bg-foreground aria-pressed:text-surface" type="button" data-filter="wordpress" aria-pressed="false">WordPress</button>
-    <button class="cursor-pointer rounded-full border border-foreground bg-transparent px-4 py-2 text-3 font-bold tracking-4 uppercase transition-colors duration-150 hover:bg-foreground hover:text-surface aria-pressed:bg-foreground aria-pressed:text-surface" type="button" data-filter="commerce" aria-pressed="false">Commerce</button>
+    <button class="text-button cursor-pointer rounded-full border border-foreground bg-transparent px-4 py-2 transition-colors duration-150 hover:bg-foreground hover:text-surface aria-pressed:bg-foreground aria-pressed:text-surface" type="button" data-filter="all" aria-pressed="true">Tous</button>
+    <button class="text-button cursor-pointer rounded-full border border-foreground bg-transparent px-4 py-2 transition-colors duration-150 hover:bg-foreground hover:text-surface aria-pressed:bg-foreground aria-pressed:text-surface" type="button" data-filter="headless" aria-pressed="false">Headless</button>
+    <button class="text-button cursor-pointer rounded-full border border-foreground bg-transparent px-4 py-2 transition-colors duration-150 hover:bg-foreground hover:text-surface aria-pressed:bg-foreground aria-pressed:text-surface" type="button" data-filter="wordpress" aria-pressed="false">WordPress</button>
+    <button class="text-button cursor-pointer rounded-full border border-foreground bg-transparent px-4 py-2 transition-colors duration-150 hover:bg-foreground hover:text-surface aria-pressed:bg-foreground aria-pressed:text-surface" type="button" data-filter="commerce" aria-pressed="false">Commerce</button>
   </div>
   <p class="sr-only" aria-live="polite" data-filter-status></p>
 
@@ -43,17 +43,17 @@ import { projects } from '../data/projects';
                 fetchpriority={index === 0 ? 'high' : 'auto'}
                 class="block size-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
               />
-              <span class="absolute right-4 bottom-4 grid size-12 place-items-center rounded-full bg-(--project-accent) text-6 transition-transform duration-200 group-hover:rotate-45" aria-hidden="true">↗</span>
+              <span class="text-icon absolute right-4 bottom-4 grid size-12 place-items-center rounded-full bg-(--project-accent) transition-transform duration-200 group-hover:rotate-45" aria-hidden="true">↗</span>
             </div>
             <div class="pt-5">
-              <div class="flex justify-between gap-4 border-b border-foreground/25 pb-3 text-3 font-bold tracking-4 uppercase">
+              <div class="text-label flex justify-between gap-4 border-b border-foreground/25 pb-3">
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 <span class="text-right">{project.role}</span>
               </div>
-              <h3 class="mt-5 mb-3 text-7 leading-96 -tracking-4 md:text-10 lg:text-15">{project.name}</h3>
-              <p class="m-0 max-w-200 text-foreground/75">{project.summary}</p>
+              <h3 class="text-title-large mt-5 mb-3">{project.name}</h3>
+              <p class="text-body m-0 max-w-200 text-foreground/75">{project.summary}</p>
               <ul class="mt-5 mb-0 flex list-none flex-wrap gap-2 p-0" aria-label={`Technologies utilisées pour ${project.name}`}>
-                {project.stack.map((item) => <li class="rounded-full border border-foreground/25 px-2 py-1 text-3 font-bold tracking-4 uppercase">{item}</li>)}
+                {project.stack.map((item) => <li class="text-label rounded-full border border-foreground/25 px-2 py-1">{item}</li>)}
               </ul>
               <span class="sr-only">Visiter le site de {project.name} dans un nouvel onglet.</span>
             </div>

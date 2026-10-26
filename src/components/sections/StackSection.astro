@@ -9,9 +9,9 @@ import SectionHeading from '../SectionHeading.astro';
     {
       stackGroups.map((group) => (
         <article class="min-h-84 border-r border-b border-foreground/25 p-5 md:p-8 lg:p-9">
-          <h3 class="mt-0 mb-14 text-3 tracking-4 uppercase">{group.title}</h3>
+          <h3 class="text-label mt-0 mb-14">{group.title}</h3>
           <ul class="m-0 list-none p-0">
-            {group.items.map((item) => <li class="text-5 leading-120 -tracking-4 md:text-7 lg:text-9">{item}</li>)}
+            {group.items.map((item) => <li class="text-title-medium">{item}</li>)}
           </ul>
         </article>
       ))

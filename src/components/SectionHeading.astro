@@ -10,9 +10,9 @@ const { number, eyebrow, title, id } = Astro.props;
 ---
 
 <div class="mb-12 grid grid-cols-4 items-start gap-4 md:mb-20 lg:mb-28">
-  <p class="col-span-1 m-0 text-3 font-bold tracking-8 uppercase" aria-hidden="true">{number}</p>
+  <p class="text-overline col-span-1 m-0" aria-hidden="true">{number}</p>
   <div class="col-span-3">
-    <p class="mt-0 mb-4 text-3 font-bold tracking-8 uppercase">{eyebrow}</p>
-    <h2 class="m-0 max-w-240 text-10 leading-92 font-extrabold -tracking-8 md:text-18 lg:text-29" id={id}>{title}</h2>
+    <p class="text-overline mt-0 mb-4">{eyebrow}</p>
+    <h2 class="text-heading-medium m-0 max-w-240" id={id}>{title}</h2>
   </div>
 </div>

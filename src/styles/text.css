@@ -1,84 +1,162 @@
 /*
- * Universal typography tokens
+ * Universal fluid typography system
  * Root convention: 1rem = 10px.
- * Font sizes and line heights follow a 4px grid.
- * Fluid values scale from 320px to 1440px viewport widths.
- *
- * Usage:
- *   text-overline
- *   text-title-large
- *   text-headline-small md:text-headline-medium lg:text-headline-large
- *   font-mono
+ * Type scales fluidly from 320px to 1440px viewport widths.
+ * Public classes contain the complete typographic recipe through Tailwind @apply.
  */
 
 @theme {
   --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: "Courier New", Courier, "Nimbus Mono PS", monospace;
 
-  --text-overline: clamp(1.2rem, calc(1.0857rem + 0.3571vw), 1.6rem);
-  --text-overline--line-height: clamp(1.6rem, calc(1.4857rem + 0.3571vw), 2rem);
-  --text-overline--letter-spacing: 0.08rem;
-  --text-overline--font-weight: 700;
+  --text-fluid-overline: clamp(1.2rem, calc(1.0857rem + 0.3571vw), 1.6rem);
+  --text-fluid-overline--line-height: clamp(1.6rem, calc(1.4857rem + 0.3571vw), 2rem);
+  --text-fluid-overline--letter-spacing: 0.08rem;
+  --text-fluid-overline--font-weight: 700;
 
-  --text-caption: clamp(1.2rem, calc(1.0857rem + 0.3571vw), 1.6rem);
-  --text-caption--line-height: clamp(1.6rem, calc(1.4857rem + 0.3571vw), 2rem);
-  --text-caption--letter-spacing: 0rem;
-  --text-caption--font-weight: 400;
+  --text-fluid-caption: clamp(1.2rem, calc(1.0857rem + 0.3571vw), 1.6rem);
+  --text-fluid-caption--line-height: clamp(1.6rem, calc(1.4857rem + 0.3571vw), 2rem);
+  --text-fluid-caption--letter-spacing: 0.04rem;
+  --text-fluid-caption--font-weight: 400;
 
-  --text-small: clamp(1.2rem, calc(1.0857rem + 0.3571vw), 1.6rem);
-  --text-small--line-height: clamp(2rem, calc(1.8857rem + 0.3571vw), 2.4rem);
-  --text-small--letter-spacing: 0rem;
-  --text-small--font-weight: 400;
+  --text-fluid-body-small: clamp(1.2rem, calc(1.0857rem + 0.3571vw), 1.6rem);
+  --text-fluid-body-small--line-height: clamp(2rem, calc(1.8857rem + 0.3571vw), 2.4rem);
+  --text-fluid-body-small--letter-spacing: 0rem;
+  --text-fluid-body-small--font-weight: 400;
 
-  --text-medium: clamp(1.6rem, calc(1.4857rem + 0.3571vw), 2rem);
-  --text-medium--line-height: clamp(2.4rem, calc(2.2857rem + 0.3571vw), 2.8rem);
-  --text-medium--letter-spacing: 0rem;
-  --text-medium--font-weight: 400;
+  --text-fluid-body: clamp(1.6rem, calc(1.4857rem + 0.3571vw), 2rem);
+  --text-fluid-body--line-height: clamp(2.4rem, calc(2.2857rem + 0.3571vw), 2.8rem);
+  --text-fluid-body--letter-spacing: 0rem;
+  --text-fluid-body--font-weight: 400;
 
-  --text-large: clamp(2rem, calc(1.8857rem + 0.3571vw), 2.4rem);
-  --text-large--line-height: clamp(2.8rem, calc(2.6857rem + 0.3571vw), 3.2rem);
-  --text-large--letter-spacing: -0.04rem;
-  --text-large--font-weight: 400;
+  --text-fluid-body-large: clamp(1.6rem, calc(1.3714rem + 0.7143vw), 2.4rem);
+  --text-fluid-body-large--line-height: clamp(2.4rem, calc(2.1714rem + 0.7143vw), 3.2rem);
+  --text-fluid-body-large--letter-spacing: -0.04rem;
+  --text-fluid-body-large--font-weight: 400;
 
-  --text-title-small: clamp(2.4rem, calc(2.1714rem + 0.7143vw), 3.2rem);
-  --text-title-small--line-height: clamp(2.8rem, calc(2.5714rem + 0.7143vw), 3.6rem);
-  --text-title-small--letter-spacing: -0.04rem;
-  --text-title-small--font-weight: 700;
+  --text-fluid-lead: clamp(2.4rem, calc(1.7143rem + 2.1429vw), 4.8rem);
+  --text-fluid-lead--line-height: clamp(2.8rem, calc(2.1143rem + 2.1429vw), 5.2rem);
+  --text-fluid-lead--letter-spacing: -0.08rem;
+  --text-fluid-lead--font-weight: 700;
 
-  --text-title-medium: clamp(3.2rem, calc(2.7429rem + 1.4286vw), 4.8rem);
-  --text-title-medium--line-height: clamp(3.6rem, calc(3.1429rem + 1.4286vw), 5.2rem);
-  --text-title-medium--letter-spacing: -0.08rem;
-  --text-title-medium--font-weight: 700;
+  --text-fluid-title-small: clamp(2rem, calc(1.6571rem + 1.0714vw), 3.2rem);
+  --text-fluid-title-small--line-height: clamp(2.4rem, calc(2.0571rem + 1.0714vw), 3.6rem);
+  --text-fluid-title-small--letter-spacing: -0.04rem;
+  --text-fluid-title-small--font-weight: 700;
 
-  --text-title-large: clamp(4.8rem, calc(4.3429rem + 1.4286vw), 6.4rem);
-  --text-title-large--line-height: clamp(5.2rem, calc(4.7429rem + 1.4286vw), 6.8rem);
-  --text-title-large--letter-spacing: -0.12rem;
-  --text-title-large--font-weight: 800;
+  --text-fluid-title-medium: clamp(2.4rem, calc(1.9429rem + 1.4286vw), 4rem);
+  --text-fluid-title-medium--line-height: clamp(2.8rem, calc(2.3429rem + 1.4286vw), 4.4rem);
+  --text-fluid-title-medium--letter-spacing: -0.08rem;
+  --text-fluid-title-medium--font-weight: 700;
 
-  --text-headline-small: clamp(6.4rem, calc(5.4857rem + 2.8571vw), 9.6rem);
-  --text-headline-small--line-height: clamp(5.6rem, calc(4.8rem + 2.5vw), 8.4rem);
-  --text-headline-small--letter-spacing: -0.16rem;
-  --text-headline-small--font-weight: 900;
+  --text-fluid-title-large: clamp(2.8rem, calc(1.8857rem + 2.8571vw), 6rem);
+  --text-fluid-title-large--line-height: clamp(3.2rem, calc(2.5143rem + 2.1429vw), 5.6rem);
+  --text-fluid-title-large--letter-spacing: -0.12rem;
+  --text-fluid-title-large--font-weight: 800;
 
-  --text-headline-medium: clamp(9.6rem, calc(8.6857rem + 2.8571vw), 12.8rem);
-  --text-headline-medium--line-height: clamp(8.4rem, calc(7.6rem + 2.5vw), 11.2rem);
-  --text-headline-medium--letter-spacing: -0.24rem;
-  --text-headline-medium--font-weight: 900;
+  --text-fluid-heading-small: clamp(4rem, calc(2.2857rem + 5.3571vw), 10rem);
+  --text-fluid-heading-small--line-height: clamp(4rem, calc(2.4rem + 5vw), 9.6rem);
+  --text-fluid-heading-small--letter-spacing: -0.16rem;
+  --text-fluid-heading-small--font-weight: 800;
 
-  --text-headline-large: clamp(12.8rem, calc(11.8857rem + 2.8571vw), 16rem);
-  --text-headline-large--line-height: clamp(11.2rem, calc(10.2857rem + 2.8571vw), 14.4rem);
-  --text-headline-large--letter-spacing: -0.4rem;
-  --text-headline-large--font-weight: 900;
+  --text-fluid-heading-medium: clamp(4rem, calc(1.8286rem + 6.7857vw), 11.6rem);
+  --text-fluid-heading-medium--line-height: clamp(3.6rem, calc(1.5429rem + 6.4286vw), 10.8rem);
+  --text-fluid-heading-medium--letter-spacing: -0.24rem;
+  --text-fluid-heading-medium--font-weight: 800;
 
-  --text-display: clamp(16rem, calc(14.6286rem + 4.2857vw), 20.8rem);
-  --text-display--line-height: clamp(14.4rem, calc(13.2571rem + 3.5714vw), 18.4rem);
-  --text-display--letter-spacing: -0.48rem;
-  --text-display--font-weight: 900;
+  --text-fluid-heading-large: clamp(6.8rem, calc(2.8rem + 12.5vw), 20.8rem);
+  --text-fluid-heading-large--line-height: clamp(5.6rem, calc(1.9429rem + 11.4286vw), 18.4rem);
+  --text-fluid-heading-large--letter-spacing: -0.4rem;
+  --text-fluid-heading-large--font-weight: 900;
+
+  --text-fluid-display: clamp(5.6rem, calc(1.2571rem + 13.5714vw), 20.8rem);
+  --text-fluid-display--line-height: clamp(4.8rem, calc(0.9143rem + 12.1429vw), 18.4rem);
+  --text-fluid-display--letter-spacing: -0.48rem;
+  --text-fluid-display--font-weight: 900;
 }
 
 @layer utilities {
   .text-overline {
-    font-family: var(--font-mono);
-    text-transform: uppercase;
+    @apply font-mono text-fluid-overline uppercase;
+  }
+
+  .text-caption {
+    @apply font-mono text-fluid-caption;
+  }
+
+  .text-body-small {
+    @apply font-sans text-fluid-body-small;
+  }
+
+  .text-body {
+    @apply font-sans text-fluid-body;
+  }
+
+  .text-body-large {
+    @apply font-sans text-fluid-body-large;
+  }
+
+  .text-lead {
+    @apply font-sans text-fluid-lead;
+  }
+
+  .text-title-small {
+    @apply font-sans text-fluid-title-small;
+  }
+
+  .text-title-medium {
+    @apply font-sans text-fluid-title-medium;
+  }
+
+  .text-title-large {
+    @apply font-sans text-fluid-title-large;
+  }
+
+  .text-heading-small {
+    @apply font-sans text-fluid-heading-small;
+  }
+
+  .text-heading-medium {
+    @apply font-sans text-fluid-heading-medium;
+  }
+
+  .text-heading-large {
+    @apply font-sans text-fluid-heading-large;
+  }
+
+  .text-display {
+    @apply font-sans text-fluid-display;
+  }
+
+  .text-label {
+    @apply font-mono text-fluid-caption font-bold uppercase;
+  }
+
+  .text-button {
+    @apply font-mono text-fluid-caption font-bold uppercase;
+  }
+
+  .text-footer {
+    @apply font-mono text-fluid-caption uppercase;
+  }
+
+  .text-contact {
+    @apply font-sans text-fluid-body font-bold;
+  }
+
+  .text-link {
+    @apply font-sans text-fluid-body font-bold;
+  }
+
+  .text-icon {
+    @apply font-sans text-fluid-title-small;
+  }
+
+  .text-brand {
+    @apply font-sans text-fluid-body font-black -tracking-4;
+  }
+
+  .text-strong {
+    @apply font-bold;
   }
 }
