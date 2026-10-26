@@ -102,11 +102,11 @@ test.describe('portfolio', () => {
   test('présente le système typographique complet', async ({ page }) => {
     await page.goto('/typography/');
 
-    await expect(page.getByRole('heading', { level: 1, name: 'Type specimen.' })).toBeVisible();
-    await expect(page.locator('article')).toHaveCount(23);
-    await expect(page.getByText('.text-overline', { exact: true })).toBeVisible();
-    await expect(page.getByText('.text-display', { exact: true })).toBeVisible();
-    await expect(page.getByText('.text-mono-display', { exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'Typographie' })).toBeVisible();
+    await expect(page.locator('main li')).toHaveCount(14);
+    await expect(page.getByText('.text-overline · Overline', { exact: true })).toBeVisible();
+    await expect(page.getByText('.text-display · Display', { exact: true })).toBeVisible();
+    await expect(page.getByText('.text-mono-display · Mono display', { exact: true })).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://pagauvreau.com/typography/');
 
     const results = await new AxeBuilder({ page }).analyze();

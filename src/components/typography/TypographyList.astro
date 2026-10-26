@@ -1,0 +1,8 @@
+---
+import { typographyScale } from '../../data/typography';
+import TypeSpecimen from './TypeSpecimen.astro';
+---
+
+<ol class="m-0 list-none p-0">
+  {typographyScale.map((specimen) => <TypeSpecimen {...specimen} />)}
+</ol>
