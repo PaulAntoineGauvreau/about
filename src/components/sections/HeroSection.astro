@@ -5,7 +5,16 @@ import { profile } from '../../data/profile';
 <section class="relative flex min-h-svh flex-col justify-between overflow-hidden bg-primary px-4 pt-24 pb-8 md:px-8 md:pt-32 lg:px-12 lg:pt-36" aria-labelledby="hero-title">
   <div class="text-overline flex justify-between gap-4">
     <p class="m-0">Développeur front-end</p>
-    <p class="m-0">Montréal, QC</p>
+    <montreal-weather>
+      <p class="m-0 text-right" aria-live="polite">
+        <span>Montréal, QC</span>
+        <span data-weather hidden>
+          <span aria-hidden="true"> · </span><span data-temperature></span>
+          <span aria-hidden="true"> · </span><span data-bike aria-hidden="true"></span>
+          <span class="sr-only" data-bike-label></span>
+        </span>
+      </p>
+    </montreal-weather>
   </div>
 
   <h1

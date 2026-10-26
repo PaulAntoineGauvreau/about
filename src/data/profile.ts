@@ -7,7 +7,7 @@ export const profile = {
   phoneHref: '+15142099499',
   website: 'https://pagauvreau.com',
   introduction:
-    'Je relie développement front-end, design et gestion de projet pour transformer une intention créative en expérience web précise, accessible et durable.',
+    'Je suis développeur web front-end basé à Montréal. Passionné par le web, le design, la musique et le cyclisme. Je suis formé au Collège de Maisonneuve en développement web et à l’UQAM en design. Si je ne suis pas derrière mon ordinateur, je suis sur un vélo!',
 } as const;
 
 export const workPrinciples = [

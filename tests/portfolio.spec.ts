@@ -19,6 +19,44 @@ test.describe('portfolio', () => {
     await expect(page.getByText('2 projets affichés.')).toBeAttached();
   });
 
+  test('affiche la météo de Montréal et adapte le conseil vélo', async ({ page }) => {
+    const weatherUrl = 'https://api.open-meteo.com/**';
+    await page.route(weatherUrl, async (route) => {
+      await route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify({
+          current: {
+            temperature_2m: 18.4,
+            precipitation: 0,
+            weather_code: 1,
+            wind_speed_10m: 12,
+          },
+        }),
+      });
+    });
+
+    await page.goto('/');
+    await expect(page.locator('montreal-weather')).toContainText('Montréal, QC · 18 °C · 🚴 Vélo extérieur');
+
+    await page.unroute(weatherUrl);
+    await page.route(weatherUrl, async (route) => {
+      await route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify({
+          current: {
+            temperature_2m: -7,
+            precipitation: 1.2,
+            weather_code: 71,
+            wind_speed_10m: 18,
+          },
+        }),
+      });
+    });
+
+    await page.reload();
+    await expect(page.locator('montreal-weather')).toContainText('Montréal, QC · -7 °C · 🚴🏠 Vélo intérieur');
+  });
+
   test('offre un lien d’évitement utilisable au clavier', async ({ page }) => {
     await page.goto('/');
     await page.keyboard.press('Tab');
