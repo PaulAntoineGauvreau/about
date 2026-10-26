@@ -1,0 +1,32 @@
+---
+import { profile } from '../../data/profile';
+---
+
+<section class="relative flex min-h-svh flex-col justify-between overflow-hidden bg-primary px-4 pt-24 pb-8 md:px-8 md:pt-32 lg:px-12 lg:pt-36" aria-labelledby="hero-title">
+  <div class="flex justify-between gap-4 text-3 leading-100 font-bold tracking-4 uppercase md:text-4">
+    <p class="m-0">Développeur front-end</p>
+    <p class="m-0">Montréal, QC</p>
+  </div>
+
+  <h1
+    id="hero-title"
+    class="my-12 text-14 leading-80 font-black -tracking-8 md:my-20 md:text-24 lg:my-28 lg:text-40 2xl:text-52"
+    aria-label={profile.name}
+  >
+    <span class="block overflow-hidden pr-1"><span class="block will-change-transform" data-hero-line>Paul-Antoine</span></span>
+    <span class="block overflow-hidden pr-1"><span class="block will-change-transform" data-hero-line>Gauvreau</span></span>
+  </h1>
+
+  <div class="mt-auto grid items-end gap-8 lg:grid-cols-12">
+    <p class="m-0 max-w-136 text-6 leading-108 font-bold -tracking-4 md:text-8 lg:col-span-7 lg:text-12">{profile.introduction}</p>
+    <div class="flex items-start gap-3 border-t border-foreground pt-4 text-4 lg:col-span-4 lg:col-start-9">
+      <span aria-hidden="true">✦</span>
+      <p class="m-0"><strong>Premier projet Astro.</strong> Construit pour apprendre l’outil en produisant une preuve concrète.</p>
+    </div>
+  </div>
+
+  <a class="group mt-10 inline-flex items-center gap-3 self-end text-3 font-bold tracking-4 uppercase no-underline" href="#projets">
+    Voir les projets
+    <span class="grid size-8 place-items-center rounded-full border border-current transition-transform duration-200 group-hover:translate-y-1" aria-hidden="true">↓</span>
+  </a>
+</section>

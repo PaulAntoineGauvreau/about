@@ -30,7 +30,8 @@ Les captures de projets peuvent être actualisées avec `npm run capture:project
 
 - `src/data/profile.ts` : profil, parcours, expériences, méthode et stack.
 - `src/data/projects.ts` : projets, liens, rôles, descriptions et technologies.
-- `src/pages/index.astro` : portfolio.
+- `src/pages/index.astro` : assemblage des modules du portfolio.
+- `src/components/sections/` : une section autonome par fichier (hero, projets, méthode, stack, parcours et contact).
 - `src/pages/cv/index.astro` : CV web et styles d’impression.
 
 Les descriptions restent factuelles. Aucun score, résultat ou défi technique n’est publié sans source vérifiable.

@@ -1,0 +1,20 @@
+---
+import { stackGroups } from '../../data/profile';
+import SectionHeading from '../SectionHeading.astro';
+---
+
+<section class="bg-surface px-4 py-20 md:px-8 md:py-28 lg:px-12 lg:py-40" aria-labelledby="stack-title">
+  <SectionHeading number="03" eyebrow="Stack" title="Des outils choisis selon le projet." id="stack-title" />
+  <div class="grid border-t border-l border-foreground/25 md:grid-cols-2 xl:grid-cols-4">
+    {
+      stackGroups.map((group) => (
+        <article class="min-h-84 border-r border-b border-foreground/25 p-5 md:p-8 lg:p-9">
+          <h3 class="mt-0 mb-14 text-3 tracking-4 uppercase">{group.title}</h3>
+          <ul class="m-0 list-none p-0">
+            {group.items.map((item) => <li class="text-5 leading-120 -tracking-4 md:text-7 lg:text-9">{item}</li>)}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+</section>

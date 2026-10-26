@@ -1,8 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectGrid from '../components/ProjectGrid.astro';
-import SectionHeading from '../components/SectionHeading.astro';
-import { career, profile, stackGroups, workPrinciples } from '../data/profile';
+import CareerSection from '../components/sections/CareerSection.astro';
+import ContactSection from '../components/sections/ContactSection.astro';
+import HeroSection from '../components/sections/HeroSection.astro';
+import MethodSection from '../components/sections/MethodSection.astro';
+import ProjectsSection from '../components/sections/ProjectsSection.astro';
+import StackSection from '../components/sections/StackSection.astro';
 ---
 
 <BaseLayout
@@ -10,104 +13,11 @@ import { career, profile, stackGroups, workPrinciples } from '../data/profile';
   description="Portfolio de Paul-Antoine Gauvreau, développeur front-end à Montréal : Craft CMS, Svelte, WordPress, Shopify et intégration web."
 >
   <main id="contenu" tabindex="-1">
-    <section class="relative flex min-h-svh flex-col justify-between overflow-hidden bg-primary px-4 pt-24 pb-8 md:px-8 md:pt-32 lg:px-12 lg:pt-36" aria-labelledby="hero-title">
-      <div class="flex justify-between gap-4 text-3 leading-100 font-bold tracking-4 uppercase md:text-4">
-        <p class="m-0">Développeur front-end</p>
-        <p class="m-0">Montréal, QC</p>
-      </div>
-
-      <h1
-        id="hero-title"
-        class="my-12 text-14 leading-80 font-black -tracking-8 md:my-20 md:text-24 lg:my-28 lg:text-40 2xl:text-52"
-        aria-label={profile.name}
-      >
-        <span class="block overflow-hidden pr-1"><span class="block will-change-transform" data-hero-line>Paul-Antoine</span></span>
-        <span class="block overflow-hidden pr-1 md:pl-12 lg:pl-28"><span class="block will-change-transform" data-hero-line>Gauvreau</span></span>
-      </h1>
-
-      <div class="mt-auto grid items-end gap-8 lg:grid-cols-12">
-        <p class="m-0 max-w-136 text-6 leading-108 font-bold -tracking-4 md:text-8 lg:col-span-7 lg:text-12">{profile.introduction}</p>
-        <div class="flex items-start gap-3 border-t border-foreground pt-4 text-4 lg:col-span-4 lg:col-start-9">
-          <span aria-hidden="true">✦</span>
-          <p class="m-0"><strong>Premier projet Astro.</strong> Construit pour apprendre l’outil en produisant une preuve concrète.</p>
-        </div>
-      </div>
-
-      <a class="group mt-10 inline-flex items-center gap-3 self-end text-3 font-bold tracking-4 uppercase no-underline" href="#projets">
-        Voir les projets
-        <span class="grid size-8 place-items-center rounded-full border border-current transition-transform duration-200 group-hover:translate-y-1" aria-hidden="true">↓</span>
-      </a>
-    </section>
-
-    <section id="projets" class="bg-background px-4 py-20 md:px-8 md:py-28 lg:px-12 lg:py-40" aria-labelledby="projects-title">
-      <SectionHeading number="01" eyebrow="Travaux sélectionnés" title="Des projets livrés, pas des mots-clés." id="projects-title" />
-      <ProjectGrid />
-    </section>
-
-    <section id="methode" class="bg-foreground px-4 py-20 text-surface md:px-8 md:py-28 lg:px-12 lg:py-40" aria-labelledby="method-title">
-      <SectionHeading number="02" eyebrow="Ma façon de travailler" title="Rendre le processus aussi solide que l’interface." id="method-title" />
-      <div class="grid border-t border-l border-surface/30 md:grid-cols-2">
-        {
-          workPrinciples.map((principle) => (
-            <article class="flex min-h-60 flex-col border-r border-b border-surface/30 p-5 md:min-h-76 md:p-8 lg:p-10">
-              <p class="m-0 mb-auto text-3">{principle.number}</p>
-              <h3 class="mt-12 mb-3 text-8 leading-96 -tracking-4 md:text-12 lg:text-18">{principle.title}</h3>
-              <p class="m-0 max-w-168 text-surface/75">{principle.text}</p>
-            </article>
-          ))
-        }
-      </div>
-      <div class="grid items-end gap-10 pt-20 md:pt-28 lg:grid-cols-12 lg:pt-40">
-        <p class="m-0 text-10 leading-96 font-extrabold -tracking-8 md:text-16 lg:col-span-6 lg:text-25">Performance, accessibilité et SEO sont des critères de livraison.</p>
-        <p class="m-0 text-surface/75 lg:col-span-5 lg:col-start-8">
-          Images adaptatives, navigation au clavier, mouvement réduit, structure sémantique et métadonnées font partie du travail. Les scores de production seront publiés seulement après une mesure réelle du site déployé.
-        </p>
-      </div>
-    </section>
-
-    <section class="bg-surface px-4 py-20 md:px-8 md:py-28 lg:px-12 lg:py-40" aria-labelledby="stack-title">
-      <SectionHeading number="03" eyebrow="Stack" title="Des outils choisis selon le projet." id="stack-title" />
-      <div class="grid border-t border-l border-foreground/25 md:grid-cols-2 xl:grid-cols-4">
-        {
-          stackGroups.map((group) => (
-            <article class="min-h-84 border-r border-b border-foreground/25 p-5 md:p-8 lg:p-9">
-              <h3 class="mt-0 mb-14 text-3 tracking-4 uppercase">{group.title}</h3>
-              <ul class="m-0 list-none p-0">
-                {group.items.map((item) => <li class="text-5 leading-120 -tracking-4 md:text-7 lg:text-9">{item}</li>)}
-              </ul>
-            </article>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="bg-accent px-4 py-20 md:px-8 md:py-28 lg:px-12 lg:py-40" aria-labelledby="career-title">
-      <SectionHeading number="04" eyebrow="Parcours" title="Design, gestion, puis développement." id="career-title" />
-      <ol class="m-0 mb-12 list-none border-t border-foreground p-0">
-        {
-          career.map((item) => (
-            <li class="grid grid-cols-1 gap-3 border-b border-foreground py-6 md:grid-cols-5 md:gap-6">
-              <p class="m-0 text-3 font-bold tracking-4 uppercase md:col-span-1">{item.period}</p>
-              <h3 class="m-0 text-5 leading-104 -tracking-4 md:col-span-2 md:text-7 lg:text-10">{item.title}</h3>
-              <p class="m-0 max-w-184 md:col-span-2">{item.detail}</p>
-            </li>
-          ))
-        }
-      </ol>
-      <a class="group inline-flex items-center gap-3 font-bold underline-offset-4" href="/cv/">Voir le CV complet <span class="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">→</span></a>
-    </section>
-
-    <section id="contact" class="flex min-h-svh flex-col justify-between bg-primary px-4 pt-20 pb-8 md:px-8 md:pt-28 lg:px-12 lg:pt-40" aria-labelledby="contact-title">
-      <p class="m-0 text-3 font-bold tracking-8 uppercase">05 · Contact</p>
-      <h2 id="contact-title" class="my-12 text-17 leading-80 font-black -tracking-8 md:text-32 lg:text-48 2xl:text-60">On devrait<br />se parler.</h2>
-      <div class="flex flex-col items-start justify-between gap-x-8 gap-y-4 border-t border-foreground pt-5 md:flex-row md:flex-wrap md:items-center">
-        <copy-email class="flex flex-wrap items-center gap-3" data-email={profile.email}>
-          <a class="text-4 leading-128 font-bold md:text-6" href={`mailto:${profile.email}`}>{profile.email}</a>
-          <button class="hidden cursor-pointer rounded-full border border-current bg-transparent px-3 py-1 text-3 font-bold tracking-4 uppercase" type="button" data-copy-button>Copier</button>
-          <span class="sr-only" aria-live="polite" data-copy-status></span>
-        </copy-email>
-        <a class="text-4 leading-128 font-bold md:text-6" href={`tel:${profile.phoneHref}`}>{profile.phoneDisplay}</a>
-      </div>
-    </section>
+    <HeroSection />
+    <ProjectsSection />
+    <MethodSection />
+    <StackSection />
+    <CareerSection />
+    <ContactSection />
   </main>
 </BaseLayout>
