@@ -1,0 +1,26 @@
+---
+import FontFamilies from '../../components/typography/FontFamilies.astro';
+import TypographyScale from '../../components/typography/TypographyScale.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Système typographique — Paul-Antoine Gauvreau"
+  description="Spécimen du système typographique fluide du portfolio de Paul-Antoine Gauvreau : Helvetica, Courier, textes, titres et composants d’interface."
+  canonicalPath="/typography/"
+>
+  <main id="contenu" tabindex="-1">
+    <header class="bg-primary px-4 pt-32 pb-20 md:px-8 md:pt-40 md:pb-28 lg:px-12 lg:pt-48 lg:pb-40">
+      <p class="text-overline m-0">Système typographique</p>
+      <h1 class="text-heading-large my-12">Type<br />specimen.</h1>
+      <p class="text-body-large m-0 max-w-200">Une échelle fluide de 320px à 1440px, deux familles système et des rôles sémantiques assemblés avec Tailwind.</p>
+    </header>
+
+    <FontFamilies />
+    <TypographyScale />
+
+    <div class="bg-accent px-4 py-12 md:px-8 lg:px-12">
+      <a class="text-link" href="/">← Retour au portfolio</a>
+    </div>
+  </main>
+</BaseLayout>

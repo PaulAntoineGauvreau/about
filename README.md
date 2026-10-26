@@ -33,6 +33,7 @@ Les captures de projets peuvent être actualisées avec `npm run capture:project
 - `src/pages/index.astro` : assemblage des modules du portfolio.
 - `src/components/sections/` : une section autonome par fichier (hero, projets, méthode, stack, parcours et contact).
 - `src/pages/cv/index.astro` : CV web et styles d’impression.
+- `src/pages/typography/index.astro` : spécimen de toutes les familles et de tous les rôles typographiques.
 
 Les descriptions restent factuelles. Aucun score, résultat ou défi technique n’est publié sans source vérifiable.
 

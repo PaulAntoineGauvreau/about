@@ -1,0 +1,16 @@
+---
+import type { TypographySpecimen } from '../../data/typography';
+
+interface Props extends TypographySpecimen {}
+
+const { className, label, sample, usage } = Astro.props;
+---
+
+<article class="grid gap-8 border-t border-foreground/25 py-8 lg:grid-cols-12 lg:items-start">
+  <div class="lg:col-span-3">
+    <h3 class="text-overline m-0">{label}</h3>
+    <p class="text-caption mt-2 mb-0 text-foreground/75">.{className}</p>
+    <p class="text-body-small mt-4 mb-0 max-w-136 text-foreground/75">{usage}</p>
+  </div>
+  <p class:list={[className, 'm-0 min-w-0 break-words lg:col-span-9']}>{sample}</p>
+</article>

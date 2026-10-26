@@ -99,6 +99,26 @@ test.describe('portfolio', () => {
     expect(schema.name).toBe('Paul-Antoine Gauvreau');
   });
 
+  test('présente le système typographique complet', async ({ page }) => {
+    await page.goto('/typography/');
+
+    await expect(page.getByRole('heading', { level: 1, name: 'Type specimen.' })).toBeVisible();
+    await expect(page.locator('article')).toHaveCount(23);
+    await expect(page.getByText('.text-overline', { exact: true })).toBeVisible();
+    await expect(page.getByText('.text-display', { exact: true })).toBeVisible();
+    await expect(page.getByText('.text-mono-display', { exact: true })).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://pagauvreau.com/typography/');
+
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations).toEqual([]);
+
+    for (const width of [320, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      const hasOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+      expect(hasOverflow).toBe(false);
+    }
+  });
+
   for (const viewport of [
     { width: 320, height: 800 },
     { width: 1440, height: 900 },

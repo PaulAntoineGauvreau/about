@@ -1,0 +1,25 @@
+---
+import { typographyGroups } from '../../data/typography';
+import TypeSpecimen from './TypeSpecimen.astro';
+---
+
+<section class="bg-surface px-4 py-20 md:px-8 md:py-28 lg:px-12 lg:py-40" aria-labelledby="type-scale-title">
+  <p class="text-overline m-0">02 · Échelle</p>
+  <h2 id="type-scale-title" class="text-heading-medium mt-4 mb-20 max-w-240">Des rôles lisibles dans le code et à l’écran.</h2>
+
+  <div class="grid gap-20 lg:gap-32">
+    {
+      typographyGroups.map((group) => (
+        <section aria-labelledby={`type-${group.title.toLowerCase().replaceAll(' ', '-')}`}>
+          <div class="mb-12 grid gap-4 md:grid-cols-2 md:items-end">
+            <h3 id={`type-${group.title.toLowerCase().replaceAll(' ', '-')}`} class="text-title-large m-0">{group.title}</h3>
+            <p class="text-body m-0 max-w-168 text-foreground/75">{group.description}</p>
+          </div>
+          <div>
+            {group.specimens.map((specimen) => <TypeSpecimen {...specimen} />)}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</section>
