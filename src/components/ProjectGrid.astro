@@ -3,31 +3,35 @@ import { Picture } from 'astro:assets';
 import { projects } from '../data/projects';
 ---
 
-<project-filter class="project-filter block">
-  <div class="project-filter__controls mb-8 hidden flex-wrap gap-2" aria-label="Filtrer les projets" data-filter-controls>
-    <button class="cursor-pointer rounded-full border border-ink bg-transparent px-4 py-2 text-xs font-bold tracking-[0.05em] uppercase transition-colors duration-150 hover:bg-ink hover:text-cream aria-pressed:bg-ink aria-pressed:text-cream" type="button" data-filter="all" aria-pressed="true">Tous</button>
-    <button class="cursor-pointer rounded-full border border-ink bg-transparent px-4 py-2 text-xs font-bold tracking-[0.05em] uppercase transition-colors duration-150 hover:bg-ink hover:text-cream aria-pressed:bg-ink aria-pressed:text-cream" type="button" data-filter="headless" aria-pressed="false">Headless</button>
-    <button class="cursor-pointer rounded-full border border-ink bg-transparent px-4 py-2 text-xs font-bold tracking-[0.05em] uppercase transition-colors duration-150 hover:bg-ink hover:text-cream aria-pressed:bg-ink aria-pressed:text-cream" type="button" data-filter="wordpress" aria-pressed="false">WordPress</button>
-    <button class="cursor-pointer rounded-full border border-ink bg-transparent px-4 py-2 text-xs font-bold tracking-[0.05em] uppercase transition-colors duration-150 hover:bg-ink hover:text-cream aria-pressed:bg-ink aria-pressed:text-cream" type="button" data-filter="commerce" aria-pressed="false">Commerce</button>
+<project-filter class="block">
+  <div class="mb-8 hidden flex-wrap gap-2" aria-label="Filtrer les projets" data-filter-controls>
+    <button class="cursor-pointer rounded-full border border-foreground bg-transparent px-4 py-2 text-3 font-bold tracking-4 uppercase transition-colors duration-150 hover:bg-foreground hover:text-surface aria-pressed:bg-foreground aria-pressed:text-surface" type="button" data-filter="all" aria-pressed="true">Tous</button>
+    <button class="cursor-pointer rounded-full border border-foreground bg-transparent px-4 py-2 text-3 font-bold tracking-4 uppercase transition-colors duration-150 hover:bg-foreground hover:text-surface aria-pressed:bg-foreground aria-pressed:text-surface" type="button" data-filter="headless" aria-pressed="false">Headless</button>
+    <button class="cursor-pointer rounded-full border border-foreground bg-transparent px-4 py-2 text-3 font-bold tracking-4 uppercase transition-colors duration-150 hover:bg-foreground hover:text-surface aria-pressed:bg-foreground aria-pressed:text-surface" type="button" data-filter="wordpress" aria-pressed="false">WordPress</button>
+    <button class="cursor-pointer rounded-full border border-foreground bg-transparent px-4 py-2 text-3 font-bold tracking-4 uppercase transition-colors duration-150 hover:bg-foreground hover:text-surface aria-pressed:bg-foreground aria-pressed:text-surface" type="button" data-filter="commerce" aria-pressed="false">Commerce</button>
   </div>
   <p class="sr-only" aria-live="polite" data-filter-status></p>
 
-  <div class="project-grid block md:grid md:grid-cols-12 md:gap-x-8 md:gap-y-project-row">
+  <div class="block md:grid md:grid-cols-12 md:gap-x-8 md:gap-y-10 lg:gap-y-28">
     {
       projects.map((project, index) => (
         <article
-          class="project-card group mb-16 min-w-0 last:mb-0 md:col-span-6 md:mb-0 md:[&:nth-child(3n+2)]:mt-project-offset md:[&:nth-child(5)]:col-start-4"
+          class:list={[
+            'group mb-16 min-w-0 last:mb-0 md:col-span-6 md:mb-0',
+            index % 3 === 1 && 'md:mt-16 lg:mt-32',
+            index === 4 && 'md:col-start-4',
+          ]}
           data-project-card
           data-category={project.category}
           style={`--project-accent: ${project.accent}`}
         >
           <a
-            class="project-card__link block no-underline"
+            class="block no-underline"
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <div class="project-card__visual relative aspect-[16/10] overflow-hidden rounded-fluid bg-[var(--project-accent)] after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:border after:border-ink/15 after:content-['']">
+            <div class="relative aspect-8/5 overflow-hidden rounded-4 bg-(--project-accent) ring-1 ring-foreground/15 ring-inset md:rounded-6 lg:rounded-7">
               <Picture
                 src={project.image}
                 formats={['avif']}
@@ -37,19 +41,19 @@ import { projects } from '../data/projects';
                 alt={`Aperçu du site ${project.name}`}
                 loading={index < 2 ? 'eager' : 'lazy'}
                 fetchpriority={index === 0 ? 'high' : 'auto'}
-                class="block size-full object-cover object-top transition-transform duration-500 ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[1.025]"
+                class="block size-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
               />
-              <span class="project-card__arrow absolute right-4 bottom-4 grid size-12 place-items-center rounded-full bg-[var(--project-accent)] text-xl transition-transform duration-200 group-hover:rotate-45" aria-hidden="true">↗</span>
+              <span class="absolute right-4 bottom-4 grid size-12 place-items-center rounded-full bg-(--project-accent) text-6 transition-transform duration-200 group-hover:rotate-45" aria-hidden="true">↗</span>
             </div>
-            <div class="project-card__content pt-5">
-              <div class="project-card__meta flex justify-between gap-4 border-b border-ink/25 pb-3 text-xs font-bold tracking-[0.05em] uppercase">
+            <div class="pt-5">
+              <div class="flex justify-between gap-4 border-b border-foreground/25 pb-3 text-3 font-bold tracking-4 uppercase">
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 <span class="text-right">{project.role}</span>
               </div>
-              <h3 class="mt-5 mb-3 text-project tracking-[-0.055em]">{project.name}</h3>
-              <p class="m-0 max-w-[50ch] text-ink/75">{project.summary}</p>
+              <h3 class="mt-5 mb-3 text-7 leading-96 -tracking-4 md:text-10 lg:text-15">{project.name}</h3>
+              <p class="m-0 max-w-200 text-foreground/75">{project.summary}</p>
               <ul class="mt-5 mb-0 flex list-none flex-wrap gap-2 p-0" aria-label={`Technologies utilisées pour ${project.name}`}>
-                {project.stack.map((item) => <li class="rounded-full border border-ink/25 px-2 py-1 text-xs font-bold tracking-[0.04em] uppercase">{item}</li>)}
+                {project.stack.map((item) => <li class="rounded-full border border-foreground/25 px-2 py-1 text-3 font-bold tracking-4 uppercase">{item}</li>)}
               </ul>
               <span class="sr-only">Visiter le site de {project.name} dans un nouvel onglet.</span>
             </div>

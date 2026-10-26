@@ -78,7 +78,7 @@ test.describe('portfolio', () => {
   test('adapte le CV à l’impression', async ({ page }) => {
     await page.goto('/cv/');
     await page.emulateMedia({ media: 'print' });
-    await expect(page.locator('.site-header')).toBeHidden();
+    await expect(page.locator('[data-site-header]')).toBeHidden();
     await expect(page.getByRole('heading', { level: 2, name: /Expériences de travail/ })).toBeVisible();
   });
 });

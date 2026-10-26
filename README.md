@@ -37,7 +37,9 @@ Les descriptions restent factuelles. Aucun score, résultat ou défi technique n
 
 ## Système Tailwind
 
-La mise en page et la typographie sont définies dans `tailwind.config.mjs`. La racine utilise `62.5%`, donc `1rem = 10px`, et l’échelle d’espacement suit une grille de 4px : `p-1` vaut 4px, `p-4` vaut 16px, etc. Les bornes des tailles fluides respectent aussi cette grille. Seuls les filets de 1px et les unités physiques du CV imprimé font exception.
+`tailwind.config.mjs` est une base universelle, sans nom de composant ni token propre à ce portfolio. La fonction `createRemScale()` génère les espacements, dimensions, tailles de texte et rayons sur une grille de 4px. Comme la racine utilise `62.5%`, `1rem = 10px` : `p-4`, `text-4` et `rounded-4` valent tous 16px. Les fonctions complémentaires génèrent aussi des hauteurs de ligne et espacements de lettres numériques.
+
+Les composants n’utilisent aucune valeur arbitraire Tailwind entre crochets et adaptent leur échelle avec les breakpoints. La palette expose seulement les rôles réutilisables `primary`, `foreground`, `background`, `surface` et `accent`; leurs valeurs sont définies avec les variables CSS de `src/styles/global.css`. Le fichier de configuration peut ainsi être copié tel quel dans un prochain projet. Seuls les filets de 1px et les unités physiques du CV imprimé font exception à la grille.
 
 ## Performance et mesures
 
