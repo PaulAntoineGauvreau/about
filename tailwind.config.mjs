@@ -61,6 +61,7 @@ export default {
     },
     fontFamily: {
       sans: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+      mono: ['Courier New', 'Courier', 'Nimbus Mono PS', 'monospace'],
     },
   },
 };

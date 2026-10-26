@@ -7,10 +7,12 @@
  *   text-overline
  *   text-title-large
  *   text-headline-small md:text-headline-medium lg:text-headline-large
+ *   font-mono
  */
 
 @theme {
   --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "Courier New", Courier, "Nimbus Mono PS", monospace;
 
   --text-overline: 1.2rem;
   --text-overline--line-height: 1.6rem;
