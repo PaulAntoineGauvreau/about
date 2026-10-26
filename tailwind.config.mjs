@@ -66,13 +66,13 @@ const fluidTypography = {
   'fluid-body': createFluidText(16, 20, 24, 28, '0rem', 400),
   'fluid-body-large': createFluidText(16, 24, 24, 32, '-0.04rem', 400),
   'fluid-lead': createFluidText(24, 48, 28, 52, '-0.08rem', 700),
-  'fluid-title-small': createFluidText(20, 32, 24, 36, '-0.04rem', 700),
-  'fluid-title-medium': createFluidText(24, 40, 28, 44, '-0.08rem', 700),
-  'fluid-title-large': createFluidText(28, 60, 32, 56, '-0.12rem', 800),
-  'fluid-heading-small': createFluidText(40, 100, 40, 96, '-0.16rem', 800),
-  'fluid-heading-medium': createFluidText(40, 116, 36, 108, '-0.24rem', 800),
-  'fluid-heading-large': createFluidText(68, 208, 56, 184, '-0.4rem', 900),
-  'fluid-display': createFluidText(56, 208, 48, 184, '-0.48rem', 900),
+  'fluid-title-small': createFluidText(20, 32, 24, 36, '-0.02em', 700),
+  'fluid-title-medium': createFluidText(24, 40, 28, 44, '-0.03em', 700),
+  'fluid-title-large': createFluidText(28, 60, 32, 56, '-0.04em', 800),
+  'fluid-heading-small': createFluidText(40, 100, 40, 96, '-0.04em', 800),
+  'fluid-heading-medium': createFluidText(40, 116, 36, 108, '-0.05em', 800),
+  'fluid-heading-large': createFluidText(68, 208, 56, 184, '-0.055em', 900),
+  'fluid-display': createFluidText(56, 208, 48, 184, '-0.07em', 900),
 };
 
 /** @type {import('tailwindcss').Config} */

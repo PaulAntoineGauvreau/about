@@ -45,7 +45,7 @@ Les composants n’utilisent aucune valeur arbitraire Tailwind entre crochets et
 
 ### Typographie
 
-`tailwind.config.mjs` génère les tailles et hauteurs de ligne fluides en `rem` avec `createFluidText()`, sur une grille de 4px entre 320px et 1440px. `src/styles/text.css` reste volontairement court : il assemble ces utilitaires avec `@apply`, Helvetica comme police principale et Courier comme alternative monospace.
+`tailwind.config.mjs` génère les tailles et hauteurs de ligne fluides en `rem` avec `createFluidText()`, sur une grille de 4px entre 320px et 1440px. Le crénage des titres utilise des valeurs proportionnelles en `em`, progressivement plus serrées jusqu’au display. `src/styles/text.css` reste volontairement court : il assemble ces utilitaires avec `@apply`, Helvetica comme police principale et Courier comme alternative monospace.
 
 Les composants utilisent uniquement des rôles sémantiques assemblés avec `@apply` : `text-overline`, `text-caption`, `text-body-small`, `text-body`, `text-body-alt`, `text-body-large`, `text-lead`, `text-title-small`, `text-title-medium`, `text-title-large`, `text-heading-small`, `text-heading-medium`, `text-heading-large` et `text-display`. `text-overline` et `text-body-alt` utilisent la pile monospace. Les styles d’interface réutilisables sont `text-label`, `text-button`, `text-footer`, `text-contact`, `text-link`, `text-icon`, `text-brand` et `text-strong`.
 
