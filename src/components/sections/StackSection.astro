@@ -3,12 +3,12 @@ import { stackGroups } from '../../data/profile';
 import SectionHeading from '../SectionHeading.astro';
 ---
 
-<section class="bg-surface px-4 py-20 md:px-8 md:py-28 lg:px-12 lg:py-40" aria-labelledby="stack-title">
+<section class="bg-surface px-4 py-20 bp:px-12 bp:py-40" aria-labelledby="stack-title">
   <SectionHeading number="03" eyebrow="Stack" title="Des outils choisis selon le projet." id="stack-title" />
-  <div class="grid border-t border-l border-foreground/25 md:grid-cols-2 xl:grid-cols-4">
+  <div class="grid border-t border-l border-foreground/25 bp:grid-cols-4">
     {
       stackGroups.map((group) => (
-        <article class="min-h-84 border-r border-b border-foreground/25 p-5 md:p-8 lg:p-9">
+        <article class="min-h-84 border-r border-b border-foreground/25 p-5 bp:p-9">
           <h3 class="text-label mt-0 mb-14">{group.title}</h3>
           <ul class="m-0 list-none p-0">
             {group.items.map((item) => <li class="text-title-medium">{item}</li>)}

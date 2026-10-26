@@ -12,14 +12,14 @@ import { projects } from '../data/projects';
   </div>
   <p class="sr-only" aria-live="polite" data-filter-status></p>
 
-  <div class="block md:grid md:grid-cols-12 md:gap-x-8 md:gap-y-10 lg:gap-y-28">
+  <div class="block bp:grid bp:grid-cols-12 bp:gap-x-8 bp:gap-y-28">
     {
       projects.map((project, index) => (
         <article
           class:list={[
-            'group mb-16 min-w-0 last:mb-0 md:col-span-6 md:mb-0',
-            index % 3 === 1 && 'md:mt-16 lg:mt-32',
-            index === 4 && 'md:col-start-4',
+            'group mb-16 min-w-0 last:mb-0 bp:col-span-6 bp:mb-0',
+            index % 3 === 1 && 'bp:mt-32',
+            index === 4 && 'bp:col-start-4',
           ]}
           data-project-card
           data-category={project.category}
@@ -31,7 +31,7 @@ import { projects } from '../data/projects';
             target="_blank"
             rel="noopener noreferrer"
           >
-            <div class="relative aspect-8/5 overflow-hidden rounded-4 bg-(--project-accent) ring-1 ring-foreground/15 ring-inset md:rounded-6 lg:rounded-7">
+            <div class="relative aspect-8/5 overflow-hidden rounded-4 bg-(--project-accent) ring-1 ring-foreground/15 ring-inset bp:rounded-7">
               <Picture
                 src={project.image}
                 formats={['avif']}

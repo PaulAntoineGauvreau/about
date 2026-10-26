@@ -2,7 +2,7 @@
 import { profile } from '../../data/profile';
 ---
 
-<section class="relative flex min-h-svh flex-col justify-between overflow-hidden bg-primary px-4 pt-24 pb-8 md:px-8 md:pt-32 lg:px-12 lg:pt-36" aria-labelledby="hero-title">
+<section class="relative flex min-h-svh flex-col justify-between overflow-hidden bg-primary px-4 pt-24 pb-8 bp:px-12 bp:pt-36" aria-labelledby="hero-title">
   <div class="text-overline flex justify-between gap-4">
     <p class="m-0">Développeur front-end</p>
     <montreal-weather>
@@ -21,19 +21,19 @@ import { profile } from '../../data/profile';
 
   <h1
     id="hero-title"
-    class="text-display my-12 md:my-20 lg:my-28"
+    class="text-display mt-12 bp:mt-28"
     aria-label={profile.name}
   >
     <span class="block overflow-hidden pr-1"><span class="block will-change-transform" data-hero-line>Paul-Antoine</span></span>
     <span class="block overflow-hidden pr-1"><span class="block will-change-transform" data-hero-line>Gauvreau</span></span>
   </h1>
 
-  <div class="mt-auto grid items-end gap-8 lg:grid-cols-12">
-    <p class="text-lead m-0 max-w-136 lg:col-span-7">{profile.introduction}</p>
-    <div class="text-body flex items-start gap-3 border-t border-foreground pt-4 lg:col-span-4 lg:col-start-9">
+  <div class="grid items-end gap-8 bp:grid-cols-12">
+    <p class="text-lead m-0 bp:col-span-10">{profile.introduction}</p>
+    <!-- <div class="text-body flex items-start gap-3 border-t border-foreground pt-4 bp:col-span-4 bp:col-start-9">
       <span aria-hidden="true">✦</span>
       <p class="m-0"><strong>Premier projet Astro.</strong> Construit pour apprendre l’outil en produisant une preuve concrète.</p>
-    </div>
+    </div> -->
   </div>
 
   <a class="text-button group mt-10 inline-flex items-center gap-3 self-end no-underline" href="#projets">

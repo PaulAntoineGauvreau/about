@@ -164,6 +164,7 @@ test.describe('portfolio', () => {
 
   for (const viewport of [
     { width: 320, height: 800 },
+    { width: 768, height: 1024 },
     { width: 1440, height: 900 },
   ]) {
     test(`ne déborde pas à ${viewport.width}px`, async ({ page }) => {

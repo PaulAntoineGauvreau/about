@@ -3,12 +3,12 @@ import { workPrinciples } from '../../data/profile';
 import SectionHeading from '../SectionHeading.astro';
 ---
 
-<section id="methode" class="bg-foreground px-4 py-20 text-surface md:px-8 md:py-28 lg:px-12 lg:py-40" aria-labelledby="method-title">
+<section id="methode" class="bg-foreground px-4 py-20 text-surface bp:px-12 bp:py-40" aria-labelledby="method-title">
   <SectionHeading number="02" eyebrow="Ma façon de travailler" title="Rendre le processus aussi solide que l’interface." id="method-title" />
-  <div class="grid border-t border-l border-surface/30 md:grid-cols-2">
+  <div class="grid border-t border-l border-surface/30 bp:grid-cols-2">
     {
       workPrinciples.map((principle) => (
-        <article class="flex min-h-60 flex-col border-r border-b border-surface/30 p-5 md:min-h-76 md:p-8 lg:p-10">
+        <article class="flex min-h-60 flex-col border-r border-b border-surface/30 p-5 bp:min-h-76 bp:p-10">
           <p class="text-caption m-0 mb-auto">{principle.number}</p>
           <h3 class="text-title-large mt-12 mb-3">{principle.title}</h3>
           <p class="text-body m-0 max-w-168 text-surface/75">{principle.text}</p>
@@ -16,9 +16,9 @@ import SectionHeading from '../SectionHeading.astro';
       ))
     }
   </div>
-  <div class="grid items-end gap-10 pt-20 md:pt-28 lg:grid-cols-12 lg:pt-40">
-    <p class="text-heading-small m-0 lg:col-span-6">Performance, accessibilité et SEO sont des critères de livraison.</p>
-    <p class="text-body m-0 text-surface/75 lg:col-span-5 lg:col-start-8">
+  <div class="grid items-end gap-10 pt-20 bp:grid-cols-12 bp:pt-40">
+    <p class="text-heading-small m-0 bp:col-span-6">Performance, accessibilité et SEO sont des critères de livraison.</p>
+    <p class="text-body m-0 text-surface/75 bp:col-span-5 bp:col-start-8">
       Images adaptatives, navigation au clavier, mouvement réduit, structure sémantique et métadonnées font partie du travail. Les scores de production seront publiés seulement après une mesure réelle du site déployé.
     </p>
   </div>

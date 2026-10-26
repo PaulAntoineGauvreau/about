@@ -78,6 +78,9 @@ const fluidTypography = {
 /** @type {import('tailwindcss').Config} */
 export default {
   theme: {
+    screens: {
+      bp: '102.4rem',
+    },
     spacing,
     width: spacing,
     minWidth: spacing,
