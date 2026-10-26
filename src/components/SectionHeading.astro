@@ -9,10 +9,10 @@ interface Props {
 const { number, eyebrow, title, id } = Astro.props;
 ---
 
-<div class="section-heading">
-  <p class="section-heading__index" aria-hidden="true">{number}</p>
+<div class="section-heading mb-section-heading grid grid-cols-[4rem_minmax(0,1fr)] items-start gap-4 md:grid-cols-[minmax(4rem,0.9fr)_minmax(0,3.1fr)]">
+  <p class="section-heading__index m-0 text-xs font-bold tracking-[0.08em] uppercase" aria-hidden="true">{number}</p>
   <div>
-    <p class="section-heading__eyebrow">{eyebrow}</p>
-    <h2 id={id}>{title}</h2>
+    <p class="section-heading__eyebrow mt-0 mb-4 text-xs font-bold tracking-[0.08em] uppercase">{eyebrow}</p>
+    <h2 class="m-0 max-w-[15ch] text-section font-extrabold tracking-[-0.065em]" id={id}>{title}</h2>
   </div>
 </div>

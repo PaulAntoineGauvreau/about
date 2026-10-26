@@ -15,32 +15,32 @@ import {
   canonicalPath="/cv/"
   bodyClass="cv-page"
 >
-  <main id="contenu" class="cv" tabindex="-1">
-    <header class="cv__hero">
-      <p class="cv__kicker">Curriculum vitæ · 2026</p>
-      <h1>{profile.name}</h1>
-      <p class="cv__role">Développeur front-end · Design · Gestion de projet</p>
-      <p class="cv__summary">{profile.introduction}</p>
-      <address class="cv__contact">
+  <main id="contenu" class="cv mx-auto w-full max-w-cv px-page pt-cv-top pb-cv-bottom" tabindex="-1">
+    <header class="cv__hero pb-cv-hero">
+      <p class="cv__kicker mt-0 mb-8 text-xs font-bold tracking-[0.07em] uppercase">Curriculum vitæ · 2026</p>
+      <h1 class="m-0 max-w-[8ch] text-cv-title font-black tracking-[-0.09em]">{profile.name}</h1>
+      <p class="cv__role mt-cv-role-top mb-0 text-cv-role font-bold tracking-[-0.04em]">Développeur front-end · Design · Gestion de projet</p>
+      <p class="cv__summary mt-6 mb-0 max-w-[62ch] text-cv-summary">{profile.introduction}</p>
+      <address class="cv__contact mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-bold not-italic">
         <span>{profile.location}</span>
         <a href={`tel:${profile.phoneHref}`}>{profile.phoneDisplay}</a>
         <a href={`mailto:${profile.email}`}>{profile.email}</a>
         <a href={profile.website}>pagauvreau.com</a>
       </address>
-      <button class="cv__print" type="button" data-print-cv>Imprimer / PDF</button>
+      <button class="cv__print mt-8 cursor-pointer rounded-full border border-ink bg-ink px-4 py-3 text-xs font-bold tracking-[0.05em] text-cream uppercase" type="button" data-print-cv>Imprimer / PDF</button>
     </header>
 
-    <section class="cv-section" aria-labelledby="experience-title">
-      <h2 id="experience-title"><span>01</span> Expériences de travail</h2>
+    <section class="cv-section grid grid-cols-1 gap-cv-gap border-t-2 border-ink py-cv-section md:grid-cols-[minmax(22.4rem,1fr)_minmax(0,3fr)]" aria-labelledby="experience-title">
+      <h2 class="m-0 text-cv-section tracking-[-0.04em]" id="experience-title"><span class="mb-3 block text-xs tracking-[0.06em]">01</span> Expériences de travail</h2>
       <div class="cv-list">
         {
           experiences.map((experience) => (
-            <article class="cv-entry">
-              <p class="cv-entry__period">{experience.period}</p>
+            <article class="cv-entry mb-10 grid grid-cols-1 gap-3 border-b border-ink/25 pb-10 last:mb-0 md:grid-cols-[minmax(11.2rem,0.6fr)_minmax(0,2fr)] md:gap-6">
+              <p class="cv-entry__period m-0 text-xs font-bold tracking-[0.05em] uppercase">{experience.period}</p>
               <div>
-                <h3>{experience.title}</h3>
-                {experience.organizations.map((organization) => <p class="cv-entry__organization">{organization}</p>)}
-                <p class="cv-entry__description">{experience.description}</p>
+                <h3 class="mt-0 mb-2 text-cv-entry tracking-[-0.045em]">{experience.title}</h3>
+                {experience.organizations.map((organization) => <p class="cv-entry__organization m-0 font-bold">{organization}</p>)}
+                <p class="cv-entry__description mt-5 mb-0 max-w-[62ch] text-ink/75">{experience.description}</p>
               </div>
             </article>
           ))
@@ -48,16 +48,16 @@ import {
       </div>
     </section>
 
-    <section class="cv-section" aria-labelledby="complementary-title">
-      <h2 id="complementary-title"><span>02</span> Expériences complémentaires</h2>
+    <section class="cv-section grid grid-cols-1 gap-cv-gap border-t-2 border-ink py-cv-section md:grid-cols-[minmax(22.4rem,1fr)_minmax(0,3fr)]" aria-labelledby="complementary-title">
+      <h2 class="m-0 text-cv-section tracking-[-0.04em]" id="complementary-title"><span class="mb-3 block text-xs tracking-[0.06em]">02</span> Expériences complémentaires</h2>
       <div class="cv-list">
         {
           complementaryExperiences.map((experience) => (
-            <article class="cv-entry cv-entry--compact">
-              <p class="cv-entry__period">{experience.period}</p>
+            <article class="cv-entry cv-entry--compact mb-6 grid grid-cols-1 gap-3 border-b border-ink/25 pb-6 last:mb-0 md:grid-cols-[minmax(11.2rem,0.6fr)_minmax(0,2fr)] md:gap-6">
+              <p class="cv-entry__period m-0 text-xs font-bold tracking-[0.05em] uppercase">{experience.period}</p>
               <div>
-                <h3>{experience.title}</h3>
-                <p class="cv-entry__organization">{experience.organization}</p>
+                <h3 class="mt-0 mb-2 text-cv-entry tracking-[-0.045em]">{experience.title}</h3>
+                <p class="cv-entry__organization m-0 font-bold">{experience.organization}</p>
               </div>
             </article>
           ))
@@ -65,16 +65,16 @@ import {
       </div>
     </section>
 
-    <section class="cv-section" aria-labelledby="education-title">
-      <h2 id="education-title"><span>03</span> Études</h2>
+    <section class="cv-section grid grid-cols-1 gap-cv-gap border-t-2 border-ink py-cv-section md:grid-cols-[minmax(22.4rem,1fr)_minmax(0,3fr)]" aria-labelledby="education-title">
+      <h2 class="m-0 text-cv-section tracking-[-0.04em]" id="education-title"><span class="mb-3 block text-xs tracking-[0.06em]">03</span> Études</h2>
       <div class="cv-list">
         {
           education.map((item) => (
-            <article class="cv-entry cv-entry--compact">
-              <p class="cv-entry__period">{item.period}</p>
+            <article class="cv-entry cv-entry--compact mb-6 grid grid-cols-1 gap-3 border-b border-ink/25 pb-6 last:mb-0 md:grid-cols-[minmax(11.2rem,0.6fr)_minmax(0,2fr)] md:gap-6">
+              <p class="cv-entry__period m-0 text-xs font-bold tracking-[0.05em] uppercase">{item.period}</p>
               <div>
-                <h3>{item.title}</h3>
-                <p class="cv-entry__organization">{item.organization}</p>
+                <h3 class="mt-0 mb-2 text-cv-entry tracking-[-0.045em]">{item.title}</h3>
+                <p class="cv-entry__organization m-0 font-bold">{item.organization}</p>
               </div>
             </article>
           ))
@@ -82,21 +82,21 @@ import {
       </div>
     </section>
 
-    <section class="cv-section" aria-labelledby="skills-title">
-      <h2 id="skills-title"><span>04</span> Compétences</h2>
-      <div class="cv-skills grid md:grid-cols-2">
+    <section class="cv-section grid grid-cols-1 gap-cv-gap border-t-2 border-ink py-cv-section md:grid-cols-[minmax(22.4rem,1fr)_minmax(0,3fr)]" aria-labelledby="skills-title">
+      <h2 class="m-0 text-cv-section tracking-[-0.04em]" id="skills-title"><span class="mb-3 block text-xs tracking-[0.06em]">04</span> Compétences</h2>
+      <div class="cv-skills grid border-t border-l border-ink/25 md:grid-cols-2">
         {
           stackGroups.map((group) => (
-            <article>
-              <h3>{group.title}</h3>
-              <p>{group.items.join(' · ')}</p>
+            <article class="border-r border-b border-ink/25 p-6">
+              <h3 class="mt-0 mb-4 text-xs tracking-[0.05em] uppercase">{group.title}</h3>
+              <p class="m-0 text-cv-skill">{group.items.join(' · ')}</p>
             </article>
           ))
         }
       </div>
     </section>
 
-    <p class="cv__back"><a href="/">← Retour au portfolio</a></p>
+    <p class="cv__back mt-16 mb-0 font-bold"><a href="/">← Retour au portfolio</a></p>
   </main>
 
   <script>

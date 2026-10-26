@@ -35,6 +35,10 @@ Les captures de projets peuvent être actualisées avec `npm run capture:project
 
 Les descriptions restent factuelles. Aucun score, résultat ou défi technique n’est publié sans source vérifiable.
 
+## Système Tailwind
+
+La mise en page et la typographie sont définies dans `tailwind.config.mjs`. La racine utilise `62.5%`, donc `1rem = 10px`, et l’échelle d’espacement suit une grille de 4px : `p-1` vaut 4px, `p-4` vaut 16px, etc. Les bornes des tailles fluides respectent aussi cette grille. Seuls les filets de 1px et les unités physiques du CV imprimé font exception.
+
 ## Performance et mesures
 
 Les scores Lighthouse et les Core Web Vitals ne sont volontairement pas affichés avant un déploiement réel. Après la mise en production :
