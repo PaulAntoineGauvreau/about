@@ -79,7 +79,7 @@ const fluidTypography = {
 export default {
   theme: {
     screens: {
-      bp: '102.4rem',
+      bp: '1024px',
     },
     spacing,
     width: spacing,

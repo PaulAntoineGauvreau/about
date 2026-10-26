@@ -129,6 +129,15 @@ test.describe('portfolio', () => {
     expect(desktop.textTransform).toBe('uppercase');
   });
 
+  test('passe de la petite tablette au layout large à 1024px', async ({ page }) => {
+    await page.setViewportSize({ width: 1023, height: 900 });
+    await page.goto('/');
+    await expect(page.locator('[data-project-grid]')).toHaveCSS('display', 'block');
+
+    await page.setViewportSize({ width: 1024, height: 900 });
+    await expect(page.locator('[data-project-grid]')).toHaveCSS('display', 'grid');
+  });
+
   test('fournit les métadonnées SEO et les données structurées', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://pagauvreau.com/');
