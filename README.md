@@ -42,6 +42,12 @@ Les descriptions restent factuelles. Aucun score, résultat ou défi technique n
 
 Les composants n’utilisent aucune valeur arbitraire Tailwind entre crochets et adaptent leur échelle avec les breakpoints. La palette expose seulement les rôles réutilisables `primary`, `foreground`, `background`, `surface` et `accent`; leurs valeurs sont définies avec les variables CSS de `src/styles/global.css`. Le fichier de configuration peut ainsi être copié tel quel dans un prochain projet. Seuls les filets de 1px et les unités physiques du CV imprimé font exception à la grille.
 
+### Typographie
+
+`src/styles/text.css` contient les tokens typographiques universels en `rem`, avec Helvetica comme police principale. Les tailles et hauteurs de ligne suivent la grille de 4px : `text-overline`, `text-caption`, `text-small`, `text-medium`, `text-large`, `text-title-small`, `text-title-medium`, `text-title-large`, `text-headline-small`, `text-headline-medium`, `text-headline-large` et `text-display`.
+
+Ces tokens sont des utilitaires Tailwind natifs et restent compatibles avec les variantes responsives : `text-title-large md:text-headline-small lg:text-headline-medium`.
+
 ## Performance et mesures
 
 Les scores Lighthouse et les Core Web Vitals ne sont volontairement pas affichés avant un déploiement réel. Après la mise en production :

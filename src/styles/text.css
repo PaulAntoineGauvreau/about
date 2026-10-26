@@ -1,0 +1,74 @@
+/*
+ * Universal typography tokens
+ * Root convention: 1rem = 10px.
+ * Font sizes and line heights follow a 4px grid.
+ *
+ * Usage:
+ *   text-overline
+ *   text-title-large
+ *   text-headline-small md:text-headline-medium lg:text-headline-large
+ */
+
+@theme {
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --text-overline: 1.2rem;
+  --text-overline--line-height: 1.6rem;
+  --text-overline--letter-spacing: 0.08rem;
+  --text-overline--font-weight: 700;
+
+  --text-caption: 1.2rem;
+  --text-caption--line-height: 1.6rem;
+  --text-caption--letter-spacing: 0rem;
+  --text-caption--font-weight: 400;
+
+  --text-small: 1.2rem;
+  --text-small--line-height: 2rem;
+  --text-small--letter-spacing: 0rem;
+  --text-small--font-weight: 400;
+
+  --text-medium: 1.6rem;
+  --text-medium--line-height: 2.4rem;
+  --text-medium--letter-spacing: 0rem;
+  --text-medium--font-weight: 400;
+
+  --text-large: 2rem;
+  --text-large--line-height: 2.8rem;
+  --text-large--letter-spacing: -0.04rem;
+  --text-large--font-weight: 400;
+
+  --text-title-small: 2.4rem;
+  --text-title-small--line-height: 2.8rem;
+  --text-title-small--letter-spacing: -0.04rem;
+  --text-title-small--font-weight: 700;
+
+  --text-title-medium: 3.2rem;
+  --text-title-medium--line-height: 3.6rem;
+  --text-title-medium--letter-spacing: -0.08rem;
+  --text-title-medium--font-weight: 700;
+
+  --text-title-large: 4.8rem;
+  --text-title-large--line-height: 5.2rem;
+  --text-title-large--letter-spacing: -0.12rem;
+  --text-title-large--font-weight: 800;
+
+  --text-headline-small: 6.4rem;
+  --text-headline-small--line-height: 5.6rem;
+  --text-headline-small--letter-spacing: -0.16rem;
+  --text-headline-small--font-weight: 900;
+
+  --text-headline-medium: 9.6rem;
+  --text-headline-medium--line-height: 8.4rem;
+  --text-headline-medium--letter-spacing: -0.24rem;
+  --text-headline-medium--font-weight: 900;
+
+  --text-headline-large: 16rem;
+  --text-headline-large--line-height: 14.4rem;
+  --text-headline-large--letter-spacing: -0.4rem;
+  --text-headline-large--font-weight: 900;
+
+  --text-display: 20.8rem;
+  --text-display--line-height: 18.4rem;
+  --text-display--letter-spacing: -0.48rem;
+  --text-display--font-weight: 900;
+}

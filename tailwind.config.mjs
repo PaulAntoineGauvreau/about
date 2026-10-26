@@ -60,7 +60,7 @@ export default {
       accent: 'var(--color-accent)',
     },
     fontFamily: {
-      sans: ['Arial', 'Helvetica', 'sans-serif'],
+      sans: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
     },
   },
 };
