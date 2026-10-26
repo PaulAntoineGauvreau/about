@@ -47,7 +47,7 @@ Les composants n’utilisent aucune valeur arbitraire Tailwind entre crochets et
 
 `src/styles/text.css` contient les tokens typographiques universels en `rem`, avec Helvetica comme police principale et Courier comme alternative monospace. Les tailles et hauteurs de ligne fluides suivent la grille de 4px entre 320px et 1440px.
 
-Les composants utilisent uniquement des rôles sémantiques assemblés avec `@apply` : `text-overline`, `text-caption`, `text-body-small`, `text-body`, `text-body-large`, `text-lead`, `text-title-small`, `text-title-medium`, `text-title-large`, `text-heading-small`, `text-heading-medium`, `text-heading-large` et `text-display`. Les styles d’interface réutilisables sont `text-label`, `text-button`, `text-footer`, `text-contact`, `text-link`, `text-icon`, `text-brand` et `text-strong`.
+Les composants utilisent uniquement des rôles sémantiques assemblés avec `@apply` : `text-overline`, `text-caption`, `text-body-small`, `text-body`, `text-body-alt`, `text-body-large`, `text-lead`, `text-title-small`, `text-title-medium`, `text-title-large`, `text-heading-small`, `text-heading-medium`, `text-heading-large` et `text-display`. `text-overline` et `text-body-alt` utilisent la pile monospace. Les styles d’interface réutilisables sont `text-label`, `text-button`, `text-footer`, `text-contact`, `text-link`, `text-icon`, `text-brand` et `text-strong`.
 
 Ainsi, un composant utilise simplement `class="text-heading-medium"` ou `class="text-body"`; la famille, la taille, l’interligne, la graisse et le crénage restent centralisés dans le système typographique.
 

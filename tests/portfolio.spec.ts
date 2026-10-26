@@ -106,8 +106,11 @@ test.describe('portfolio', () => {
     await expect(page.locator('main li')).toHaveCount(14);
     await expect(page.getByText('.text-overline · Overline', { exact: true })).toBeVisible();
     await expect(page.getByText('.text-display · Display', { exact: true })).toBeVisible();
-    await expect(page.getByText('.text-mono-display · Mono display', { exact: true })).toBeVisible();
+    await expect(page.getByText('.text-body-alt · Body alt', { exact: true })).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://pagauvreau.com/typography/');
+
+    const bodyAltFamily = await page.getByText('Le corps alternatif en Courier.', { exact: true }).evaluate((element) => getComputedStyle(element).fontFamily);
+    expect(bodyAltFamily).toContain('Courier New');
 
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations).toEqual([]);

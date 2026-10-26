@@ -92,6 +92,10 @@
     @apply font-sans text-fluid-body;
   }
 
+  .text-body-alt {
+    @apply font-mono text-fluid-body;
+  }
+
   .text-body-large {
     @apply font-sans text-fluid-body-large;
   }
@@ -126,10 +130,6 @@
 
   .text-display {
     @apply font-sans text-fluid-display;
-  }
-
-  .text-mono-display {
-    @apply font-mono text-fluid-heading-small;
   }
 
   .text-label {
