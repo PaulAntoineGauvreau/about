@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import Button from '../components/Button.astro';
 import { profile } from '../data/profile';
 import '../styles/global.css';
 
@@ -17,8 +18,6 @@ const {
 const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).href;
 const ogImageUrl = new URL('/og-cover.png', Astro.site ?? Astro.url.origin).href;
 const currentPath = Astro.url.pathname;
-const navLinkClass = 'relative no-underline after:absolute after:inset-x-0 after:-bottom-1 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-200 hover:after:origin-left hover:after:scale-x-100';
-const activeNavLinkClass = 'after:origin-left after:scale-x-100';
 
 const personSchema = {
   '@context': 'https://schema.org',
@@ -75,37 +74,47 @@ const personSchema = {
     <script is:inline>document.documentElement.classList.add('js');</script>
     <ClientRouter />
   </head>
-  <body class="text-body m-0 min-w-80 overflow-x-clip bg-background text-foreground">
+  <body class="m-0 min-w-80 overflow-x-clip bg-background font-sans text-fluid-body text-foreground">
+    <a class="fixed top-gutter left-gutter z-100 -translate-y-[200%] rounded-2 bg-surface px-4 py-3 font-mono text-fluid-caption font-bold uppercase text-foreground focus:translate-y-0" href="#contenu" data-skip-link>Aller au contenu</a>
 
-    <header
-      class="absolute inset-x-0 top-0 z-20 flex items-start justify-between gap-4 border-b border-foreground/30 px-4 py-4 text-foreground bp:items-center bp:px-12"
-      data-site-header
-    >
-      <a
-        class="text-brand group inline-flex items-center gap-1 no-underline"
-        href="/"
-        aria-label="PAG — Accueil de Paul-Antoine Gauvreau"
-      >
-        PAG<span class="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true">↗</span>
-      </a>
-      <nav
-        class="text-label grid grid-cols-2 gap-x-4 gap-y-2 text-right bp:flex bp:items-center bp:gap-8"
-        aria-label="Navigation principale"
-      >
-        <a class={navLinkClass} href="/#projets">Projets</a>
-        <a class={navLinkClass} href="/#methode">Méthode</a>
-        <a class:list={[navLinkClass, currentPath.startsWith('/cv') && activeNavLinkClass]} href="/cv/" aria-current={currentPath.startsWith('/cv') ? 'page' : undefined}>CV</a>
-        <a class={navLinkClass} href="/#contact">Contact</a>
-      </nav>
+    <header class="absolute top-header-offset right-gutter left-gutter z-20 flex flex-col items-start gap-2 text-foreground bp:right-auto" data-site-header>
+      <div class="flex w-full items-center justify-between gap-3 rounded-shell bg-surface p-2 bp:w-auto">
+        <a class="inline-flex w-brand-slot flex-none items-center justify-center rounded-2 bg-foreground px-4 py-2 font-sans text-fluid-body font-black tracking-[-0.04em] text-surface no-underline" href="/" aria-label="PAG — Accueil de Paul-Antoine Gauvreau">
+          PAG
+        </a>
+        <nav class="flex min-w-0 items-center font-mono text-fluid-caption font-bold uppercase" aria-label="Navigation principale">
+          <a class="hidden rounded-2 px-4 py-3 no-underline bp:block" href="/#projets">Projets</a>
+          <a class="hidden rounded-2 px-4 py-3 no-underline bp:block" href="/#musique">Musique</a>
+          <a class:list={['hidden rounded-2 px-4 py-3 no-underline  bp:block', currentPath.startsWith('/cv') && 'bg-accent']} href="/cv/" aria-current={currentPath.startsWith('/cv') ? 'page' : undefined}>CV</a>
+          <Button variant="primary" href="/#contact">Contact</Button>
+        </nav>
+      </div>
+      <div class="hidden w-full items-center space-between gap-2 rounded-2 bg-surface px-3 py-2 font-mono text-fluid-caption font-bold uppercase bp:flex" data-header-meta>
+        <p>Aujourd'hui</p>
+        <span aria-hidden="true">·</span>
+        <p>Montréal, QC</p>
+        <span aria-hidden="true">·</span>
+        <montreal-weather>
+          <p aria-live="polite">
+            <span data-weather>
+              <span data-temperature>0 °C</span>
+              <span aria-hidden="true"> · </span><span data-weather-icon aria-hidden="true"></span>
+              <span class="sr-only" data-weather-label></span>
+              <span aria-hidden="true"> </span><span data-bike aria-hidden="true"></span>
+              <span class="sr-only" data-bike-label></span>
+            </span>
+          </p>
+        </montreal-weather>
+      </div>
     </header>
 
     <slot />
 
-    <footer class="text-footer flex flex-col items-start justify-between gap-4 bg-foreground px-4 py-5 text-surface bp:flex-row bp:px-12" data-site-footer>
+    <!-- <footer class="flex flex-col items-start justify-between gap-4 bg-foreground px-gutter py-5 font-mono text-fluid-caption uppercase text-surface bp:flex-row" data-site-footer>
       <p class="m-0">Paul-Antoine Gauvreau <span aria-hidden="true">—</span> Montréal</p>
       <a href="/typography/">Système typographique</a>
       <p class="m-0">Conçu et développé avec Astro, sans CMS.</p>
-    </footer>
+    </footer> -->
 
     <script>
       import '../scripts/web-components';

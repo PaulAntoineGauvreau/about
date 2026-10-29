@@ -1,3 +1,5 @@
+export {};
+
 class ProjectFilter extends HTMLElement {
   private controller?: AbortController;
 
@@ -9,6 +11,9 @@ class ProjectFilter extends HTMLElement {
     const buttons = Array.from(this.querySelectorAll<HTMLButtonElement>('[data-filter]'));
     const cards = Array.from(this.querySelectorAll<HTMLElement>('[data-project-card]'));
     const status = this.querySelector<HTMLElement>('[data-filter-status]');
+    const controls = this.querySelector<HTMLElement>('[data-filter-controls]');
+    controls?.classList.remove('hidden');
+    controls?.classList.add('flex');
 
     buttons.forEach((button) => {
       button.addEventListener(
@@ -49,6 +54,7 @@ class CopyEmail extends HTMLElement {
     const button = this.querySelector<HTMLButtonElement>('[data-copy-button]');
     const status = this.querySelector<HTMLElement>('[data-copy-status]');
     const email = this.dataset.email;
+    button?.classList.remove('hidden');
 
     button?.addEventListener(
       'click',
@@ -76,6 +82,160 @@ class CopyEmail extends HTMLElement {
 
   disconnectedCallback() {
     this.controller?.abort();
+  }
+}
+
+type SpotifyEmbedController = {
+  addListener: (event: string, callback: () => void) => void;
+  destroy: () => void;
+  loadEntity: (uri: string) => void;
+  pause: () => void;
+  play: () => void;
+};
+
+type SpotifyIframeApi = {
+  createController: (
+    element: HTMLElement,
+    options: { width: number; height: number; uri: string },
+    callback: (controller: SpotifyEmbedController) => void,
+  ) => void;
+};
+
+declare global {
+  interface Window {
+    onSpotifyIframeApiReady?: (api: SpotifyIframeApi) => void;
+    spotifyIframeApi?: SpotifyIframeApi;
+  }
+}
+
+let spotifyApiPromise: Promise<SpotifyIframeApi> | undefined;
+
+function getSpotifyIframeApi() {
+  if (window.spotifyIframeApi) return Promise.resolve(window.spotifyIframeApi);
+  if (spotifyApiPromise) return spotifyApiPromise;
+
+  spotifyApiPromise = new Promise((resolve) => {
+    const previousCallback = window.onSpotifyIframeApiReady;
+    window.onSpotifyIframeApiReady = (api) => {
+      window.spotifyIframeApi = api;
+      previousCallback?.(api);
+      resolve(api);
+    };
+
+    if (!document.querySelector<HTMLScriptElement>('[data-spotify-iframe-api]')) {
+      const script = document.createElement('script');
+      script.src = 'https://open.spotify.com/embed/iframe-api/v1';
+      script.async = true;
+      script.dataset.spotifyIframeApi = '';
+      document.head.append(script);
+    }
+  });
+
+  return spotifyApiPromise;
+}
+
+class SpotifyPreview extends HTMLElement {
+  private controller?: AbortController;
+  private embedController?: SpotifyEmbedController;
+  private activeCard?: HTMLElement;
+  private loadedUri?: string;
+  private playerReady = false;
+  private playerObserver?: MutationObserver;
+
+  connectedCallback() {
+    this.controller?.abort();
+    this.controller = new AbortController();
+
+    const cards = Array.from(this.querySelectorAll<HTMLElement>('[data-spotify-card][data-spotify-uri]'));
+    const player = this.querySelector<HTMLElement>('[data-spotify-player]');
+    const firstUri = cards[0]?.dataset.spotifyUri;
+    if (!player || !firstUri) return;
+
+    const hidePlayerFrame = () => {
+      const iframe = document.querySelector<HTMLIFrameElement>('iframe[src*="open.spotify.com/embed"]');
+      iframe?.setAttribute('title', 'Lecteur Spotify masqué');
+      iframe?.setAttribute('tabindex', '-1');
+      iframe?.setAttribute('aria-hidden', 'true');
+      iframe?.classList.add('sr-only');
+    };
+    this.playerObserver?.disconnect();
+    this.playerObserver = new MutationObserver(hidePlayerFrame);
+    this.playerObserver.observe(document.documentElement, { attributes: true, childList: true, subtree: true, attributeFilter: ['src'] });
+
+    cards.forEach((card) => {
+      const button = card.querySelector<HTMLButtonElement>('[data-spotify-toggle]');
+      button?.addEventListener('click', () => this.toggle(card), { signal: this.controller?.signal });
+    });
+
+    void getSpotifyIframeApi().then((api) => {
+      if (!this.isConnected) return;
+
+      api.createController(player, { width: 152, height: 152, uri: firstUri }, (embedController) => {
+        this.embedController = embedController;
+        hidePlayerFrame();
+        embedController.addListener('ready', () => {
+          hidePlayerFrame();
+          this.loadedUri = firstUri;
+          this.playerReady = true;
+          this.dataset.spotifyReady = '';
+          if (this.activeCard) this.startPlayback(this.activeCard);
+        });
+      });
+    });
+  }
+
+  private toggle(card: HTMLElement) {
+    if (this.activeCard === card && card.hasAttribute('data-playing')) {
+      this.pause(card);
+      return;
+    }
+
+    if (this.activeCard) this.pause(this.activeCard);
+    this.activeCard = card;
+    if (this.playerReady) this.startPlayback(card);
+  }
+
+  private startPlayback(card: HTMLElement) {
+    const uri = card.dataset.spotifyUri;
+    if (!uri || !this.embedController) return;
+
+    this.querySelectorAll<HTMLElement>('[data-spotify-card]').forEach((item) => delete item.dataset.playing);
+    if (this.loadedUri !== uri) {
+      this.embedController.loadEntity(uri);
+      this.loadedUri = uri;
+    }
+    this.embedController.play();
+    card.dataset.playing = '';
+    const button = card.querySelector<HTMLButtonElement>('[data-spotify-toggle]');
+    button?.setAttribute('aria-pressed', 'true');
+    if (button?.dataset.pauseLabel) button.setAttribute('aria-label', button.dataset.pauseLabel);
+
+    const status = this.querySelector<HTMLElement>('[data-spotify-status]');
+    if (status) status.textContent = `Lecture de ${card.textContent?.trim() ?? 'la chanson'}.`;
+  }
+
+  private pause(card: HTMLElement) {
+    if (this.activeCard !== card) return;
+    this.embedController?.pause();
+    delete card.dataset.playing;
+    const button = card.querySelector<HTMLButtonElement>('[data-spotify-toggle]');
+    button?.setAttribute('aria-pressed', 'false');
+    if (button?.dataset.playLabel) button.setAttribute('aria-label', button.dataset.playLabel);
+    this.activeCard = undefined;
+
+    const status = this.querySelector<HTMLElement>('[data-spotify-status]');
+    if (status) status.textContent = 'Lecture en pause.';
+  }
+
+  disconnectedCallback() {
+    this.controller?.abort();
+    this.playerObserver?.disconnect();
+    this.playerObserver = undefined;
+    this.embedController?.destroy();
+    this.embedController = undefined;
+    this.loadedUri = undefined;
+    this.playerReady = false;
+    delete this.dataset.spotifyReady;
   }
 }
 
@@ -168,3 +328,4 @@ class MontrealWeather extends HTMLElement {
 if (!customElements.get('project-filter')) customElements.define('project-filter', ProjectFilter);
 if (!customElements.get('copy-email')) customElements.define('copy-email', CopyEmail);
 if (!customElements.get('montreal-weather')) customElements.define('montreal-weather', MontrealWeather);
+if (!customElements.get('spotify-preview')) customElements.define('spotify-preview', SpotifyPreview);

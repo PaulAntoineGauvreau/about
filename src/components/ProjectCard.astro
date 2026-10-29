@@ -1,0 +1,48 @@
+---
+import { Picture } from 'astro:assets';
+import type { Project } from '../data/portfolio';
+
+interface Props {
+  project: Project;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+---
+
+<article
+  class="group/card min-w-0"
+  data-project-card
+  data-category={project.category}
+  data-accent={project.accent}
+>
+  <a class="block no-underline" href={project.url} target="_blank" rel="noopener noreferrer">
+    <div class="relative h-project-image overflow-hidden rounded-2">
+      <Picture
+        src={project.image}
+        formats={['avif']}
+        fallbackFormat="webp"
+        widths={[640, 960, 1440]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        alt={`Aperçu du site ${project.name}`}
+        loading={index < 2 ? 'eager' : 'lazy'}
+        fetchpriority={index === 0 ? 'high' : 'auto'}
+        class="block size-full grayscale object-cover transition-project-image duration-project ease-expo-out group-hover/card:grayscale-0 w-full"
+      />
+    </div>
+    <div>
+      <div class="min-h-19 pt-5">
+        <h3 class="m-0 whitespace-nowrap font-sans text-fluid-title-large">{project.name}</h3>
+      </div>
+      <div class="max-w-copy">
+        <div class="py-3 font-mono text-fluid-caption font-bold uppercase">
+          {project.role}
+        </div>
+      </div>
+      <ul class="flex min-h-13 list-none flex-wrap items-start gap-2" aria-label={`Technologies utilisées pour ${project.name}`}>
+        {project.stack.map((item) => <li class="rounded-full border border-border px-2 py-1 font-mono text-fluid-caption font-bold uppercase">{item}</li>)}
+      </ul>
+      <span class="sr-only">{project.summary} Visiter le site dans un nouvel onglet.</span>
+    </div>
+  </a>
+</article>

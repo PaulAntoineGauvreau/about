@@ -1,16 +1,17 @@
 ---
 import { profile } from '../../data/profile';
+import Button from '../Button.astro';
 ---
 
-<section id="contact" class="flex min-h-svh flex-col justify-between bg-primary px-4 pt-20 pb-8 bp:px-12 bp:pt-40" aria-labelledby="contact-title">
-  <p class="text-overline m-0">05 · Contact</p>
-  <h2 id="contact-title" class="text-heading-large my-12">On devrait<br />se parler.</h2>
-  <div class="flex flex-col items-start justify-between gap-x-8 gap-y-4 border-t border-foreground pt-5 bp:flex-row bp:flex-wrap bp:items-center">
+<section id="contact" class="sticky bottom-0 z-0 flex flex-col justify-between bg-foreground px-gutter pt-0 pb-8 text-surface" aria-labelledby="contact-title" data-contact-reveal>
+  <p class="m-0 font-mono text-fluid-overline font-bold uppercase">Contact</p>
+  <h2 id="contact-title" class="my-12 font-sans text-fluid-heading-large text-balance [overflow-wrap:anywhere]">Prenons un café ☕ !!!</h2>
+  <div class="flex flex-col items-start justify-between gap-4 border-t border-border-inverse pt-5 bp:flex-row bp:flex-wrap bp:items-center">
     <copy-email class="flex flex-wrap items-center gap-3" data-email={profile.email}>
-      <a class="text-contact" href={`mailto:${profile.email}`}>{profile.email}</a>
-      <button class="text-button hidden cursor-pointer rounded-full border border-current bg-transparent px-3 py-1" type="button" data-copy-button>Copier</button>
+      <a class="font-sans text-fluid-body font-bold" href={`mailto:${profile.email}`}>{profile.email}</a>
+      <Button variant="filter" class="hidden" data-copy-button>Copier</Button>
       <span class="sr-only" aria-live="polite" data-copy-status></span>
     </copy-email>
-    <a class="text-contact" href={`tel:${profile.phoneHref}`}>{profile.phoneDisplay}</a>
+    <a class="font-sans text-fluid-body font-bold" href={`tel:${profile.phoneHref}`}>{profile.phoneDisplay}</a>
   </div>
 </section>

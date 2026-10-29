@@ -4,6 +4,7 @@ import CareerSection from '../components/sections/CareerSection.astro';
 import ContactSection from '../components/sections/ContactSection.astro';
 import HeroSection from '../components/sections/HeroSection.astro';
 import MethodSection from '../components/sections/MethodSection.astro';
+import MusicSection from '../components/sections/MusicSection.astro';
 import ProjectsSection from '../components/sections/ProjectsSection.astro';
 import StackSection from '../components/sections/StackSection.astro';
 ---
@@ -13,11 +14,14 @@ import StackSection from '../components/sections/StackSection.astro';
   description="Portfolio de Paul-Antoine Gauvreau, développeur front-end à Montréal : Craft CMS, Svelte, WordPress, Shopify et intégration web."
 >
   <main id="contenu" tabindex="-1">
-    <HeroSection />
-    <ProjectsSection />
-    <MethodSection />
-    <StackSection />
-    <CareerSection />
+    <div class="relative z-10" data-page-panels>
+      <HeroSection />
+      <ProjectsSection />
+      <MethodSection />
+      <StackSection />
+      <CareerSection />
+      <MusicSection />
+    </div>
     <ContactSection />
   </main>
 </BaseLayout>

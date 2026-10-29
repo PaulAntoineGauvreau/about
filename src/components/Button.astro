@@ -1,0 +1,43 @@
+---
+interface Props {
+  variant?: 'primary' | 'filter' | 'icon';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  pressed?: boolean;
+  label?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = 'primary',
+  href,
+  type = 'button',
+  pressed,
+  label,
+  class: className,
+  ...attributes
+} = Astro.props;
+const variants = {
+  primary: 'rounded-2 border-transparent bg-accent px-4 py-3 text-foreground hover:bg-white',
+  filter: 'rounded-full border-current bg-transparent px-4 py-2 hover:bg-foreground hover:text-surface aria-pressed:bg-foreground aria-pressed:text-surface',
+  icon: 'border-transparent bg-transparent',
+};
+const classes = [
+  'inline-flex cursor-pointer items-center justify-center gap-3 border font-mono text-fluid-caption font-bold uppercase no-underline transition-colors duration-fast',
+  variants[variant],
+  className,
+];
+---
+
+{
+  href ? (
+    <a class:list={classes} href={href} aria-label={label} {...attributes}>
+      <slot />
+    </a>
+  ) : (
+    <button class:list={classes} type={type} aria-pressed={pressed} aria-label={label} {...attributes}>
+      <slot />
+    </button>
+  )
+}

@@ -7,12 +7,13 @@ interface Props {
 }
 
 const { number, eyebrow, title, id } = Astro.props;
+const heading = title || eyebrow;
 ---
 
-<div class="mb-12 grid grid-cols-4 items-start gap-4 bp:mb-28">
-  <p class="text-overline col-span-1 m-0" aria-hidden="true">{number}</p>
-  <div class="col-span-3">
-    <p class="text-overline mt-0 mb-4">{eyebrow}</p>
-    <h2 class="text-heading-medium m-0 max-w-240" id={id}>{title}</h2>
+<div class="mb-12 bp:mb-14">
+  <p class="hidden" aria-hidden="true">{number}</p>
+  <div>
+    <p class="mt-0 mb-4 font-mono text-fluid-overline font-bold uppercase">{eyebrow}</p>
+    <h2 class:list={[title ? 'm-0 max-w-heading-wide font-sans text-fluid-heading-medium' : 'sr-only']} id={id}>{heading}</h2>
   </div>
 </div>

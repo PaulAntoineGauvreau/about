@@ -1,0 +1,168 @@
+@layer base {
+  :root {
+    --pag-color-ink: #1d1d1b;
+    --pag-color-paper: #f1eee6;
+    --pag-color-surface: #fffdf8;
+    --pag-color-orange: #ff5a3d;
+    --pag-color-blue: #c9d7ff;
+    --pag-color-white: #ffffff;
+    --pag-color-black: #000000;
+    --pag-color-project-atelier: #fff3d7;
+    --pag-color-project-cosoltec: #dceeff;
+    --pag-color-project-cegep: #dff5ec;
+    --pag-color-project-chia: #ffe4eb;
+    --pag-color-project-pylex: #e3f0ff;
+
+    --pag-color-brand: var(--pag-color-orange);
+    --pag-color-canvas: var(--pag-color-paper);
+    --pag-color-surface-default: var(--pag-color-surface);
+    --pag-color-surface-inverse: var(--pag-color-ink);
+    --pag-color-text: var(--pag-color-ink);
+    --pag-color-text-inverse: var(--pag-color-surface);
+    --pag-color-text-muted: color-mix(in srgb, var(--pag-color-ink) 72%, transparent);
+    --pag-color-text-muted-inverse: color-mix(in srgb, var(--pag-color-surface) 72%, transparent);
+    --pag-color-border: color-mix(in srgb, var(--pag-color-ink) 28%, transparent);
+    --pag-color-border-strong: var(--pag-color-ink);
+    --pag-color-border-inverse: color-mix(in srgb, var(--pag-color-surface) 28%, transparent);
+    --pag-color-music-overlay: color-mix(in srgb, var(--pag-color-ink) 68%, transparent);
+    --pag-color-focus: var(--pag-color-orange);
+    --pag-color-selection-bg: var(--pag-color-ink);
+    --pag-color-selection-text: var(--pag-color-orange);
+
+    --color-primary: var(--pag-color-brand);
+    --color-foreground: var(--pag-color-text);
+    --color-background: var(--pag-color-canvas);
+    --color-surface: var(--pag-color-surface-default);
+    --color-accent: var(--pag-color-blue);
+
+    --pag-dimension-1: 0.4rem;
+    --pag-dimension-2: 0.8rem;
+    --pag-dimension-3: 1.2rem;
+    --pag-dimension-4: 1.6rem;
+    --pag-dimension-5: 2rem;
+    --pag-dimension-6: 2.4rem;
+    --pag-dimension-8: 3.2rem;
+    --pag-dimension-10: 4rem;
+    --pag-dimension-12: 4.8rem;
+    --pag-dimension-16: 6.4rem;
+    --pag-dimension-20: 8rem;
+    --pag-dimension-24: 9.6rem;
+    --pag-dimension-30: 12rem;
+    --pag-dimension-40: 16rem;
+    --pag-dimension-60: 24rem;
+    --pag-border-1: 0.1rem;
+    --pag-border-2: 0.2rem;
+    --pag-radius-small: 0.4rem;
+    --pag-radius-medium: 0.8rem;
+    --pag-radius-shell: 1.2rem;
+    --pag-radius-large: 1.6rem;
+    --pag-radius-card: 2.8rem;
+    --pag-radius-full: 9999px;
+    --pag-icon-small: 2rem;
+    --pag-icon-medium: 3.2rem;
+    --pag-icon-large: 4.8rem;
+    --pag-content-wide: 144rem;
+    --pag-content-copy: 84rem;
+    --pag-content-method-copy: 72rem;
+    --pag-content-heading: 96rem;
+    --pag-content-heading-wide: 112rem;
+
+    --pag-layout-gutter: var(--pag-dimension-4);
+    --pag-layout-section-space: var(--pag-dimension-20);
+    --pag-layout-grid-gap: var(--pag-dimension-4);
+    --pag-layout-card-radius: var(--pag-radius-large);
+    --pag-layout-project-image-height: 18rem;
+    --pag-layout-header-offset: var(--pag-dimension-4);
+    --pag-layout-header-height: 13.6rem;
+    --pag-layout-header-shell-width: 88rem;
+    --pag-layout-brand-width: 9.7rem;
+    --pag-layout-stack-stage-height: 90svh;
+    --pag-layout-stack-card-height: min(52rem, 56svh);
+    --pag-layout-stack-scroll-step: 72svh;
+    --pag-layout-static-card-height: 28rem;
+    --pag-layout-reduced-card-height: 24rem;
+    --pag-layout-music-card-height: 24rem;
+    --pag-layout-music-card-width: 28rem;
+    --pag-layout-marquee-gap: var(--pag-dimension-4);
+
+    --pag-font-family-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --pag-font-family-mono: "Courier New", Courier, "Nimbus Mono PS", monospace;
+    --pag-font-weight-regular: 400;
+    --pag-font-weight-bold: 700;
+    --pag-font-weight-extra-bold: 800;
+    --pag-font-weight-black: 900;
+    --pag-tracking-overline: 0.08rem;
+    --pag-tracking-caption: 0.04rem;
+    --pag-tracking-body-large: -0.04rem;
+    --pag-tracking-lead: -0.08rem;
+    --pag-tracking-title-small: -0.02em;
+    --pag-tracking-title-medium: -0.03em;
+    --pag-tracking-title-large: -0.04em;
+    --pag-tracking-heading-small: -0.04em;
+    --pag-tracking-heading-medium: -0.05em;
+    --pag-tracking-heading-large: -0.055em;
+    --pag-tracking-display: -0.07em;
+    --pag-tracking-brand: -0.04em;
+
+    --pag-text-overline-size: clamp(1.2rem, calc(1.0857rem + 0.3571vw), 1.6rem);
+    --pag-text-overline-line: clamp(1.6rem, calc(1.4857rem + 0.3571vw), 2rem);
+    --pag-text-caption-size: var(--pag-text-overline-size);
+    --pag-text-caption-line: var(--pag-text-overline-line);
+    --pag-text-body-small-size: clamp(1.2rem, calc(1.0857rem + 0.3571vw), 1.6rem);
+    --pag-text-body-small-line: clamp(2rem, calc(1.8857rem + 0.3571vw), 2.4rem);
+    --pag-text-body-size: clamp(1.6rem, calc(1.4857rem + 0.3571vw), 2rem);
+    --pag-text-body-line: clamp(2.4rem, calc(2.2857rem + 0.3571vw), 2.8rem);
+    --pag-text-body-large-size: clamp(1.6rem, calc(1.3714rem + 0.7143vw), 2.4rem);
+    --pag-text-body-large-line: clamp(2.4rem, calc(2.1714rem + 0.7143vw), 3.2rem);
+    --pag-text-lead-size: clamp(2.4rem, calc(1.7143rem + 2.1429vw), 4.8rem);
+    --pag-text-lead-line: clamp(2.8rem, calc(2.1143rem + 2.1429vw), 5.2rem);
+    --pag-text-title-small-size: clamp(2rem, calc(1.6571rem + 1.0714vw), 3.2rem);
+    --pag-text-title-small-line: clamp(2.4rem, calc(2.0571rem + 1.0714vw), 3.6rem);
+    --pag-text-title-medium-size: clamp(2.4rem, calc(1.9429rem + 1.4286vw), 4rem);
+    --pag-text-title-medium-line: clamp(2.8rem, calc(2.3429rem + 1.4286vw), 4.4rem);
+    --pag-text-title-large-size: clamp(2.8rem, calc(1.8857rem + 2.8571vw), 6rem);
+    --pag-text-title-large-line: clamp(3.2rem, calc(2.5143rem + 2.1429vw), 5.6rem);
+    --pag-text-heading-small-size: clamp(4rem, calc(2.2857rem + 5.3571vw), 10rem);
+    --pag-text-heading-small-line: clamp(4rem, calc(2.4rem + 5vw), 9.6rem);
+    --pag-text-heading-medium-size: clamp(4rem, calc(1.8286rem + 6.7857vw), 11.6rem);
+    --pag-text-heading-medium-line: clamp(3.6rem, calc(1.5429rem + 6.4286vw), 10.8rem);
+    --pag-text-heading-large-size: clamp(6.8rem, calc(2.8rem + 12.5vw), 20.8rem);
+    --pag-text-heading-large-line: clamp(5.6rem, calc(1.9429rem + 11.4286vw), 18.4rem);
+    --pag-text-display-size: clamp(5.6rem, calc(1.2571rem + 13.5714vw), 20.8rem);
+    --pag-text-display-line: clamp(4.8rem, calc(0.9143rem + 12.1429vw), 18.4rem);
+
+    --pag-motion-duration-fast: 150ms;
+    --pag-motion-duration-medium: 240ms;
+    --pag-motion-duration-slow: 500ms;
+    --pag-motion-duration-project: 300ms;
+    --pag-motion-duration-marquee: 30s;
+    --pag-motion-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+    --pag-motion-ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --pag-motion-offset-card: 2.4rem;
+    --pag-motion-scale-card: 0.965;
+    --pag-motion-scale-card-enter: 0.985;
+    --pag-motion-rotation-enter: -1.25deg;
+    --pag-motion-rotation-exit: 0.75deg;
+    --pag-motion-stack-scrub: 0.6;
+    --pag-motion-stack-safe-area: 1.6rem;
+    --pag-motion-stack-card-gap: 16rem;
+    --pag-roulette-line-height: 1.2em;
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --pag-layout-section-space: var(--pag-dimension-40);
+      --pag-layout-grid-gap: var(--pag-dimension-6);
+      --pag-layout-card-radius: var(--pag-radius-card);
+      --pag-layout-project-image-height: 41rem;
+      --pag-layout-header-height: 14.4rem;
+      --pag-layout-stack-stage-height: 90svh;
+      --pag-layout-stack-card-height: min(58rem, 58svh);
+      --pag-layout-stack-scroll-step: 82svh;
+      --pag-layout-static-card-height: 33.6rem;
+      --pag-layout-music-card-width: 40rem;
+      --pag-layout-marquee-gap: var(--pag-dimension-6);
+      --pag-motion-stack-card-gap: 24rem;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+---
+interface Props {
+  principle: {
+    number: string;
+    title: string;
+    text: string;
+  };
+  index: number;
+}
+
+const { principle, index } = Astro.props;
+---
+
+<article class="mb-4 flex min-h-stack-card origin-top flex-col justify-between rounded-card border border-border-inverse bg-foreground p-5 text-surface last:mb-0 motion-reduce:min-h-reduced-card bp:p-10" data-method-card data-method-index={index}>
+  <p class="m-0 font-mono text-fluid-caption">{principle.number}</p>
+  <div>
+    <h3 class="m-0 font-sans text-fluid-title-large">{principle.title}</h3>
+    <p class="mt-3 mb-0 max-w-method-copy font-sans text-fluid-body text-muted-inverse">{principle.text}</p>
+  </div>
+</article>

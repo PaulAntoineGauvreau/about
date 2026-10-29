@@ -3,18 +3,18 @@ import { career } from '../../data/profile';
 import SectionHeading from '../SectionHeading.astro';
 ---
 
-<section class="bg-accent px-4 py-20 bp:px-12 bp:py-40" aria-labelledby="career-title">
+<section class="bg-primary px-gutter py-section" aria-labelledby="career-title">
   <SectionHeading number="04" eyebrow="Parcours" title="Design, gestion, puis développement." id="career-title" />
   <ol class="m-0 mb-12 list-none border-t border-foreground p-0">
     {
       career.map((item) => (
-        <li class="grid grid-cols-1 gap-3 border-b border-foreground py-6 bp:grid-cols-5 bp:gap-6">
-          <p class="text-label m-0 bp:col-span-1">{item.period}</p>
-          <h3 class="text-title-medium m-0 bp:col-span-2">{item.title}</h3>
-          <p class="text-body m-0 max-w-184 bp:col-span-2">{item.detail}</p>
+        <li class="grid gap-3 border-b border-foreground py-6 bp:grid-cols-[1fr_2fr_2fr] bp:gap-6">
+          <p class="m-0 font-mono text-fluid-caption font-bold uppercase">{item.period}</p>
+          <h3 class="m-0 font-sans text-fluid-title-medium">{item.title}</h3>
+          <p class="m-0 font-sans text-fluid-body">{item.detail}</p>
         </li>
       ))
     }
   </ol>
-  <a class="text-link group inline-flex items-center gap-3 underline-offset-4" href="/cv/">Voir le CV complet <span class="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">→</span></a>
+  <a class="group/career inline-flex items-center gap-3 font-sans text-fluid-body font-bold underline-offset-4" href="/cv/">Voir le CV complet <span class="transition-transform duration-medium ease-standard group-hover/career:translate-x-1" aria-hidden="true">→</span></a>
 </section>

@@ -1,58 +1,17 @@
 @import "tailwindcss";
-@import "./text.css";
+@import "./tokens.css";
 @config "../../tailwind.config.mjs";
 
 @layer base {
-  :root {
-    --color-primary: #ff5a3d;
-    --color-foreground: #1d1d1b;
-    --color-background: #f1eee6;
-    --color-surface: #fffdf8;
-    --color-accent: #c9d7ff;
-  }
-
-  html {
-    font-size: 62.5%;
-  }
-
-  body {
-    text-rendering: optimizeLegibility;
-  }
-
-  ::selection {
-    background: #1d1d1b;
-    color: #ff5a3d;
-  }
-
-  a {
-    color: inherit;
-  }
-
+  html { font-size: 62.5%; }
+  body { text-rendering: optimizeLegibility; }
+  ::selection { background: var(--pag-color-selection-bg); color: var(--pag-color-selection-text); }
+  a { color: inherit; }
   button,
-  a {
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  button {
-    font: inherit;
-  }
-
-  :focus-visible {
-    outline: 0.4rem solid currentColor;
-    outline-offset: 0.4rem;
-  }
-
-  [hidden] {
-    display: none !important;
-  }
-}
-
-project-filter[data-enhanced] [data-filter-controls] {
-  display: flex;
-}
-
-copy-email[data-enhanced] [data-copy-button] {
-  display: inline-block;
+  a { -webkit-tap-highlight-color: transparent; }
+  button { font: inherit; }
+  :focus-visible { outline: var(--pag-border-2) solid var(--pag-color-focus); outline-offset: var(--pag-dimension-1); }
+  [hidden] { display: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -67,114 +26,31 @@ copy-email[data-enhanced] [data-copy-button] {
 }
 
 @media print {
-  @page {
-    size: letter;
-    margin: 0.55in;
-  }
-
-  body {
-    background: #fff;
-    color: #000;
-    font-size: 9.5pt;
-  }
-
+  @page { size: letter; margin: 0.55in; }
+  body { background: #fff; color: #000; font-size: 9.5pt; }
   [data-site-header],
   [data-site-footer],
   [data-skip-link],
   [data-print-cv],
-  [data-cv-back] {
-    display: none !important;
-  }
-
-  [data-cv] {
-    width: 100%;
-    max-width: none;
-    padding: 0;
-  }
-
-  [data-cv-hero] {
-    padding-bottom: 0.35in;
-  }
-
-  [data-cv] h1 {
-    max-width: none;
-    font-size: 42pt;
-    line-height: 0.9;
-  }
-
-  [data-cv-kicker] {
-    margin-bottom: 0.15in;
-  }
-
-  [data-cv-role] {
-    margin-top: 0.18in;
-    font-size: 16pt;
-  }
-
+  [data-cv-back] { display: none !important; }
+  [data-cv] { width: 100%; max-width: none; padding: 0; }
+  [data-cv-hero] { padding-bottom: 0.35in; }
+  [data-cv] h1 { max-width: none; font-size: 42pt; line-height: 0.9; }
+  [data-cv-kicker] { margin-bottom: 0.15in; }
+  [data-cv-role] { margin-top: 0.18in; font-size: 16pt; }
   [data-cv-summary],
-  [data-cv-contact] {
-    margin-top: 0.12in;
-  }
-
-  [data-cv-section] {
-    grid-template-columns: 1.05in 1fr;
-    gap: 0.25in;
-    padding: 0.22in 0;
-    break-inside: avoid;
-  }
-
-  [data-cv-section] > h2 {
-    font-size: 11pt;
-  }
-
-  [data-cv-entry] {
-    grid-template-columns: 0.95in 1fr;
-    gap: 0.15in;
-    padding-bottom: 0.12in;
-    margin-bottom: 0.12in;
-    break-inside: avoid;
-  }
-
-  [data-cv-entry] h3 {
-    margin-bottom: 0.05in;
-    font-size: 13pt;
-  }
-
-  [data-cv-description] {
-    margin-top: 0.07in;
-  }
-
-  [data-cv-skills] article {
-    padding: 0.12in;
-  }
-
-  [data-cv-skills] p {
-    font-size: 9.5pt;
-  }
+  [data-cv-contact] { margin-top: 0.12in; }
+  [data-cv-section] { grid-template-columns: 1.05in 1fr; gap: 0.25in; padding: 0.22in 0; break-inside: avoid; }
+  [data-cv-section] > h2 { font-size: 11pt; }
+  [data-cv-entry] { grid-template-columns: 0.95in 1fr; gap: 0.15in; padding-bottom: 0.12in; margin-bottom: 0.12in; break-inside: avoid; }
+  [data-cv-entry] h3 { margin-bottom: 0.05in; font-size: 13pt; }
+  [data-cv-description] { margin-top: 0.07in; }
+  [data-cv-skills] article { padding: 0.12in; }
+  [data-cv-skills] p { font-size: 9.5pt; }
 }
 
-@view-transition {
-  navigation: auto;
-}
-
-::view-transition-old(root) {
-  animation: 240ms ease both fade-out;
-}
-
-::view-transition-new(root) {
-  animation: 360ms ease both fade-in;
-}
-
-@keyframes fade-out {
-  to {
-    opacity: 0;
-    transform: translateY(-0.8rem);
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(1.2rem);
-  }
-}
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: 240ms ease both fade-out; }
+::view-transition-new(root) { animation: 360ms ease both fade-in; }
+@keyframes fade-out { to { opacity: 0; transform: translateY(-0.8rem); } }
+@keyframes fade-in { from { opacity: 0; transform: translateY(1.2rem); } }

@@ -3,10 +3,10 @@ import type { TypographySpecimen } from '../../data/typography';
 
 interface Props extends TypographySpecimen {}
 
-const { className, label, sample } = Astro.props;
+const { token, className, label, sample } = Astro.props;
 ---
 
 <li class="border-t border-foreground/25 py-8 bp:py-12">
-  <p class="text-overline mt-0 mb-6">.{className} · {label}</p>
+  <p class="mt-0 mb-6 font-mono text-fluid-overline font-bold uppercase">.{token} · {label}</p>
   <p class:list={[className, 'm-0 min-w-0 break-words']}>{sample}</p>
 </li>

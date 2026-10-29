@@ -1,0 +1,28 @@
+---
+import { getMusicFavorites } from '../../data/portfolio';
+import MusicCard from '../MusicCard.astro';
+
+const favorites = getMusicFavorites();
+---
+
+<section id="musique" class="overflow-hidden bg-foreground py-section text-surface" aria-labelledby="music-title">
+  <div class="px-gutter">
+    <p class="m-0 font-mono text-fluid-overline font-bold uppercase">Coups de cœur musicaux</p>
+    <h2 id="music-title" class="mt-4 mb-0 max-w-heading-wide font-sans text-fluid-heading-medium">Ce qui joue dans mes écouteurs ces temps-ci.</h2>
+  </div>
+
+  <spotify-preview class="block" data-spotify-preview>
+    <div class="group/marquee mt-16 overflow-hidden motion-reduce:overflow-x-auto" data-music-marquee>
+      <div class="flex w-max animate-marquee will-change-transform group-hover/marquee:[animation-play-state:paused] group-focus-within/marquee:[animation-play-state:paused] motion-reduce:animate-none motion-reduce:transform-none motion-reduce:will-change-auto" data-music-track>
+        <div class="flex gap-gutter pr-gutter" data-music-group>
+          {favorites.map((favorite) => <MusicCard favorite={favorite} />)}
+        </div>
+        <div class="flex gap-gutter pr-gutter motion-reduce:hidden" aria-hidden="true" data-music-group>
+          {favorites.map((favorite) => <MusicCard favorite={favorite} duplicate />)}
+        </div>
+      </div>
+    </div>
+    <div class="sr-only" aria-hidden="true" data-spotify-player></div>
+    <p class="sr-only" aria-live="polite" data-spotify-status></p>
+  </spotify-preview>
+</section>

@@ -16,30 +16,30 @@ import {
 >
   <main id="contenu" class="mx-auto w-full max-w-380 px-4 pt-28 pb-20 bp:px-12 bp:pt-44 bp:pb-32" data-cv tabindex="-1">
     <header class="pb-16 bp:pb-32" data-cv-hero>
-      <p class="text-overline mt-0 mb-8" data-cv-kicker>CV · 2026</p>
-      <h1 class="text-display m-0">{profile.name}</h1>
-      <p class="text-lead mt-8 mb-0 bp:mt-16" data-cv-role>Développeur front-end · Design · Gestion de projet</p>
-      <p class="text-body-large mt-6 mb-0 max-w-248" data-cv-summary>{profile.introduction}</p>
-      <address class="text-contact mt-8 flex flex-wrap gap-x-6 gap-y-2 not-italic" data-cv-contact>
+      <p class="mt-0 mb-8 font-mono text-fluid-overline font-bold uppercase" data-cv-kicker>CV · 2026</p>
+      <h1 class="m-0 font-sans text-fluid-display">{profile.name}</h1>
+      <p class="mt-8 mb-0 font-sans text-fluid-lead bp:mt-16" data-cv-role>Développeur front-end · Design · Gestion de projet</p>
+      <p class="mt-6 mb-0 max-w-248 font-sans text-fluid-body-large" data-cv-summary>{profile.introduction}</p>
+      <address class="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-sans text-fluid-body font-bold not-italic" data-cv-contact>
         <span>{profile.location}</span>
         <a href={`tel:${profile.phoneHref}`}>{profile.phoneDisplay}</a>
         <a href={`mailto:${profile.email}`}>{profile.email}</a>
         <a href={profile.website}>pagauvreau.com</a>
       </address>
-      <button class="text-button mt-8 cursor-pointer rounded-full border border-foreground bg-foreground px-4 py-3 text-surface" type="button" data-print-cv>Imprimer / PDF</button>
+      <button class="mt-8 cursor-pointer rounded-full border border-foreground bg-foreground px-4 py-3 font-mono text-fluid-caption font-bold uppercase text-surface" type="button" data-print-cv>Imprimer / PDF</button>
     </header>
 
     <section class="grid grid-cols-1 gap-8 border-t-2 border-foreground py-12 bp:grid-cols-4 bp:gap-28 bp:py-24" data-cv-section aria-labelledby="experience-title">
-      <h2 class="text-title-small m-0 bp:col-span-1" id="experience-title"><span class="text-caption mb-3 block">01</span> Expériences de travail</h2>
+      <h2 class="m-0 font-sans text-fluid-title-small bp:col-span-1" id="experience-title"><span class="mb-3 block font-mono text-fluid-caption">01</span> Expériences de travail</h2>
       <div class="bp:col-span-3">
         {
           experiences.map((experience) => (
             <article class="mb-10 grid grid-cols-1 gap-3 border-b border-foreground/25 pb-10 last:mb-0 bp:grid-cols-3 bp:gap-6" data-cv-entry>
-              <p class="text-label m-0 bp:col-span-1">{experience.period}</p>
+              <p class="m-0 font-mono text-fluid-caption font-bold uppercase bp:col-span-1">{experience.period}</p>
               <div class="bp:col-span-2">
-                <h3 class="text-title-medium mt-0 mb-2">{experience.title}</h3>
-                {experience.organizations.map((organization) => <p class="text-strong m-0">{organization}</p>)}
-                <p class="text-body mt-5 mb-0 max-w-248 text-foreground/75" data-cv-description>{experience.description}</p>
+                <h3 class="mt-0 mb-2 font-sans text-fluid-title-medium">{experience.title}</h3>
+                {experience.organizations.map((organization) => <p class="m-0 font-bold">{organization}</p>)}
+                <p class="mt-5 mb-0 max-w-248 font-sans text-fluid-body text-foreground/75" data-cv-description>{experience.description}</p>
               </div>
             </article>
           ))
@@ -48,15 +48,15 @@ import {
     </section>
 
     <section class="grid grid-cols-1 gap-8 border-t-2 border-foreground py-12 bp:grid-cols-4 bp:gap-28 bp:py-24" data-cv-section aria-labelledby="complementary-title">
-      <h2 class="text-title-small m-0 bp:col-span-1" id="complementary-title"><span class="text-caption mb-3 block">02</span> Expériences complémentaires</h2>
+      <h2 class="m-0 font-sans text-fluid-title-small bp:col-span-1" id="complementary-title"><span class="mb-3 block font-mono text-fluid-caption">02</span> Expériences complémentaires</h2>
       <div class="bp:col-span-3">
         {
           complementaryExperiences.map((experience) => (
             <article class="mb-6 grid grid-cols-1 gap-3 border-b border-foreground/25 pb-6 last:mb-0 bp:grid-cols-3 bp:gap-6" data-cv-entry>
-              <p class="text-label m-0 bp:col-span-1">{experience.period}</p>
+              <p class="m-0 font-mono text-fluid-caption font-bold uppercase bp:col-span-1">{experience.period}</p>
               <div class="bp:col-span-2">
-                <h3 class="text-title-medium mt-0 mb-2">{experience.title}</h3>
-                <p class="text-strong m-0">{experience.organization}</p>
+                <h3 class="mt-0 mb-2 font-sans text-fluid-title-medium">{experience.title}</h3>
+                <p class="m-0 font-bold">{experience.organization}</p>
               </div>
             </article>
           ))
@@ -65,15 +65,15 @@ import {
     </section>
 
     <section class="grid grid-cols-1 gap-8 border-t-2 border-foreground py-12 bp:grid-cols-4 bp:gap-28 bp:py-24" data-cv-section aria-labelledby="education-title">
-      <h2 class="text-title-small m-0 bp:col-span-1" id="education-title"><span class="text-caption mb-3 block">03</span> Études</h2>
+      <h2 class="m-0 font-sans text-fluid-title-small bp:col-span-1" id="education-title"><span class="mb-3 block font-mono text-fluid-caption">03</span> Études</h2>
       <div class="bp:col-span-3">
         {
           education.map((item) => (
             <article class="mb-6 grid grid-cols-1 gap-3 border-b border-foreground/25 pb-6 last:mb-0 bp:grid-cols-3 bp:gap-6" data-cv-entry>
-              <p class="text-label m-0 bp:col-span-1">{item.period}</p>
+              <p class="m-0 font-mono text-fluid-caption font-bold uppercase bp:col-span-1">{item.period}</p>
               <div class="bp:col-span-2">
-                <h3 class="text-title-medium mt-0 mb-2">{item.title}</h3>
-                <p class="text-strong m-0">{item.organization}</p>
+                <h3 class="mt-0 mb-2 font-sans text-fluid-title-medium">{item.title}</h3>
+                <p class="m-0 font-bold">{item.organization}</p>
               </div>
             </article>
           ))
@@ -82,20 +82,20 @@ import {
     </section>
 
     <section class="grid grid-cols-1 gap-8 border-t-2 border-foreground py-12 bp:grid-cols-4 bp:gap-28 bp:py-24" data-cv-section aria-labelledby="skills-title">
-      <h2 class="text-title-small m-0 bp:col-span-1" id="skills-title"><span class="text-caption mb-3 block">04</span> Compétences</h2>
+      <h2 class="m-0 font-sans text-fluid-title-small bp:col-span-1" id="skills-title"><span class="mb-3 block font-mono text-fluid-caption">04</span> Compétences</h2>
       <div class="grid border-t border-l border-foreground/25 bp:col-span-3 bp:grid-cols-2" data-cv-skills>
         {
           stackGroups.map((group) => (
             <article class="border-r border-b border-foreground/25 p-6">
-              <h3 class="text-label mt-0 mb-4">{group.title}</h3>
-              <p class="text-body-large m-0">{group.items.join(' · ')}</p>
+              <h3 class="mt-0 mb-4 font-mono text-fluid-caption font-bold uppercase">{group.title}</h3>
+              <p class="m-0 font-sans text-fluid-body-large">{group.items.join(' · ')}</p>
             </article>
           ))
         }
       </div>
     </section>
 
-    <p class="text-link mt-16 mb-0" data-cv-back><a href="/">← Retour au portfolio</a></p>
+    <p class="mt-16 mb-0 font-sans text-fluid-body font-bold" data-cv-back><a href="/">← Retour au portfolio</a></p>
   </main>
 
   <script>
