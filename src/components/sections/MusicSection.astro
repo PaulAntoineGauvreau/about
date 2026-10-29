@@ -1,6 +1,5 @@
 ---
 import { getMusicFavorites } from '../../data/portfolio';
-import Button from '../Button.astro';
 import MusicCard from '../MusicCard.astro';
 
 const favorites = getMusicFavorites();
@@ -13,7 +12,7 @@ const favorites = getMusicFavorites();
     </h2>
   </div>
 
-  <spotify-preview class="block" data-spotify-preview>
+  <spotify-preview class="relative block" data-spotify-preview>
     <div class="group/marquee mt-16 overflow-hidden motion-reduce:overflow-x-auto" data-music-marquee>
       <div class="flex w-max animate-marquee will-change-transform group-hover/marquee:[animation-play-state:paused] group-focus-within/marquee:[animation-play-state:paused] motion-reduce:animate-none motion-reduce:transform-none motion-reduce:will-change-auto" data-music-track>
         <div class="flex gap-gutter pr-gutter" data-music-group>
@@ -24,23 +23,7 @@ const favorites = getMusicFavorites();
         </div>
       </div>
     </div>
-    <div class="sr-only" aria-hidden="true" data-spotify-player></div>
+    <div class="pointer-events-none absolute top-0 left-0 size-40 overflow-hidden opacity-0" aria-hidden="true" data-spotify-player></div>
     <p class="sr-only" aria-live="polite" data-spotify-status></p>
-
-    <dialog
-      class="m-auto max-w-copy rounded-card border border-border bg-surface p-6 text-foreground backdrop:bg-foreground/80 bp:p-10"
-      aria-labelledby="spotify-consent-title"
-      aria-describedby="spotify-consent-description"
-      data-spotify-consent
-    >
-      <h3 id="spotify-consent-title" class="m-0 font-sans text-fluid-title-medium">Écouter avec Spotify?</h3>
-      <p id="spotify-consent-description" class="mt-4 mb-0 font-sans text-fluid-body">
-        Le lecteur Spotify est un service tiers. Il sera chargé uniquement avec ton accord et peut déposer des cookies tiers pour lancer la chanson.
-      </p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <Button data-spotify-consent-accept>Lire avec Spotify</Button>
-        <Button variant="filter" data-spotify-consent-decline>Annuler</Button>
-      </div>
-    </dialog>
   </spotify-preview>
 </section>

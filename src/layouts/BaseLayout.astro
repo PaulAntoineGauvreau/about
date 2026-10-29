@@ -77,13 +77,13 @@ const personSchema = {
 
     <header class="absolute top-header-offset right-gutter left-gutter z-20 flex flex-col items-start gap-2 text-foreground bp:right-auto" data-site-header>
       <div class="flex w-full items-center justify-between gap-3 rounded-shell bg-surface p-2 bp:w-auto">
-        <a class="inline-flex w-brand-slot flex-none items-center justify-center rounded-2 bg-foreground px-4 py-2 font-sans text-fluid-body font-black tracking-[-0.04em] text-surface no-underline" href="/" aria-label="PAG — Accueil de Paul-Antoine Gauvreau">
+        <a class="inline-flex min-h-11 w-brand-slot flex-none items-center justify-center rounded-2 bg-foreground px-4 font-sans text-fluid-body font-black tracking-[-0.04em] text-surface no-underline" href="/" aria-label="PAG — Accueil de Paul-Antoine Gauvreau">
           PAG
         </a>
         <nav class="flex min-w-0 items-center font-mono text-fluid-caption font-bold uppercase" aria-label="Navigation principale">
-          <a class="hidden rounded-2 px-4 py-3 no-underline bp:block" href="/#projets">Projets</a>
-          <a class="hidden rounded-2 px-4 py-3 no-underline bp:block" href="/#musique">Musique</a>
-          <a class:list={['hidden rounded-2 px-4 py-3 no-underline  bp:block', currentPath.startsWith('/cv') && 'bg-accent']} href="/cv/" aria-current={currentPath.startsWith('/cv') ? 'page' : undefined}>CV</a>
+          <a class="hidden min-h-11 items-center justify-center rounded-2 px-4 pt-1 pb-0 leading-100 no-underline bp:inline-flex" href="/#projets">Projets</a>
+          <a class="hidden min-h-11 items-center justify-center rounded-2 px-4 pt-1 pb-0 leading-100 no-underline bp:inline-flex" href="/#musique">Musique</a>
+          <a class:list={['hidden min-h-11 items-center justify-center rounded-2 px-4 pt-1 pb-0 leading-100 no-underline bp:inline-flex', currentPath.startsWith('/cv') && 'bg-accent']} href="/cv/" aria-current={currentPath.startsWith('/cv') ? 'page' : undefined}>CV</a>
           <Button variant="primary" href="/#contact">Contact</Button>
         </nav>
       </div>

@@ -3,30 +3,32 @@ import { profile } from '../../data/profile';
 import Button from '../Button.astro';
 ---
 
-<section class="flex min-h-svh flex-col justify-end overflow-hidden bg-foreground px-gutter pt-[calc(var(--pag-layout-header-height)+var(--pag-dimension-12))] pb-8 text-surface" aria-labelledby="hero-title">
-  <h1 id="hero-title" class="m-0 font-sans text-fluid-display" aria-label={profile.name}>
-    <span class="block pr-1"><span class="block" data-hero-line>Paul-Antoine</span></span>
-    <span class="block pr-1"><span class="block" data-hero-line>Gauvreau</span></span>
-  </h1>
+<section class="flex min-h-svh flex-col overflow-hidden bg-foreground px-gutter pt-[calc(var(--pag-layout-header-height)+var(--pag-dimension-12))] pb-8 text-surface" aria-labelledby="hero-title">
+  <div class="flex w-full flex-1 flex-col justify-center py-8">
+    <h1 id="hero-title" class="m-0 font-sans text-fluid-display" aria-label={profile.name}>
+      <span class="block pr-1"><span class="block" data-hero-line>Paul-Antoine</span></span>
+      <span class="block pr-1"><span class="block" data-hero-line>Gauvreau</span></span>
+    </h1>
 
-  <div class="mt-12 flex w-full max-w-heading-wide items-start gap-2 font-sans text-fluid-lead">
-    <span aria-hidden="true">👋</span>
-    <div class="min-w-0">
-      <p data-hero-copy-start>Bonjour, je suis développeur front-end.</p>
-      <p class="flex flex-wrap items-baseline">
-        <span data-hero-copy-start>Passionné par&nbsp;</span>
-        <span class="inline-block h-[var(--pag-roulette-line-height)] overflow-hidden align-bottom" aria-hidden="true">
-          <span class="flex animate-roulette flex-col text-accent motion-reduce:animate-none [&>span]:h-[var(--pag-roulette-line-height)] [&>span]:flex-none [&>span]:whitespace-nowrap [&>span]:leading-[var(--pag-roulette-line-height)] [&>span:not(:first-child)]:motion-reduce:hidden">
-            {profile.passions.map((passion) => <span>{passion}.</span>)}
-            <span>{profile.passions[0]}.</span>
+    <div class="mt-12 flex w-full max-w-heading-wide items-start gap-2 font-sans text-fluid-lead">
+      <span aria-hidden="true">👋</span>
+      <div class="min-w-0">
+        <p data-hero-copy-start>Bonjour, je suis développeur front-end.</p>
+        <p class="flex flex-wrap items-baseline">
+          <span data-hero-copy-start>Passionné par&nbsp;</span>
+          <span class="inline-block h-[var(--pag-roulette-line-height)] overflow-hidden align-bottom" aria-hidden="true">
+            <span class="flex animate-roulette flex-col text-accent motion-reduce:animate-none [&>span]:h-[var(--pag-roulette-line-height)] [&>span]:flex-none [&>span]:whitespace-nowrap [&>span]:leading-[var(--pag-roulette-line-height)] [&>span:not(:first-child)]:motion-reduce:hidden">
+              {profile.passions.map((passion) => <span>{passion}.</span>)}
+              <span>{profile.passions[0]}.</span>
+            </span>
           </span>
-        </span>
-        <span class="sr-only">le web, le design, la musique et le cyclisme.</span>
-      </p>
+          <span class="sr-only">le web, le design, la musique et le cyclisme.</span>
+        </p>
+      </div>
     </div>
   </div>
 
-  <Button variant="icon" href="#projets" class="group/action mt-10 self-start bp:self-end">
+  <Button variant="icon" href="#projets" class="group/action flex-none self-start bp:self-end">
     Voir les projets <span class="grid size-8 place-items-center rounded-full border border-current transition-transform duration-medium ease-standard group-hover/action:translate-y-1" aria-hidden="true">↓</span>
   </Button>
 </section>

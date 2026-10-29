@@ -38,10 +38,21 @@ const { project } = Astro.props;
           {project.role}
         </div>
       </div>
-      <ul class="flex list-none flex-wrap items-start gap-2" aria-label={`Technologies utilisées pour ${project.name}`}>
-        {project.stack.map((item) => <li class="inline-flex min-h-8 items-center justify-center rounded-full border border-border px-2 pt-1 pb-0 font-mono text-fluid-caption font-bold leading-100 uppercase">{item}</li>)}
-      </ul>
       <span class="sr-only">{project.summary} Visiter le site dans un nouvel onglet.</span>
     </div>
   </a>
+  <p class="mt-0 mb-3 font-mono text-fluid-caption font-bold uppercase">
+    {
+      project.team.url ? (
+        <a class="underline decoration-1 underline-offset-4" href={project.team.url} target="_blank" rel="noopener noreferrer">
+          {project.team.name}
+        </a>
+      ) : (
+        <span>{project.team.name}</span>
+      )
+    }
+  </p>
+  <ul class="flex list-none flex-wrap items-start gap-2" aria-label={`Technologies utilisées pour ${project.name}`}>
+    {project.stack.map((item) => <li class="inline-flex min-h-8 items-center justify-center rounded-full border border-border px-2 pt-1 pb-0 font-mono text-fluid-caption font-bold leading-100 uppercase">{item}</li>)}
+  </ul>
 </article>

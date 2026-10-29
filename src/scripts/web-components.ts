@@ -86,7 +86,7 @@ class CopyEmail extends HTMLElement {
 }
 
 type SpotifyEmbedController = {
-  addListener: (event: string, callback: () => void) => void;
+  addListener: (event: string, callback: (event?: { data?: { isPaused?: boolean } }) => void) => void;
   destroy: () => void;
   loadEntity: (uri: string) => void;
   pause: () => void;
@@ -135,18 +135,18 @@ function getSpotifyIframeApi() {
 }
 
 class SpotifyPreview extends HTMLElement {
-  private static readonly consentKey = 'pag-spotify-embed-consent';
   private controller?: AbortController;
   private embedController?: SpotifyEmbedController;
   private activeCard?: HTMLElement;
-  private pendingCard?: HTMLElement;
-  private consentDialog?: HTMLDialogElement;
   private player?: HTMLElement;
   private firstUri?: string;
   private loadedUri?: string;
   private playerInitialized = false;
   private playerReady = false;
   private playerObserver?: MutationObserver;
+  private preloadObserver?: IntersectionObserver;
+  private preloadIdleCallback?: number;
+  private preloadTimeout?: number;
 
   connectedCallback() {
     this.controller?.abort();
@@ -154,64 +154,48 @@ class SpotifyPreview extends HTMLElement {
 
     const cards = Array.from(this.querySelectorAll<HTMLElement>('[data-spotify-card][data-spotify-uri]'));
     const player = this.querySelector<HTMLElement>('[data-spotify-player]');
-    const consentDialog = this.querySelector<HTMLDialogElement>('[data-spotify-consent]');
-    const acceptConsent = consentDialog?.querySelector<HTMLButtonElement>('[data-spotify-consent-accept]');
-    const declineConsent = consentDialog?.querySelector<HTMLButtonElement>('[data-spotify-consent-decline]');
     const firstUri = cards[0]?.dataset.spotifyUri;
     if (!player || !firstUri) return;
     this.player = player;
     this.firstUri = firstUri;
-    this.consentDialog = consentDialog ?? undefined;
 
     cards.forEach((card) => {
       const button = card.querySelector<HTMLButtonElement>('[data-spotify-toggle]');
       button?.addEventListener('click', () => this.toggle(card), { signal: this.controller?.signal });
     });
 
-    acceptConsent?.addEventListener('click', () => this.acceptSpotifyConsent(), { signal: this.controller.signal });
-    declineConsent?.addEventListener('click', () => this.declineSpotifyConsent(), { signal: this.controller.signal });
-    consentDialog?.addEventListener(
-      'close',
-      () => {
-        if (consentDialog.returnValue !== 'accepted') this.cancelPendingPlayback();
-        consentDialog.returnValue = '';
-      },
-      { signal: this.controller.signal },
-    );
-  }
+    const preparePlayer = () => this.initializePlayer();
+    this.addEventListener('pointerenter', preparePlayer, { once: true, signal: this.controller.signal });
+    this.addEventListener('focusin', preparePlayer, { once: true, signal: this.controller.signal });
 
-  private hasSpotifyConsent() {
-    try {
-      return window.sessionStorage.getItem(SpotifyPreview.consentKey) === 'granted';
-    } catch {
-      return false;
+    const scheduleIdlePreload = () => {
+      const idleWindow = window as Window & {
+        requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+      };
+      if (idleWindow.requestIdleCallback) {
+        this.preloadIdleCallback = idleWindow.requestIdleCallback(preparePlayer, { timeout: 4000 });
+      } else {
+        this.preloadTimeout = window.setTimeout(preparePlayer, 2500);
+      }
+    };
+
+    if (document.readyState === 'complete') scheduleIdlePreload();
+    else window.addEventListener('load', scheduleIdlePreload, { once: true, signal: this.controller.signal });
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      this.preloadObserver = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          this.preloadObserver?.disconnect();
+          this.preloadObserver = undefined;
+          this.initializePlayer();
+        },
+        { rootMargin: '75% 0px' },
+      );
+      this.preloadObserver.observe(this);
+    } else {
+      window.addEventListener('load', preparePlayer, { once: true, signal: this.controller.signal });
     }
-  }
-
-  private acceptSpotifyConsent() {
-    try {
-      window.sessionStorage.setItem(SpotifyPreview.consentKey, 'granted');
-    } catch {
-      // Playback still works for the current page if storage is unavailable.
-    }
-
-    this.consentDialog?.close('accepted');
-    const card = this.pendingCard;
-    this.pendingCard = undefined;
-    if (!card) return;
-    this.activeCard = card;
-    this.initializePlayer();
-  }
-
-  private declineSpotifyConsent() {
-    this.consentDialog?.close('declined');
-    this.cancelPendingPlayback();
-  }
-
-  private cancelPendingPlayback() {
-    this.pendingCard = undefined;
-    const status = this.querySelector<HTMLElement>('[data-spotify-status]');
-    if (status) status.textContent = 'Lecture Spotify annulée.';
   }
 
   private initializePlayer() {
@@ -225,7 +209,6 @@ class SpotifyPreview extends HTMLElement {
       iframe?.setAttribute('title', 'Lecteur Spotify masqué');
       iframe?.setAttribute('tabindex', '-1');
       iframe?.setAttribute('aria-hidden', 'true');
-      iframe?.classList.add('sr-only');
     };
     this.playerObserver?.disconnect();
     this.playerObserver = new MutationObserver(hidePlayerFrame);
@@ -244,6 +227,10 @@ class SpotifyPreview extends HTMLElement {
           this.dataset.spotifyReady = '';
           if (this.activeCard) this.startPlayback(this.activeCard);
         });
+        embedController.addListener('playback_update', (event) => {
+          if (!this.activeCard || event?.data?.isPaused === undefined) return;
+          this.setCardPlaybackState(this.activeCard, !event.data.isPaused);
+        });
       });
     });
   }
@@ -255,12 +242,6 @@ class SpotifyPreview extends HTMLElement {
     }
 
     if (this.activeCard) this.pause(this.activeCard);
-
-    if (!this.hasSpotifyConsent()) {
-      this.pendingCard = card;
-      this.consentDialog?.showModal();
-      return;
-    }
 
     this.activeCard = card;
     if (this.playerReady) {
@@ -280,10 +261,7 @@ class SpotifyPreview extends HTMLElement {
       this.loadedUri = uri;
     }
     this.embedController.play();
-    card.dataset.playing = '';
-    const button = card.querySelector<HTMLButtonElement>('[data-spotify-toggle]');
-    button?.setAttribute('aria-pressed', 'true');
-    if (button?.dataset.pauseLabel) button.setAttribute('aria-label', button.dataset.pauseLabel);
+    this.setCardPlaybackState(card, true);
 
     const status = this.querySelector<HTMLElement>('[data-spotify-status]');
     if (status) status.textContent = `Lecture de ${card.textContent?.trim() ?? 'la chanson'}.`;
@@ -292,24 +270,34 @@ class SpotifyPreview extends HTMLElement {
   private pause(card: HTMLElement) {
     if (this.activeCard !== card) return;
     this.embedController?.pause();
-    delete card.dataset.playing;
-    const button = card.querySelector<HTMLButtonElement>('[data-spotify-toggle]');
-    button?.setAttribute('aria-pressed', 'false');
-    if (button?.dataset.playLabel) button.setAttribute('aria-label', button.dataset.playLabel);
+    this.setCardPlaybackState(card, false);
     this.activeCard = undefined;
 
     const status = this.querySelector<HTMLElement>('[data-spotify-status]');
     if (status) status.textContent = 'Lecture en pause.';
   }
 
+  private setCardPlaybackState(card: HTMLElement, playing: boolean) {
+    const button = card.querySelector<HTMLButtonElement>('[data-spotify-toggle]');
+    card.toggleAttribute('data-playing', playing);
+    button?.setAttribute('aria-pressed', String(playing));
+    const label = playing ? button?.dataset.pauseLabel : button?.dataset.playLabel;
+    if (label) button?.setAttribute('aria-label', label);
+  }
+
   disconnectedCallback() {
     this.controller?.abort();
+    const idleWindow = window as Window & { cancelIdleCallback?: (handle: number) => void };
+    if (this.preloadIdleCallback !== undefined) idleWindow.cancelIdleCallback?.(this.preloadIdleCallback);
+    if (this.preloadTimeout !== undefined) window.clearTimeout(this.preloadTimeout);
+    this.preloadIdleCallback = undefined;
+    this.preloadTimeout = undefined;
+    this.preloadObserver?.disconnect();
+    this.preloadObserver = undefined;
     this.playerObserver?.disconnect();
     this.playerObserver = undefined;
     this.embedController?.destroy();
     this.embedController = undefined;
-    this.pendingCard = undefined;
-    this.consentDialog = undefined;
     this.player = undefined;
     this.firstUri = undefined;
     this.loadedUri = undefined;

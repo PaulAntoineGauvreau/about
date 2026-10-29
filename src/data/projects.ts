@@ -13,6 +13,11 @@ import venitiennes83Image from '../assets/projects/venitiennes-83.png';
 export type ProjectCategory = 'application' | 'headless' | 'wordpress' | 'commerce';
 export type ProjectAccent = 'atelier' | 'cosoltec' | 'cegep' | 'chia' | 'pylex' | 'mc-waterloo' | 'accordeon' | 'humanify' | 'rollout' | 'v83';
 
+export interface ProjectTeam {
+  name: string;
+  url?: string;
+}
+
 export interface Project {
   name: string;
   url: string;
@@ -22,7 +27,26 @@ export interface Project {
   category: ProjectCategory;
   image: ImageMetadata;
   accent: ProjectAccent;
+  team: ProjectTeam;
 }
+
+const teams = {
+  deuxHuitHuit: {
+    name: 'Deux Huit Huit',
+    url: 'https://deuxhuithuit.com/fr',
+  },
+  lesPretentieux: {
+    name: 'Les Prétentieux',
+    url: 'https://lespretentieux.com/',
+  },
+  chacha: {
+    name: 'CHACHA communications',
+    url: 'https://cha-cha.ca/',
+  },
+  solo: {
+    name: 'Projet solo aka Paul-Antoine',
+  },
+} as const satisfies Record<string, ProjectTeam>;
 
 export const projects: readonly Project[] = [
   {
@@ -35,6 +59,7 @@ export const projects: readonly Project[] = [
     category: 'headless',
     image: atelierImage,
     accent: 'atelier',
+    team: teams.deuxHuitHuit,
   },
   {
     name: 'Cosoltec',
@@ -46,6 +71,7 @@ export const projects: readonly Project[] = [
     category: 'headless',
     image: cosoltecImage,
     accent: 'cosoltec',
+    team: teams.deuxHuitHuit,
   },
   {
     name: 'Cégep de Lanaudière',
@@ -57,6 +83,7 @@ export const projects: readonly Project[] = [
     category: 'wordpress',
     image: cegepImage,
     accent: 'cegep',
+    team: teams.lesPretentieux,
   },
   {
     name: 'Chia Love',
@@ -68,6 +95,7 @@ export const projects: readonly Project[] = [
     category: 'commerce',
     image: chiaImage,
     accent: 'chia',
+    team: teams.deuxHuitHuit,
   },
   {
     name: 'Pylex',
@@ -79,6 +107,7 @@ export const projects: readonly Project[] = [
     category: 'commerce',
     image: pylexImage,
     accent: 'pylex',
+    team: teams.lesPretentieux,
   },
   {
     name: 'MC Waterloo',
@@ -90,6 +119,7 @@ export const projects: readonly Project[] = [
     category: 'wordpress',
     image: mcWaterlooImage,
     accent: 'mc-waterloo',
+    team: teams.chacha,
   },
   {
     name: 'Accordéon Montmagny',
@@ -101,6 +131,7 @@ export const projects: readonly Project[] = [
     category: 'wordpress',
     image: accordeonMontmagnyImage,
     accent: 'accordeon',
+    team: teams.lesPretentieux,
   },
   {
     name: 'Humanify 360',
@@ -112,6 +143,7 @@ export const projects: readonly Project[] = [
     category: 'wordpress',
     image: humanifyImage,
     accent: 'humanify',
+    team: teams.lesPretentieux,
   },
   {
     name: 'Roll Out',
@@ -123,6 +155,7 @@ export const projects: readonly Project[] = [
     category: 'application',
     image: rolloutCyclingImage,
     accent: 'rollout',
+    team: teams.solo,
   },
   {
     name: 'Vénitiennes 83',
@@ -134,6 +167,7 @@ export const projects: readonly Project[] = [
     category: 'wordpress',
     image: venitiennes83Image,
     accent: 'v83',
+    team: teams.lesPretentieux,
   },
 ];
 
