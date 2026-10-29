@@ -12,7 +12,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
-      exclude: ['lenis'],
+      exclude: ['gsap', 'lenis'],
     },
   },
 });

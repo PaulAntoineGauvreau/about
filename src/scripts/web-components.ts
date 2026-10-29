@@ -1,7 +1,269 @@
 export {};
 
+type Gsap = typeof import('gsap')['gsap'];
+
+const projectCardMotion = {
+  offset: 48,
+  duration: 0.65,
+  stagger: 0.12,
+  ease: 'power3.out',
+  rowTolerance: 4,
+} as const;
+
+const heroTitleMotion = {
+  delay: 0.35,
+  opacityDuration: 0.9,
+  scaleDuration: 1,
+  stagger: 0.1,
+  opacityEase: 'power1.out',
+  scaleEase: 'back.out(1.8)',
+} as const;
+
+async function animateHeroIntro() {
+  const title = document.querySelector<HTMLElement>('[data-hero-title]');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const headerItems = Array.from(document.querySelectorAll<HTMLElement>('[data-site-header] > [data-hero-appear]'));
+  const words = title ? Array.from(title.querySelectorAll<HTMLElement>('[data-hero-title-word]')) : [];
+  const copy = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-copy]'));
+  const items = [...headerItems, ...words, ...copy];
+  if (items.length === 0) return;
+
+  try {
+    const { gsap } = await import('gsap');
+    gsap.set(items, { transformOrigin: '50% 50%' });
+    const timeline = gsap.timeline({
+      delay: heroTitleMotion.delay,
+      onComplete: () => {
+        items.forEach((item) => {
+          item.dataset.heroAppearVisible = '';
+        });
+        gsap.set(items, { clearProps: 'opacity,visibility,transform,transformOrigin,willChange' });
+      },
+    });
+
+    const animateGroup = (group: HTMLElement[], position: number) => {
+      if (group.length === 0) return;
+      timeline
+        .fromTo(
+          group,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: heroTitleMotion.opacityDuration,
+            ease: heroTitleMotion.opacityEase,
+            stagger: heroTitleMotion.stagger,
+          },
+          position,
+        )
+        .fromTo(
+          group,
+          { scale: 0.8 },
+          {
+            scale: 1,
+            duration: heroTitleMotion.scaleDuration,
+            ease: heroTitleMotion.scaleEase,
+            stagger: heroTitleMotion.stagger,
+            force3D: true,
+          },
+          position,
+        );
+    };
+
+    animateGroup(headerItems, 0);
+    animateGroup(words, 0.12);
+    animateGroup(copy, 0.3);
+  } catch {
+    items.forEach((item) => {
+      item.dataset.heroAppearVisible = '';
+      item.style.opacity = '1';
+      item.style.transform = 'none';
+      item.style.willChange = 'auto';
+    });
+  }
+}
+
+void animateHeroIntro();
+
+class ClipLineReveal extends HTMLElement {
+  private observer?: IntersectionObserver;
+  private gsap?: Gsap;
+  private originalContent = new Map<HTMLElement, Node[]>();
+
+  connectedCallback() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    if (typeof IntersectionObserver === 'undefined') {
+      this.reveal();
+      return;
+    }
+
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        this.observer?.disconnect();
+        this.observer = undefined;
+        this.reveal();
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -10% 0px' },
+    );
+    this.observer.observe(this);
+  }
+
+  private getRenderedLines(element: HTMLElement) {
+    const text = (element.textContent ?? '').replace(/\s+/g, ' ').trim();
+    if (!text) return [];
+
+    element.textContent = text;
+    const textNode = element.firstChild;
+    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return [text];
+
+    const range = document.createRange();
+    const renderedLines: Array<{ text: string; top: number }> = [];
+
+    for (let start = 0; start < text.length;) {
+      const character = String.fromCodePoint(text.codePointAt(start) ?? 0);
+      const end = start + character.length;
+      range.setStart(textNode, start);
+      range.setEnd(textNode, end);
+      const rect = Array.from(range.getClientRects()).find((candidate) => candidate.width > 0 || candidate.height > 0);
+
+      if (rect) {
+        const currentLine = renderedLines.at(-1);
+        if (!currentLine || Math.abs(currentLine.top - rect.top) > 1) {
+          renderedLines.push({ text: character, top: rect.top });
+        } else {
+          currentLine.text += character;
+        }
+      }
+      start = end;
+    }
+
+    return renderedLines.map((line) => line.text.trim()).filter(Boolean);
+  }
+
+  private splitRenderedLines(element: HTMLElement) {
+    const originalNodes = Array.from(element.childNodes, (node) => node.cloneNode(true));
+    this.originalContent.set(element, originalNodes);
+    const originalText = (element.textContent ?? '').replace(/\s+/g, ' ').trim();
+    const width = element.getBoundingClientRect().width;
+    const renderedLines = this.getRenderedLines(element);
+
+    element.replaceChildren();
+    element.style.width = `${width}px`;
+    element.setAttribute('aria-label', originalText);
+
+    return renderedLines.map((line) => {
+      const clip = document.createElement('span');
+      const inner = document.createElement('span');
+      clip.className = '_reveal-clip-line';
+      clip.setAttribute('aria-hidden', 'true');
+      inner.className = '_reveal-clip-line-inner';
+      inner.textContent = line;
+      clip.append(inner);
+      element.append(clip);
+      return inner;
+    });
+  }
+
+  private restoreContent() {
+    this.originalContent.forEach((nodes, element) => {
+      element.replaceChildren(...nodes.map((node) => node.cloneNode(true)));
+      element.style.removeProperty('width');
+      element.removeAttribute('aria-label');
+    });
+    this.originalContent.clear();
+  }
+
+  private async reveal() {
+    const elements = Array.from(this.querySelectorAll<HTMLElement>('[data-clip-reveal-line]'));
+    if (elements.length === 0) return;
+
+    try {
+      const [{ gsap }] = await Promise.all([
+        import('gsap'),
+        'fonts' in document ? document.fonts.ready : Promise.resolve(),
+      ]);
+      if (!this.isConnected) return;
+      this.gsap = gsap;
+      const lines = elements.flatMap((element) => this.splitRenderedLines(element));
+      const borders = Array.from(this.querySelectorAll<HTMLElement>('[data-clip-reveal-border]'));
+      if (lines.length === 0) {
+        this.dataset.clipRevealed = '';
+        this.restoreContent();
+        return;
+      }
+
+      const textStagger = Number.parseFloat(this.dataset.clipStagger ?? '0.18');
+      const borderStagger = Number.parseFloat(this.dataset.clipBorderStagger ?? '0.16');
+      this.dataset.clipReady = '';
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          this.dataset.clipRevealed = '';
+          delete this.dataset.clipReady;
+          gsap.set(borders, { clearProps: 'transform,willChange' });
+          this.restoreContent();
+        },
+      });
+
+      if (borders.length > 0) {
+        timeline.fromTo(
+          borders,
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            duration: 1.1,
+            ease: 'expo.out',
+            stagger: borderStagger,
+            force3D: true,
+          },
+          0,
+        );
+      }
+
+      timeline.fromTo(
+        lines,
+        { yPercent: 110, y: 2 },
+        {
+          yPercent: 0,
+          y: 0,
+          duration: 1.8,
+          ease: 'expo.out',
+          stagger: textStagger,
+          force3D: true,
+        },
+        borders.length > 0 ? 0.12 : 0,
+      );
+    } catch {
+      this.dataset.clipRevealed = '';
+      delete this.dataset.clipReady;
+      this.querySelectorAll<HTMLElement>('[data-clip-reveal-border]').forEach((border) => {
+        border.style.transform = 'none';
+        border.style.willChange = 'auto';
+      });
+      this.restoreContent();
+    }
+  }
+
+  disconnectedCallback() {
+    this.observer?.disconnect();
+    const lines = Array.from(this.querySelectorAll<HTMLElement>('._reveal-clip-line-inner'));
+    const borders = Array.from(this.querySelectorAll<HTMLElement>('[data-clip-reveal-border]'));
+    this.gsap?.killTweensOf([...lines, ...borders]);
+    this.gsap?.set(borders, { clearProps: 'transform,willChange' });
+    this.restoreContent();
+    this.observer = undefined;
+    this.gsap = undefined;
+  }
+}
+
 class ProjectFilter extends HTMLElement {
   private controller?: AbortController;
+  private motionLoaderObserver?: IntersectionObserver;
+  private cardObserver?: IntersectionObserver;
+  private animationFrame?: number;
+  private gsap?: Gsap;
+  private pendingCards = new Set<HTMLElement>();
+  private motionReady?: Promise<void>;
 
   connectedCallback() {
     this.controller?.abort();
@@ -30,14 +292,165 @@ class ProjectFilter extends HTMLElement {
           if (status) {
             status.textContent = `${visibleCount} projet${visibleCount > 1 ? 's' : ''} affiché${visibleCount > 1 ? 's' : ''}.`;
           }
+
+          void this.motionReady?.then(() => {
+            this.animateFilteredCards(cards.filter((card) => !card.hidden));
+          });
         },
         { signal: this.controller?.signal },
+      );
+    });
+
+    this.motionReady = this.setupCardMotionWhenNear(cards);
+  }
+
+  private setupCardMotionWhenNear(cards: HTMLElement[]) {
+    if (
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      typeof IntersectionObserver === 'undefined'
+    ) {
+      return this.setupCardMotion(cards);
+    }
+
+    return new Promise<void>((resolve) => {
+      this.motionLoaderObserver = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          this.motionLoaderObserver?.disconnect();
+          this.motionLoaderObserver = undefined;
+          void this.setupCardMotion(cards).finally(resolve);
+        },
+        { rootMargin: '50% 0px' },
+      );
+      this.motionLoaderObserver.observe(this);
+    });
+  }
+
+  private async setupCardMotion(cards: HTMLElement[]) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    try {
+      const { gsap } = await import('gsap');
+      if (!this.isConnected) return;
+      this.gsap = gsap;
+    } catch {
+      return;
+    }
+
+    if (typeof IntersectionObserver === 'undefined') {
+      this.animateRows(cards);
+      return;
+    }
+
+    this.cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const card = entry.target as HTMLElement;
+          if (!entry.isIntersecting || card.hidden) return;
+          this.cardObserver?.unobserve(card);
+          this.pendingCards.add(card);
+        });
+        this.schedulePendingAnimation();
+      },
+      { threshold: 0.16 },
+    );
+
+    cards.forEach((card) => this.prepareCard(card));
+  }
+
+  private prepareCard(card: HTMLElement) {
+    if (!this.gsap || card.hidden) return;
+    this.gsap.set(card, { autoAlpha: 0, y: projectCardMotion.offset });
+    this.cardObserver?.observe(card);
+  }
+
+  private schedulePendingAnimation() {
+    if (this.animationFrame !== undefined || this.pendingCards.size === 0) return;
+
+    this.animationFrame = window.requestAnimationFrame(() => {
+      this.animationFrame = undefined;
+      const cards = Array.from(this.pendingCards);
+      this.pendingCards.clear();
+      this.animateRows(cards);
+    });
+  }
+
+  private animateFilteredCards(cards: HTMLElement[]) {
+    const gsap = this.gsap;
+    if (!gsap) return;
+
+    this.pendingCards.clear();
+    cards.forEach((card) => {
+      this.cardObserver?.unobserve(card);
+      gsap.killTweensOf(card);
+    });
+
+    if (this.animationFrame !== undefined) window.cancelAnimationFrame(this.animationFrame);
+    this.animationFrame = window.requestAnimationFrame(() => {
+      this.animationFrame = undefined;
+      const viewportCards: HTMLElement[] = [];
+
+      cards.forEach((card) => {
+        const bounds = card.getBoundingClientRect();
+        if (bounds.bottom > 0 && bounds.top < window.innerHeight) {
+          viewportCards.push(card);
+        } else {
+          this.prepareCard(card);
+        }
+      });
+
+      this.animateRows(viewportCards);
+    });
+  }
+
+  private animateRows(cards: HTMLElement[]) {
+    const gsap = this.gsap;
+    if (!gsap || cards.length === 0) return;
+
+    const measurements = cards
+      .map((card) => ({ card, top: card.getBoundingClientRect().top }))
+      .sort((a, b) => a.top - b.top);
+    const rows: Array<{ top: number; cards: HTMLElement[] }> = [];
+
+    measurements.forEach(({ card, top }) => {
+      const row = rows.find((candidate) => Math.abs(candidate.top - top) <= projectCardMotion.rowTolerance);
+      if (row) row.cards.push(card);
+      else rows.push({ top, cards: [card] });
+    });
+
+    rows.forEach((row) => {
+      gsap.fromTo(
+        row.cards,
+        { autoAlpha: 0, y: projectCardMotion.offset },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: projectCardMotion.duration,
+          ease: projectCardMotion.ease,
+          stagger: projectCardMotion.stagger,
+          overwrite: 'auto',
+          clearProps: 'opacity,visibility,transform',
+        },
       );
     });
   }
 
   disconnectedCallback() {
     this.controller?.abort();
+    this.motionLoaderObserver?.disconnect();
+    this.cardObserver?.disconnect();
+    this.pendingCards.clear();
+    if (this.animationFrame !== undefined) window.cancelAnimationFrame(this.animationFrame);
+    if (this.gsap) {
+      const cards = Array.from(this.querySelectorAll<HTMLElement>('[data-project-card]'));
+      this.gsap.killTweensOf(cards);
+      this.gsap.set(cards, { clearProps: 'opacity,visibility,transform' });
+    }
+    this.motionLoaderObserver = undefined;
+    this.cardObserver = undefined;
+    this.animationFrame = undefined;
+    this.gsap = undefined;
+    this.motionReady = undefined;
   }
 }
 
@@ -322,6 +735,7 @@ class MontrealWeather extends HTMLElement {
 }
 
 if (!customElements.get('project-filter')) customElements.define('project-filter', ProjectFilter);
+if (!customElements.get('clip-line-reveal')) customElements.define('clip-line-reveal', ClipLineReveal);
 if (!customElements.get('copy-email')) customElements.define('copy-email', CopyEmail);
 if (!customElements.get('montreal-weather')) customElements.define('montreal-weather', MontrealWeather);
 if (!customElements.get('music-preview')) customElements.define('music-preview', MusicPreview);

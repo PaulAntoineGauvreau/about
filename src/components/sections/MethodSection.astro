@@ -12,9 +12,9 @@ import SectionHeading from '../SectionHeading.astro';
     class="sticky top-0 z-10 bg-foreground pt-4 bp:pt-6"
   />
   <div>
-    <div class="min-h-stack-stage">
+    <div>
       {workPrinciples.map((principle, index) => <MethodCard principle={principle} index={index} />)}
     </div>
-    <div class="pointer-events-none relative z-5 h-stack-card bg-foreground" aria-hidden="true"></div>
+    <div class="pointer-events-none relative z-5 h-stack-exit bg-foreground" aria-hidden="true"></div>
   </div>
 </section>

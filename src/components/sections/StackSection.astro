@@ -8,11 +8,13 @@ import SectionHeading from '../SectionHeading.astro';
   <div class="grid grid-cols-1 border-t border-l border-border bp:grid-cols-4">
     {
       stackGroups.map((group) => (
-        <article class="min-h-static-card border-r border-b border-border p-5 bp:p-8">
-          <h3 class="mt-0 mb-12 font-mono text-fluid-caption font-bold uppercase">{group.title}</h3>
-          <ul class="m-0 list-none p-0">
-            {group.items.map((item) => <li class="font-sans text-fluid-title-medium">{item}</li>)}
-          </ul>
+        <article class="bp:min-h-static-card min-h-none border-r border-b border-border p-5 bp:p-8">
+          <h3 class="mt-0 bp:mb-12 mb-4 font-mono text-fluid-caption font-bold uppercase">{group.title}</h3>
+          <clip-line-reveal class="block">
+            <ul class="m-0 list-none p-0 grid grid-cols-2 bp:grid-cols-1">
+              {group.items.map((item) => <li class="font-sans text-fluid-title-medium" data-clip-reveal-line>{item}</li>)}
+            </ul>
+          </clip-line-reveal>
         </article>
       ))
     }

@@ -5,16 +5,20 @@ import SectionHeading from '../SectionHeading.astro';
 
 <section class="bg-primary px-gutter py-section" aria-labelledby="career-title">
   <SectionHeading eyebrow="Parcours" title="Design, gestion, puis développement." id="career-title" />
-  <ol class="m-0 mb-12 list-none border-t border-foreground p-0">
-    {
-      career.map((item) => (
-        <li class="grid gap-3 border-b border-foreground py-6 bp:grid-cols-[1fr_2fr_2fr] bp:gap-6">
-          <p class="m-0 font-mono text-fluid-caption font-bold uppercase">{item.period}</p>
-          <h3 class="m-0 font-sans text-fluid-title-medium">{item.title}</h3>
-          <p class="m-0 font-sans text-fluid-body">{item.detail}</p>
-        </li>
-      ))
-    }
-  </ol>
+  <clip-line-reveal class="relative mb-12 block" data-clip-stagger="0.1" data-clip-border-stagger="0.16">
+    <span class="pointer-events-none absolute inset-x-0 top-0 h-px origin-left bg-foreground" data-clip-reveal-border aria-hidden="true"></span>
+    <ol class="m-0 list-none p-0">
+      {
+        career.map((item) => (
+          <li class="relative grid gap-3 py-6 bp:grid-cols-[1fr_2fr_2fr] bp:gap-6">
+            <p class="m-0 font-mono text-fluid-caption font-bold uppercase" data-clip-reveal-line>{item.period}</p>
+            <h3 class="m-0 font-sans text-fluid-title-medium" data-clip-reveal-line>{item.title}</h3>
+            <p class="m-0 font-sans text-fluid-body" data-clip-reveal-line>{item.detail}</p>
+            <span class="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left bg-foreground" data-clip-reveal-border aria-hidden="true"></span>
+          </li>
+        ))
+      }
+    </ol>
+  </clip-line-reveal>
   <a class="group/career inline-flex items-center gap-3 font-sans text-fluid-body font-bold underline-offset-4" href="/cv/">Voir le CV complet <span class="transition-transform duration-medium ease-standard group-hover/career:translate-x-1" aria-hidden="true">→</span></a>
 </section>

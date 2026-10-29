@@ -50,8 +50,8 @@
     --pag-layout-header-offset: var(--pag-dimension-4);
     --pag-layout-header-height: 13.6rem;
     --pag-layout-brand-width: 9.7rem;
-    --pag-layout-stack-stage-height: 90svh;
-    --pag-layout-stack-card-height: min(52rem, 56svh);
+    --pag-layout-stack-card-height: min(36rem, 42svh);
+    --pag-layout-stack-exit-height: 28svh;
     --pag-layout-stack-sticky-top: var(--pag-dimension-40);
     --pag-layout-stack-title-offset: var(--pag-dimension-5);
     --pag-layout-stack-scroll-step: 72svh;
@@ -123,8 +123,8 @@
       --pag-layout-card-radius: var(--pag-radius-card);
       --pag-layout-project-image-height: 41rem;
       --pag-layout-header-height: 14.4rem;
-      --pag-layout-stack-stage-height: 90svh;
       --pag-layout-stack-card-height: min(58rem, 58svh);
+      --pag-layout-stack-exit-height: var(--pag-layout-stack-card-height);
       --pag-layout-stack-sticky-top: var(--pag-dimension-50);
       --pag-layout-stack-title-offset: var(--pag-dimension-5);
       --pag-layout-stack-scroll-step: 82svh;

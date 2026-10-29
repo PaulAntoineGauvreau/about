@@ -10,9 +10,13 @@ interface Props {
 const { eyebrow, title, id, centered = false, class: className } = Astro.props;
 ---
 
-<div class:list={['mb-12 bp:mb-14', className]}>
+<clip-line-reveal class:list={['mb-12 block bp:mb-14', className]}>
   <div class:list={{ 'text-center': centered }}>
-    <p class="mt-0 mb-4 font-mono text-fluid-overline font-bold uppercase">{eyebrow}</p>
-    <h2 class:list={['m-0 max-w-heading-wide text-balance font-sans text-fluid-heading-medium', { 'mx-auto': centered }]} id={id}>{title}</h2>
+    <div class="_reveal-clip mb-4">
+      <p class="_reveal-line m-0 font-mono text-fluid-overline font-bold uppercase" data-clip-reveal-line>{eyebrow}</p>
+    </div>
+    <div class="_reveal-clip">
+      <h2 class:list={['_reveal-line m-0 max-w-heading-wide text-balance font-sans text-fluid-heading-medium', { 'mx-auto': centered }]} id={id} data-clip-reveal-line>{title}</h2>
+    </div>
   </div>
-</div>
+</clip-line-reveal>

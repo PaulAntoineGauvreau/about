@@ -8,8 +8,10 @@ const favorites = getMusicFavorites();
 <section id="musique" class="overflow-hidden bg-foreground py-section text-surface" aria-labelledby="music-title">
   <div class="px-gutter">
     <p class="m-0 font-mono text-fluid-overline font-bold uppercase">Coups de cœur musicaux</p>
-    <h2 id="music-title" class="mt-4 mb-0 max-w-heading-wide text-balance font-sans text-fluid-heading-medium">Dans mes écouteurs live !
-    </h2>
+    <clip-line-reveal class="block">
+      <h2 id="music-title" class="mt-4 mb-0 max-w-heading-wide text-balance font-sans text-fluid-heading-medium" data-clip-reveal-line>Dans mes écouteurs live !
+      </h2>
+    </clip-line-reveal>
   </div>
 
   <music-preview class="relative block">
