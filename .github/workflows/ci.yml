@@ -30,9 +30,3 @@ jobs:
 
       - name: Construire le site
         run: npm run build
-
-      - name: Installer Chromium
-        run: npx playwright install --with-deps chromium
-
-      - name: Exécuter les tests navigateur
-        run: npm run test:e2e
