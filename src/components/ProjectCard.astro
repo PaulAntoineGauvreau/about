@@ -16,17 +16,17 @@ const { project } = Astro.props;
   data-accent={project.accent}
 >
   <a class="block no-underline" href={project.url} target="_blank" rel="noopener noreferrer">
-    <div class="relative h-project-image overflow-hidden rounded-2">
+    <div class="_clip-project-image relative h-project-image">
       <Picture
         src={project.image}
         formats={['avif']}
         fallbackFormat="webp"
-        widths={[640, 960, 1440]}
-        sizes="(min-width: 1024px) 50vw, 100vw"
+        widths={[320, 640, 656, 704, 960, 1440]}
+        sizes="(min-width: 1024px) calc((100vw - 5.6rem) / 2), calc(100vw - 3.2rem)"
         alt={`Aperçu du site ${project.name}`}
         loading="lazy"
         fetchpriority="auto"
-        class="block size-full grayscale object-cover transition-project-image duration-project ease-expo-out group-hover/card:grayscale-0 w-full"
+        class="block size-full rounded-2 grayscale object-cover object-top transition-project-image duration-project ease-expo-out group-hover/card:grayscale-0 w-full"
       />
     </div>
     <div>

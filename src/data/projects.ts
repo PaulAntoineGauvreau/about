@@ -7,9 +7,11 @@ import pylexImage from '../assets/projects/pylex.png';
 import mcWaterlooImage from '../assets/projects/mc-waterloo.png';
 import accordeonMontmagnyImage from '../assets/projects/accordeon-montmagny.png';
 import humanifyImage from '../assets/projects/humanify-360.png';
+import rolloutCyclingImage from '../assets/projects/rollout-cycling.png';
+import venitiennes83Image from '../assets/projects/venitiennes-83.png';
 
-export type ProjectCategory = 'headless' | 'wordpress' | 'commerce';
-export type ProjectAccent = 'atelier' | 'cosoltec' | 'cegep' | 'chia' | 'pylex' | 'mc-waterloo' | 'accordeon' | 'humanify';
+export type ProjectCategory = 'application' | 'headless' | 'wordpress' | 'commerce';
+export type ProjectAccent = 'atelier' | 'cosoltec' | 'cegep' | 'chia' | 'pylex' | 'mc-waterloo' | 'accordeon' | 'humanify' | 'rollout' | 'v83';
 
 export interface Project {
   name: string;
@@ -110,6 +112,28 @@ export const projects: readonly Project[] = [
     category: 'wordpress',
     image: humanifyImage,
     accent: 'humanify',
+  },
+  {
+    name: 'Roll Out',
+    url: 'https://www.rolloutcycling.cc/',
+    role: 'Design UI, développement PWA et intégration',
+    stack: ['SvelteKit', 'PWA', 'Web Bluetooth'],
+    summary:
+      'Une application progressive pour créer, suivre et enregistrer des séances de vélo intérieur structurées avec un home trainer.',
+    category: 'application',
+    image: rolloutCyclingImage,
+    accent: 'rollout',
+  },
+  {
+    name: 'Vénitiennes 83',
+    url: 'https://v83.ca/',
+    role: 'Développement WordPress et intégration',
+    stack: ['WordPress', 'PHP', 'JavaScript'],
+    summary:
+      'Un site éditorial et commercial consacré aux toiles sur mesure, aux produits pour la maison et au design intérieur.',
+    category: 'wordpress',
+    image: venitiennes83Image,
+    accent: 'v83',
   },
 ];
 

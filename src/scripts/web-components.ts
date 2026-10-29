@@ -322,9 +322,7 @@ class SpotifyPreview extends HTMLElement {
 type MontrealWeatherResponse = {
   current?: {
     temperature_2m?: number;
-    precipitation?: number;
     weather_code?: number;
-    wind_speed_10m?: number;
     is_day?: number;
   };
 };
@@ -384,7 +382,7 @@ class MontrealWeather extends HTMLElement {
       const parameters = new URLSearchParams({
         latitude: '45.5019',
         longitude: '-73.5674',
-        current: 'temperature_2m,precipitation,weather_code,wind_speed_10m,is_day',
+        current: 'temperature_2m,weather_code,is_day',
         timezone: 'America/Toronto',
       });
       const response = await fetch(`https://api.open-meteo.com/v1/forecast?${parameters}`, {
@@ -397,26 +395,29 @@ class MontrealWeather extends HTMLElement {
       const current = data.current;
       if (
         typeof current?.temperature_2m !== 'number' ||
-        typeof current.precipitation !== 'number' ||
-        typeof current.weather_code !== 'number' ||
-        typeof current.wind_speed_10m !== 'number'
+        typeof current.weather_code !== 'number'
       ) return;
 
-      const isOutdoorRide =
-        current.temperature_2m >= 5 &&
-        current.precipitation < 0.2 &&
-        current.weather_code <= 3 &&
-        current.wind_speed_10m <= 35;
+      const isSnowing =
+        (current.weather_code >= 71 && current.weather_code <= 77) ||
+        (current.weather_code >= 85 && current.weather_code <= 86);
       const condition = getWeatherCondition(current.weather_code, current.is_day !== 0);
 
       temperature.textContent = `${new Intl.NumberFormat('fr-CA', { maximumFractionDigits: 0 }).format(current.temperature_2m)} °C`;
       weatherIcon.textContent = condition.icon;
       weatherLabel.textContent = ` ${condition.label}.`;
-      bike.textContent = isOutdoorRide ? '🚴' : '🚴🏠';
-      bikeLabel.textContent = isOutdoorRide ? ' Vélo extérieur' : ' Vélo intérieur';
+      bike.textContent = isSnowing ? '⛷️' : '🚴';
+      bikeLabel.textContent = isSnowing ? ' Ski alpin' : ' Vélo';
+      weather.setAttribute('aria-busy', 'false');
       weather.hidden = false;
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') return;
+      temperature.textContent = '-- °C';
+      weatherIcon.textContent = '🌡️';
+      weatherLabel.textContent = ' Météo indisponible.';
+      bike.textContent = '🚴';
+      bikeLabel.textContent = ' Vélo';
+      weather.setAttribute('aria-busy', 'false');
     }
   }
 

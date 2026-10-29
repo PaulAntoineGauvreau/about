@@ -6,9 +6,10 @@ import ProjectCard from './ProjectCard.astro';
 const projects = getProjects();
 const filters = [
   { value: 'all', label: 'Tous', className: 'order-1' },
-  { value: 'headless', label: 'Headless', className: 'order-3 bp:order-2' },
-  { value: 'wordpress', label: 'WordPress', className: 'order-4 bp:order-3' },
-  { value: 'commerce', label: 'Commerce', className: 'order-2 bp:order-4' },
+  { value: 'application', label: 'Application', className: 'order-2' },
+  { value: 'headless', label: 'Headless', className: 'order-3' },
+  { value: 'wordpress', label: 'WordPress', className: 'order-4' },
+  { value: 'commerce', label: 'Commerce', className: 'order-5' },
 ] as const;
 ---
 

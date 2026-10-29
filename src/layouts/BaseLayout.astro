@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from 'astro:transitions';
 import Button from '../components/Button.astro';
 import { profile } from '../data/profile';
 import '../styles/global.css';
@@ -72,7 +71,6 @@ const personSchema = {
     <title>{title}</title>
     <script type="application/ld+json" is:inline set:html={JSON.stringify(personSchema)}></script>
     <script is:inline>document.documentElement.classList.add('js');</script>
-    <ClientRouter />
   </head>
   <body class="m-0 min-w-80 overflow-x-clip bg-background font-sans text-fluid-body text-foreground">
     <a class="fixed top-gutter left-gutter z-100 -translate-y-[200%] rounded-2 bg-surface px-4 py-3 font-mono text-fluid-caption font-bold uppercase text-foreground focus:translate-y-0" href="#contenu" data-skip-link>Aller au contenu</a>
@@ -96,11 +94,19 @@ const personSchema = {
         <span aria-hidden="true">·</span>
         <montreal-weather>
           <p aria-live="polite">
-            <span data-weather >
-              <span data-temperature>0 °C</span>
-              <span aria-hidden="true"> · </span><span data-weather-icon aria-hidden="true"></span>
-              <span class="sr-only" data-weather-label></span>
-              <span aria-hidden="true"> </span><span data-bike aria-hidden="true"></span>
+            <span class="inline-flex min-h-6 items-center gap-2" aria-busy="true" data-weather>
+              <span class="inline-grid min-w-16 place-items-center" data-temperature>
+                <span class="h-4 w-12 animate-pulse rounded-1 bg-border" aria-hidden="true"></span>
+                <span class="sr-only">Température en chargement</span>
+              </span>
+              <span aria-hidden="true">·</span>
+              <span class="inline-grid size-6 place-items-center" data-weather-icon aria-hidden="true">
+                <span class="size-5 animate-pulse rounded-full bg-border"></span>
+              </span>
+              <span class="sr-only" data-weather-label>Météo en chargement.</span>
+              <span class="inline-grid size-6 place-items-center" data-bike aria-hidden="true">
+                <span class="size-5 animate-pulse rounded-full bg-border"></span>
+              </span>
               <span class="sr-only" data-bike-label></span>
             </span>
           </p>
