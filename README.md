@@ -20,7 +20,6 @@ Le serveur local utilise normalement `http://localhost:4321`.
 ```bash
 npm run check       # Astro Check et TypeScript
 npm run build       # Build statique dans dist/
-npm run test:e2e    # Tests Playwright et Axe
 npm run generate:og # Régénère l’image Open Graph 1200 × 630
 ```
 

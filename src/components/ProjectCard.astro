@@ -4,10 +4,9 @@ import type { Project } from '../data/portfolio';
 
 interface Props {
   project: Project;
-  index: number;
 }
 
-const { project, index } = Astro.props;
+const { project } = Astro.props;
 ---
 
 <article
@@ -25,8 +24,8 @@ const { project, index } = Astro.props;
         widths={[640, 960, 1440]}
         sizes="(min-width: 1024px) 50vw, 100vw"
         alt={`Aperçu du site ${project.name}`}
-        loading={index < 2 ? 'eager' : 'lazy'}
-        fetchpriority={index === 0 ? 'high' : 'auto'}
+        loading="lazy"
+        fetchpriority="auto"
         class="block size-full grayscale object-cover transition-project-image duration-project ease-expo-out group-hover/card:grayscale-0 w-full"
       />
     </div>

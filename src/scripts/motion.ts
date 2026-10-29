@@ -159,6 +159,7 @@ function setupPageMotion() {
 
 document.addEventListener('astro:before-swap', clearPageMotion);
 document.addEventListener('astro:page-load', setupPageMotion);
+if (document.readyState === 'complete') setupPageMotion();
 document.addEventListener('astro:after-swap', () => {
   window.requestAnimationFrame(() => {
     const heading = document.querySelector<HTMLElement>('main h1');

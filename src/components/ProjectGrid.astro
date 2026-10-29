@@ -30,6 +30,6 @@ const filters = [
   <p class="sr-only" aria-live="polite" data-filter-status></p>
 
   <div class="grid grid-cols-1 gap-y-4 bp:grid-cols-2 bp:gap-x-8 bp:gap-y-8" data-project-grid>
-    {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
+    {projects.map((project) => <ProjectCard project={project} />)}
   </div>
 </project-filter>

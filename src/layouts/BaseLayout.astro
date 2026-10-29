@@ -89,14 +89,14 @@ const personSchema = {
           <Button variant="primary" href="/#contact">Contact</Button>
         </nav>
       </div>
-      <div class="hidden w-full items-center space-between gap-2 rounded-2 bg-surface px-3 py-2 font-mono text-fluid-caption font-bold uppercase bp:flex" data-header-meta>
+      <div class="hidden w-full items-center justify-between gap-2 rounded-2 bg-surface px-3 py-2 font-mono text-fluid-caption font-bold uppercase bp:flex" data-header-meta>
         <p>Aujourd'hui</p>
         <span aria-hidden="true">·</span>
         <p>Montréal, QC</p>
         <span aria-hidden="true">·</span>
         <montreal-weather>
           <p aria-live="polite">
-            <span data-weather>
+            <span data-weather >
               <span data-temperature>0 °C</span>
               <span aria-hidden="true"> · </span><span data-weather-icon aria-hidden="true"></span>
               <span class="sr-only" data-weather-label></span>
@@ -116,7 +116,16 @@ const personSchema = {
 
     <script>
       import '../scripts/web-components';
-      import '../scripts/motion';
+
+      const loadMotion = () => {
+        window.requestAnimationFrame(() => void import('../scripts/motion'));
+      };
+
+      if (document.readyState === 'complete') {
+        loadMotion();
+      } else {
+        window.addEventListener('load', loadMotion, { once: true });
+      }
     </script>
   </body>
 </html>

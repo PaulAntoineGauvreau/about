@@ -1,5 +1,6 @@
 ---
 import { getMusicFavorites } from '../../data/portfolio';
+import Button from '../Button.astro';
 import MusicCard from '../MusicCard.astro';
 
 const favorites = getMusicFavorites();
@@ -24,5 +25,21 @@ const favorites = getMusicFavorites();
     </div>
     <div class="sr-only" aria-hidden="true" data-spotify-player></div>
     <p class="sr-only" aria-live="polite" data-spotify-status></p>
+
+    <dialog
+      class="m-auto max-w-copy rounded-card border border-border bg-surface p-6 text-foreground backdrop:bg-foreground/80 bp:p-10"
+      aria-labelledby="spotify-consent-title"
+      aria-describedby="spotify-consent-description"
+      data-spotify-consent
+    >
+      <h3 id="spotify-consent-title" class="m-0 font-sans text-fluid-title-medium">Écouter avec Spotify?</h3>
+      <p id="spotify-consent-description" class="mt-4 mb-0 font-sans text-fluid-body">
+        Le lecteur Spotify est un service tiers. Il sera chargé uniquement avec ton accord et peut déposer des cookies tiers pour lancer la chanson.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button data-spotify-consent-accept>Lire avec Spotify</Button>
+        <Button variant="filter" data-spotify-consent-decline>Annuler</Button>
+      </div>
+    </dialog>
   </spotify-preview>
 </section>

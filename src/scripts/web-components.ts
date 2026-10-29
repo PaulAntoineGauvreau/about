@@ -135,10 +135,16 @@ function getSpotifyIframeApi() {
 }
 
 class SpotifyPreview extends HTMLElement {
+  private static readonly consentKey = 'pag-spotify-embed-consent';
   private controller?: AbortController;
   private embedController?: SpotifyEmbedController;
   private activeCard?: HTMLElement;
+  private pendingCard?: HTMLElement;
+  private consentDialog?: HTMLDialogElement;
+  private player?: HTMLElement;
+  private firstUri?: string;
   private loadedUri?: string;
+  private playerInitialized = false;
   private playerReady = false;
   private playerObserver?: MutationObserver;
 
@@ -148,8 +154,71 @@ class SpotifyPreview extends HTMLElement {
 
     const cards = Array.from(this.querySelectorAll<HTMLElement>('[data-spotify-card][data-spotify-uri]'));
     const player = this.querySelector<HTMLElement>('[data-spotify-player]');
+    const consentDialog = this.querySelector<HTMLDialogElement>('[data-spotify-consent]');
+    const acceptConsent = consentDialog?.querySelector<HTMLButtonElement>('[data-spotify-consent-accept]');
+    const declineConsent = consentDialog?.querySelector<HTMLButtonElement>('[data-spotify-consent-decline]');
     const firstUri = cards[0]?.dataset.spotifyUri;
     if (!player || !firstUri) return;
+    this.player = player;
+    this.firstUri = firstUri;
+    this.consentDialog = consentDialog ?? undefined;
+
+    cards.forEach((card) => {
+      const button = card.querySelector<HTMLButtonElement>('[data-spotify-toggle]');
+      button?.addEventListener('click', () => this.toggle(card), { signal: this.controller?.signal });
+    });
+
+    acceptConsent?.addEventListener('click', () => this.acceptSpotifyConsent(), { signal: this.controller.signal });
+    declineConsent?.addEventListener('click', () => this.declineSpotifyConsent(), { signal: this.controller.signal });
+    consentDialog?.addEventListener(
+      'close',
+      () => {
+        if (consentDialog.returnValue !== 'accepted') this.cancelPendingPlayback();
+        consentDialog.returnValue = '';
+      },
+      { signal: this.controller.signal },
+    );
+  }
+
+  private hasSpotifyConsent() {
+    try {
+      return window.sessionStorage.getItem(SpotifyPreview.consentKey) === 'granted';
+    } catch {
+      return false;
+    }
+  }
+
+  private acceptSpotifyConsent() {
+    try {
+      window.sessionStorage.setItem(SpotifyPreview.consentKey, 'granted');
+    } catch {
+      // Playback still works for the current page if storage is unavailable.
+    }
+
+    this.consentDialog?.close('accepted');
+    const card = this.pendingCard;
+    this.pendingCard = undefined;
+    if (!card) return;
+    this.activeCard = card;
+    this.initializePlayer();
+  }
+
+  private declineSpotifyConsent() {
+    this.consentDialog?.close('declined');
+    this.cancelPendingPlayback();
+  }
+
+  private cancelPendingPlayback() {
+    this.pendingCard = undefined;
+    const status = this.querySelector<HTMLElement>('[data-spotify-status]');
+    if (status) status.textContent = 'Lecture Spotify annulée.';
+  }
+
+  private initializePlayer() {
+    const player = this.player;
+    const firstUri = this.firstUri;
+    if (this.playerInitialized || !player || !firstUri) return;
+    this.playerInitialized = true;
 
     const hidePlayerFrame = () => {
       const iframe = document.querySelector<HTMLIFrameElement>('iframe[src*="open.spotify.com/embed"]');
@@ -161,11 +230,6 @@ class SpotifyPreview extends HTMLElement {
     this.playerObserver?.disconnect();
     this.playerObserver = new MutationObserver(hidePlayerFrame);
     this.playerObserver.observe(document.documentElement, { attributes: true, childList: true, subtree: true, attributeFilter: ['src'] });
-
-    cards.forEach((card) => {
-      const button = card.querySelector<HTMLButtonElement>('[data-spotify-toggle]');
-      button?.addEventListener('click', () => this.toggle(card), { signal: this.controller?.signal });
-    });
 
     void getSpotifyIframeApi().then((api) => {
       if (!this.isConnected) return;
@@ -191,8 +255,19 @@ class SpotifyPreview extends HTMLElement {
     }
 
     if (this.activeCard) this.pause(this.activeCard);
+
+    if (!this.hasSpotifyConsent()) {
+      this.pendingCard = card;
+      this.consentDialog?.showModal();
+      return;
+    }
+
     this.activeCard = card;
-    if (this.playerReady) this.startPlayback(card);
+    if (this.playerReady) {
+      this.startPlayback(card);
+    } else {
+      this.initializePlayer();
+    }
   }
 
   private startPlayback(card: HTMLElement) {
@@ -233,7 +308,12 @@ class SpotifyPreview extends HTMLElement {
     this.playerObserver = undefined;
     this.embedController?.destroy();
     this.embedController = undefined;
+    this.pendingCard = undefined;
+    this.consentDialog = undefined;
+    this.player = undefined;
+    this.firstUri = undefined;
     this.loadedUri = undefined;
+    this.playerInitialized = false;
     this.playerReady = false;
     delete this.dataset.spotifyReady;
   }
@@ -263,11 +343,31 @@ const getWeatherCondition = (code: number, isDay: boolean) => {
 
 class MontrealWeather extends HTMLElement {
   private controller?: AbortController;
+  private idleCallback?: number;
+  private fallbackTimeout?: number;
 
   connectedCallback() {
     this.controller?.abort();
     this.controller = new AbortController();
-    void this.loadWeather();
+
+    const scheduleWeather = () => {
+      if (!this.isConnected) return;
+      const idleWindow = window as Window & {
+        requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+      };
+
+      if (idleWindow.requestIdleCallback) {
+        this.idleCallback = idleWindow.requestIdleCallback(() => void this.loadWeather(), { timeout: 3000 });
+      } else {
+        this.fallbackTimeout = window.setTimeout(() => void this.loadWeather(), 1500);
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      scheduleWeather();
+    } else {
+      window.addEventListener('load', scheduleWeather, { once: true, signal: this.controller.signal });
+    }
   }
 
   private async loadWeather() {
@@ -322,6 +422,9 @@ class MontrealWeather extends HTMLElement {
 
   disconnectedCallback() {
     this.controller?.abort();
+    const idleWindow = window as Window & { cancelIdleCallback?: (handle: number) => void };
+    if (this.idleCallback !== undefined) idleWindow.cancelIdleCallback?.(this.idleCallback);
+    if (this.fallbackTimeout !== undefined) window.clearTimeout(this.fallbackTimeout);
   }
 }
 

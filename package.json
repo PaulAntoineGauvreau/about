@@ -9,8 +9,7 @@
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
     "generate:og": "node scripts/generate-og.mjs",
-    "capture:projects": "node scripts/capture-projects.mjs",
-    "test:e2e": "playwright test"
+    "capture:projects": "node scripts/capture-projects.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "latest",
@@ -23,8 +22,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "latest",
-    "@axe-core/playwright": "latest",
-    "@playwright/test": "1.64.1",
+    "@playwright/test": "^1.64.1",
     "autoprefixer": "latest",
     "postcss": "latest",
     "typescript": "latest"
