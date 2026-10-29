@@ -108,6 +108,7 @@ export default {
     lineHeight: createRatioScale(60, 200),
     letterSpacing: createTrackingScale(12),
     borderRadius: {
+      '1': '1px',
       ...createRemScale(12),
       shell: 'var(--pag-radius-shell)',
       card: 'var(--pag-layout-card-radius)',

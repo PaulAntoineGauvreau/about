@@ -19,6 +19,16 @@
     overflow: visible;
     clip-path: inset(-100vmax 0 0 0);
   }
+
+  ._method-card-sticky {
+    position: sticky;
+    top: calc(var(--pag-layout-stack-sticky-top) + var(--pag-method-card-offset, 0rem));
+  }
+
+  [data-method-index="0"] { --pag-method-card-offset: 0rem; z-index: 1; }
+  [data-method-index="1"] { --pag-method-card-offset: var(--pag-layout-stack-title-offset); z-index: 2; }
+  [data-method-index="2"] { --pag-method-card-offset: calc(var(--pag-layout-stack-title-offset) + var(--pag-layout-stack-title-offset)); z-index: 3; }
+  [data-method-index="3"] { --pag-method-card-offset: calc(var(--pag-layout-stack-title-offset) + var(--pag-layout-stack-title-offset) + var(--pag-layout-stack-title-offset)); z-index: 4; }
 }
 
 @media (prefers-reduced-motion: reduce) {

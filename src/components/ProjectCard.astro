@@ -10,7 +10,7 @@ const { project } = Astro.props;
 ---
 
 <article
-  class="group/card min-w-0"
+  class="group/card min-w-0 rounded-6 border-1 border-border bg-white p-4"
   data-project-card
   data-category={project.category}
   data-accent={project.accent}
@@ -26,7 +26,7 @@ const { project } = Astro.props;
         alt={`Aperçu du site ${project.name}`}
         loading="lazy"
         fetchpriority="auto"
-        class="block size-full rounded-2 grayscale object-cover object-top transition-project-image duration-project ease-expo-out group-hover/card:grayscale-0 w-full"
+        class="border-1 border-border block size-full rounded-2 grayscale object-cover object-top transition-project-image duration-project ease-expo-out group-hover/card:grayscale-0 w-full"
       />
     </div>
     <div>
@@ -34,12 +34,12 @@ const { project } = Astro.props;
         <h3 class="m-0 whitespace-nowrap font-sans text-fluid-title-large">{project.name}</h3>
       </div>
       <div class="max-w-copy">
-        <div class="py-3 font-mono text-fluid-caption font-bold uppercase">
+        <div class="pt-2 pb-3 font-mono text-fluid-caption font-bold uppercase">
           {project.role}
         </div>
       </div>
-      <ul class="flex min-h-13 list-none flex-wrap items-start gap-2" aria-label={`Technologies utilisées pour ${project.name}`}>
-        {project.stack.map((item) => <li class="rounded-full border border-border px-2 py-1 font-mono text-fluid-caption font-bold uppercase">{item}</li>)}
+      <ul class="flex list-none flex-wrap items-start gap-2" aria-label={`Technologies utilisées pour ${project.name}`}>
+        {project.stack.map((item) => <li class="inline-flex min-h-8 items-center justify-center rounded-full border border-border px-2 pt-1 pb-0 font-mono text-fluid-caption font-bold leading-100 uppercase">{item}</li>)}
       </ul>
       <span class="sr-only">{project.summary} Visiter le site dans un nouvel onglet.</span>
     </div>

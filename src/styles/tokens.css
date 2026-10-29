@@ -78,6 +78,8 @@
     --pag-layout-brand-width: 9.7rem;
     --pag-layout-stack-stage-height: 90svh;
     --pag-layout-stack-card-height: min(52rem, 56svh);
+    --pag-layout-stack-sticky-top: var(--pag-dimension-30);
+    --pag-layout-stack-title-offset: var(--pag-dimension-5);
     --pag-layout-stack-scroll-step: 72svh;
     --pag-layout-static-card-height: 28rem;
     --pag-layout-reduced-card-height: 24rem;
@@ -158,6 +160,8 @@
       --pag-layout-header-height: 14.4rem;
       --pag-layout-stack-stage-height: 90svh;
       --pag-layout-stack-card-height: min(58rem, 58svh);
+      --pag-layout-stack-sticky-top: var(--pag-dimension-30);
+      --pag-layout-stack-title-offset: var(--pag-dimension-5);
       --pag-layout-stack-scroll-step: 82svh;
       --pag-layout-static-card-height: 33.6rem;
       --pag-layout-music-card-width: 40rem;
