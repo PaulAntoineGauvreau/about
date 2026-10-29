@@ -12,8 +12,7 @@ const { favorite, duplicate = false } = Astro.props;
 <article
   class="group/music relative isolate flex min-h-music-card w-music-card flex-none overflow-hidden rounded-card border border-border-inverse p-5 text-surface"
   data-music-card
-  data-spotify-card={favorite.spotifyUri ? '' : undefined}
-  data-spotify-uri={favorite.spotifyUri}
+  data-preview-url={favorite.previewUrl}
 >
   {favorite.coverImage && <img class="absolute inset-0 -z-20 size-full object-cover" src={favorite.coverImage} alt="" loading="lazy" decoding="async" />}
   {favorite.coverImage && <span class="absolute inset-0 -z-10 bg-music-overlay" aria-hidden="true"></span>}
@@ -26,14 +25,14 @@ const { favorite, duplicate = false } = Astro.props;
         <p class="mt-2 mb-0 font-mono text-fluid-body text-muted-inverse">{favorite.title}</p>
       </div>
 
-      {favorite.spotifyUri && (
+      {favorite.previewUrl && (
         <button
           type="button"
           class="grid size-12 flex-none cursor-pointer place-items-center rounded-full border border-surface bg-surface text-foreground transition-colors duration-project ease-in hover:bg-transparent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
           aria-label={`Lire ${favorite.title} de ${favorite.artist}`}
           aria-pressed="false"
           tabindex={duplicate ? -1 : undefined}
-          data-spotify-toggle
+          data-music-toggle
           data-play-label={`Lire ${favorite.title} de ${favorite.artist}`}
           data-pause-label={`Mettre ${favorite.title} en pause`}
         >

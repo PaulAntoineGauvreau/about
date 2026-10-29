@@ -85,102 +85,32 @@ class CopyEmail extends HTMLElement {
   }
 }
 
-type SpotifyEmbedController = {
-  addListener: (event: string, callback: (event?: { data?: { isPaused?: boolean } }) => void) => void;
-  destroy: () => void;
-  loadEntity: (uri: string) => void;
-  pause: () => void;
-  play: () => void;
-};
-
-type SpotifyIframeApi = {
-  createController: (
-    element: HTMLElement,
-    options: { width: number; height: number; uri: string },
-    callback: (controller: SpotifyEmbedController) => void,
-  ) => void;
-};
-
-declare global {
-  interface Window {
-    onSpotifyIframeApiReady?: (api: SpotifyIframeApi) => void;
-    spotifyIframeApi?: SpotifyIframeApi;
-  }
-}
-
-let spotifyApiPromise: Promise<SpotifyIframeApi> | undefined;
-
-function getSpotifyIframeApi() {
-  if (window.spotifyIframeApi) return Promise.resolve(window.spotifyIframeApi);
-  if (spotifyApiPromise) return spotifyApiPromise;
-
-  spotifyApiPromise = new Promise((resolve) => {
-    const previousCallback = window.onSpotifyIframeApiReady;
-    window.onSpotifyIframeApiReady = (api) => {
-      window.spotifyIframeApi = api;
-      previousCallback?.(api);
-      resolve(api);
-    };
-
-    if (!document.querySelector<HTMLScriptElement>('[data-spotify-iframe-api]')) {
-      const script = document.createElement('script');
-      script.src = 'https://open.spotify.com/embed/iframe-api/v1';
-      script.async = true;
-      script.dataset.spotifyIframeApi = '';
-      document.head.append(script);
-    }
-  });
-
-  return spotifyApiPromise;
-}
-
-class SpotifyPreview extends HTMLElement {
+class MusicPreview extends HTMLElement {
   private controller?: AbortController;
-  private embedController?: SpotifyEmbedController;
+  private player?: HTMLAudioElement;
   private activeCard?: HTMLElement;
-  private player?: HTMLElement;
-  private firstUri?: string;
-  private loadedUri?: string;
-  private playerInitialized = false;
-  private playerReady = false;
-  private playerObserver?: MutationObserver;
   private preloadObserver?: IntersectionObserver;
-  private preloadIdleCallback?: number;
-  private preloadTimeout?: number;
 
   connectedCallback() {
     this.controller?.abort();
     this.controller = new AbortController();
 
-    const cards = Array.from(this.querySelectorAll<HTMLElement>('[data-spotify-card][data-spotify-uri]'));
-    const player = this.querySelector<HTMLElement>('[data-spotify-player]');
-    const firstUri = cards[0]?.dataset.spotifyUri;
-    if (!player || !firstUri) return;
+    const player = this.querySelector<HTMLAudioElement>('[data-music-player]');
+    const cards = Array.from(this.querySelectorAll<HTMLElement>('[data-music-card][data-preview-url]'));
+    if (!player || cards.length === 0) return;
     this.player = player;
-    this.firstUri = firstUri;
 
     cards.forEach((card) => {
-      const button = card.querySelector<HTMLButtonElement>('[data-spotify-toggle]');
+      const button = card.querySelector<HTMLButtonElement>('[data-music-toggle]');
       button?.addEventListener('click', () => this.toggle(card), { signal: this.controller?.signal });
+      card.addEventListener('pointerenter', () => this.prepare(card), { signal: this.controller?.signal });
+      card.addEventListener('focusin', () => this.prepare(card), { signal: this.controller?.signal });
     });
 
-    const preparePlayer = () => this.initializePlayer();
-    this.addEventListener('pointerenter', preparePlayer, { once: true, signal: this.controller.signal });
-    this.addEventListener('focusin', preparePlayer, { once: true, signal: this.controller.signal });
-
-    const scheduleIdlePreload = () => {
-      const idleWindow = window as Window & {
-        requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
-      };
-      if (idleWindow.requestIdleCallback) {
-        this.preloadIdleCallback = idleWindow.requestIdleCallback(preparePlayer, { timeout: 4000 });
-      } else {
-        this.preloadTimeout = window.setTimeout(preparePlayer, 2500);
-      }
-    };
-
-    if (document.readyState === 'complete') scheduleIdlePreload();
-    else window.addEventListener('load', scheduleIdlePreload, { once: true, signal: this.controller.signal });
+    player.addEventListener('play', () => this.handlePlay(), { signal: this.controller.signal });
+    player.addEventListener('pause', () => this.handlePause(), { signal: this.controller.signal });
+    player.addEventListener('ended', () => this.handleEnded(), { signal: this.controller.signal });
+    player.addEventListener('error', () => this.handleError(), { signal: this.controller.signal });
 
     if (typeof IntersectionObserver !== 'undefined') {
       this.preloadObserver = new IntersectionObserver(
@@ -188,97 +118,86 @@ class SpotifyPreview extends HTMLElement {
           if (!entries.some((entry) => entry.isIntersecting)) return;
           this.preloadObserver?.disconnect();
           this.preloadObserver = undefined;
-          this.initializePlayer();
+          this.prepare(cards[0]);
         },
         { rootMargin: '75% 0px' },
       );
       this.preloadObserver.observe(this);
-    } else {
-      window.addEventListener('load', preparePlayer, { once: true, signal: this.controller.signal });
     }
   }
 
-  private initializePlayer() {
+  private prepare(card: HTMLElement) {
     const player = this.player;
-    const firstUri = this.firstUri;
-    if (this.playerInitialized || !player || !firstUri) return;
-    this.playerInitialized = true;
+    const previewUrl = card.dataset.previewUrl;
+    if (!player || !previewUrl || (!player.paused && this.activeCard)) return;
+    if (player.dataset.previewUrl === previewUrl) return;
 
-    const hidePlayerFrame = () => {
-      const iframe = document.querySelector<HTMLIFrameElement>('iframe[src*="open.spotify.com/embed"]');
-      iframe?.setAttribute('title', 'Lecteur Spotify masqué');
-      iframe?.setAttribute('tabindex', '-1');
-      iframe?.setAttribute('aria-hidden', 'true');
-    };
-    this.playerObserver?.disconnect();
-    this.playerObserver = new MutationObserver(hidePlayerFrame);
-    this.playerObserver.observe(document.documentElement, { attributes: true, childList: true, subtree: true, attributeFilter: ['src'] });
-
-    void getSpotifyIframeApi().then((api) => {
-      if (!this.isConnected) return;
-
-      api.createController(player, { width: 152, height: 152, uri: firstUri }, (embedController) => {
-        this.embedController = embedController;
-        hidePlayerFrame();
-        embedController.addListener('ready', () => {
-          hidePlayerFrame();
-          this.loadedUri = firstUri;
-          this.playerReady = true;
-          this.dataset.spotifyReady = '';
-          if (this.activeCard) this.startPlayback(this.activeCard);
-        });
-        embedController.addListener('playback_update', (event) => {
-          if (!this.activeCard || event?.data?.isPaused === undefined) return;
-          this.setCardPlaybackState(this.activeCard, !event.data.isPaused);
-        });
-      });
-    });
+    player.preload = 'metadata';
+    player.src = previewUrl;
+    player.dataset.previewUrl = previewUrl;
+    player.load();
   }
 
   private toggle(card: HTMLElement) {
-    if (this.activeCard === card && card.hasAttribute('data-playing')) {
-      this.pause(card);
+    const player = this.player;
+    const previewUrl = card.dataset.previewUrl;
+    if (!player || !previewUrl) return;
+
+    if (this.activeCard === card && !player.paused) {
+      player.pause();
       return;
     }
 
-    if (this.activeCard) this.pause(this.activeCard);
-
+    const changingTrack = player.dataset.previewUrl !== previewUrl;
+    if (this.activeCard && this.activeCard !== card) this.setCardPlaybackState(this.activeCard, false);
     this.activeCard = card;
-    if (this.playerReady) {
-      this.startPlayback(card);
-    } else {
-      this.initializePlayer();
+
+    if (changingTrack) {
+      player.preload = 'auto';
+      player.src = previewUrl;
+      player.dataset.previewUrl = previewUrl;
+      player.load();
     }
+
+    const status = this.querySelector<HTMLElement>('[data-music-status]');
+    if (status) status.textContent = `Chargement de ${card.textContent?.trim() ?? 'la chanson'}.`;
+
+    void player.play().catch(() => this.handleError());
   }
 
-  private startPlayback(card: HTMLElement) {
-    const uri = card.dataset.spotifyUri;
-    if (!uri || !this.embedController) return;
-
-    this.querySelectorAll<HTMLElement>('[data-spotify-card]').forEach((item) => delete item.dataset.playing);
-    if (this.loadedUri !== uri) {
-      this.embedController.loadEntity(uri);
-      this.loadedUri = uri;
-    }
-    this.embedController.play();
-    this.setCardPlaybackState(card, true);
-
-    const status = this.querySelector<HTMLElement>('[data-spotify-status]');
-    if (status) status.textContent = `Lecture de ${card.textContent?.trim() ?? 'la chanson'}.`;
+  private handlePlay() {
+    if (!this.activeCard) return;
+    this.setCardPlaybackState(this.activeCard, true);
+    const status = this.querySelector<HTMLElement>('[data-music-status]');
+    if (status) status.textContent = `Lecture de ${this.activeCard.textContent?.trim() ?? 'la chanson'}.`;
   }
 
-  private pause(card: HTMLElement) {
-    if (this.activeCard !== card) return;
-    this.embedController?.pause();
-    this.setCardPlaybackState(card, false);
-    this.activeCard = undefined;
-
-    const status = this.querySelector<HTMLElement>('[data-spotify-status]');
+  private handlePause() {
+    if (!this.activeCard || this.player?.ended) return;
+    this.setCardPlaybackState(this.activeCard, false);
+    const status = this.querySelector<HTMLElement>('[data-music-status]');
     if (status) status.textContent = 'Lecture en pause.';
   }
 
+  private handleEnded() {
+    if (this.activeCard) this.setCardPlaybackState(this.activeCard, false);
+    this.activeCard = undefined;
+    const status = this.querySelector<HTMLElement>('[data-music-status]');
+    if (status) status.textContent = 'Extrait terminé.';
+  }
+
+  private handleError() {
+    if (this.activeCard) this.setCardPlaybackState(this.activeCard, false);
+    this.activeCard = undefined;
+    const status = this.querySelector<HTMLElement>('[data-music-status]');
+    if (status) status.textContent = 'Cet extrait audio est temporairement indisponible.';
+  }
+
   private setCardPlaybackState(card: HTMLElement, playing: boolean) {
-    const button = card.querySelector<HTMLButtonElement>('[data-spotify-toggle]');
+    this.querySelectorAll<HTMLElement>('[data-music-card]').forEach((item) => {
+      if (item !== card) delete item.dataset.playing;
+    });
+    const button = card.querySelector<HTMLButtonElement>('[data-music-toggle]');
     card.toggleAttribute('data-playing', playing);
     button?.setAttribute('aria-pressed', String(playing));
     const label = playing ? button?.dataset.pauseLabel : button?.dataset.playLabel;
@@ -287,23 +206,13 @@ class SpotifyPreview extends HTMLElement {
 
   disconnectedCallback() {
     this.controller?.abort();
-    const idleWindow = window as Window & { cancelIdleCallback?: (handle: number) => void };
-    if (this.preloadIdleCallback !== undefined) idleWindow.cancelIdleCallback?.(this.preloadIdleCallback);
-    if (this.preloadTimeout !== undefined) window.clearTimeout(this.preloadTimeout);
-    this.preloadIdleCallback = undefined;
-    this.preloadTimeout = undefined;
     this.preloadObserver?.disconnect();
     this.preloadObserver = undefined;
-    this.playerObserver?.disconnect();
-    this.playerObserver = undefined;
-    this.embedController?.destroy();
-    this.embedController = undefined;
+    this.player?.pause();
+    this.player?.removeAttribute('src');
+    this.player?.load();
     this.player = undefined;
-    this.firstUri = undefined;
-    this.loadedUri = undefined;
-    this.playerInitialized = false;
-    this.playerReady = false;
-    delete this.dataset.spotifyReady;
+    this.activeCard = undefined;
   }
 }
 
@@ -420,4 +329,4 @@ class MontrealWeather extends HTMLElement {
 if (!customElements.get('project-filter')) customElements.define('project-filter', ProjectFilter);
 if (!customElements.get('copy-email')) customElements.define('copy-email', CopyEmail);
 if (!customElements.get('montreal-weather')) customElements.define('montreal-weather', MontrealWeather);
-if (!customElements.get('spotify-preview')) customElements.define('spotify-preview', SpotifyPreview);
+if (!customElements.get('music-preview')) customElements.define('music-preview', MusicPreview);

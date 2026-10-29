@@ -12,7 +12,7 @@ const favorites = getMusicFavorites();
     </h2>
   </div>
 
-  <spotify-preview class="relative block" data-spotify-preview>
+  <music-preview class="relative block" data-music-preview>
     <div class="group/marquee mt-16 overflow-hidden motion-reduce:overflow-x-auto" data-music-marquee>
       <div class="flex w-max animate-marquee will-change-transform group-hover/marquee:[animation-play-state:paused] group-focus-within/marquee:[animation-play-state:paused] motion-reduce:animate-none motion-reduce:transform-none motion-reduce:will-change-auto" data-music-track>
         <div class="flex gap-gutter pr-gutter" data-music-group>
@@ -23,7 +23,7 @@ const favorites = getMusicFavorites();
         </div>
       </div>
     </div>
-    <div class="pointer-events-none absolute top-0 left-0 size-40 overflow-hidden opacity-0" aria-hidden="true" data-spotify-player></div>
-    <p class="sr-only" aria-live="polite" data-spotify-status></p>
-  </spotify-preview>
+    <audio class="hidden" preload="none" data-music-player></audio>
+    <p class="sr-only" aria-live="polite" data-music-status></p>
+  </music-preview>
 </section>
