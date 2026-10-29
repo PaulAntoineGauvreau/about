@@ -5,17 +5,18 @@ interface Props {
   title: string;
   id?: string;
   compact?: boolean;
+  centered?: boolean;
   class?: string;
 }
 
-const { number, eyebrow, title, id, compact = false, class: className } = Astro.props;
+const { number, eyebrow, title, id, compact = false, centered = false, class: className } = Astro.props;
 const heading = title || eyebrow;
 ---
 
 <div class:list={['mb-12 bp:mb-14', className]}>
   <p class="hidden" aria-hidden="true">{number}</p>
-  <div>
+  <div class:list={{ 'text-center': centered }}>
     <p class="mt-0 mb-4 font-mono text-fluid-overline font-bold uppercase">{eyebrow}</p>
-    <h2 class:list={[title ? `m-0 max-w-heading-wide font-sans text-balance ${compact ? 'text-fluid-title-small bp:whitespace-nowrap' : 'text-fluid-heading-medium'}` : 'sr-only']} id={id}>{heading}</h2>
+    <h2 class:list={[title ? `m-0 max-w-heading-wide font-sans text-balance ${compact ? 'text-fluid-title-small bp:whitespace-nowrap' : 'text-fluid-heading-medium'}` : 'sr-only', { 'mx-auto': centered }]} id={id}>{heading}</h2>
   </div>
 </div>
