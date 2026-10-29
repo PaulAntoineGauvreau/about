@@ -6,8 +6,6 @@ class ProjectFilter extends HTMLElement {
   connectedCallback() {
     this.controller?.abort();
     this.controller = new AbortController();
-    this.dataset.enhanced = '';
-
     const buttons = Array.from(this.querySelectorAll<HTMLButtonElement>('[data-filter]'));
     const cards = Array.from(this.querySelectorAll<HTMLElement>('[data-project-card]'));
     const status = this.querySelector<HTMLElement>('[data-filter-status]');
@@ -49,8 +47,6 @@ class CopyEmail extends HTMLElement {
   connectedCallback() {
     this.controller?.abort();
     this.controller = new AbortController();
-    this.dataset.enhanced = '';
-
     const button = this.querySelector<HTMLButtonElement>('[data-copy-button]');
     const status = this.querySelector<HTMLElement>('[data-copy-status]');
     const email = this.dataset.email;
@@ -306,7 +302,6 @@ class MontrealWeather extends HTMLElement {
       bike.textContent = isSnowing ? '⛷️' : '🚴';
       bikeLabel.textContent = isSnowing ? ' Ski alpin' : ' Vélo';
       weather.setAttribute('aria-busy', 'false');
-      weather.hidden = false;
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') return;
       temperature.textContent = '-- °C';

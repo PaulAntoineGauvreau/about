@@ -102,6 +102,6 @@ import {
     function setupPrintButton() {
       document.querySelector('[data-print-cv]')?.addEventListener('click', () => window.print(), { once: true });
     }
-    document.addEventListener('astro:page-load', setupPrintButton);
+    setupPrintButton();
   </script>
 </BaseLayout>

@@ -9,11 +9,5 @@ export function setupSmoothScroll() {
     stopInertiaOnNavigate: true,
   });
 
-  const announceScroll = () => window.dispatchEvent(new Event('pag:lenis-scroll'));
-  lenis.on('scroll', announceScroll);
-
-  return () => {
-    lenis.off('scroll', announceScroll);
-    lenis.destroy();
-  };
+  return () => lenis.destroy();
 }

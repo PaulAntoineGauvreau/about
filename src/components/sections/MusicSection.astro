@@ -12,13 +12,13 @@ const favorites = getMusicFavorites();
     </h2>
   </div>
 
-  <music-preview class="relative block" data-music-preview>
-    <div class="group/marquee mt-16 overflow-hidden motion-reduce:overflow-x-auto" data-music-marquee>
-      <div class="flex w-max animate-marquee will-change-transform group-hover/marquee:[animation-play-state:paused] group-focus-within/marquee:[animation-play-state:paused] motion-reduce:animate-none motion-reduce:transform-none motion-reduce:will-change-auto" data-music-track>
-        <div class="flex gap-gutter pr-gutter" data-music-group>
+  <music-preview class="relative block">
+    <div class="group/marquee mt-16 overflow-hidden motion-reduce:overflow-x-auto">
+      <div class="flex w-max animate-marquee will-change-transform group-hover/marquee:[animation-play-state:paused] group-focus-within/marquee:[animation-play-state:paused] motion-reduce:animate-none motion-reduce:transform-none motion-reduce:will-change-auto">
+        <div class="flex gap-gutter pr-gutter">
           {favorites.map((favorite) => <MusicCard favorite={favorite} />)}
         </div>
-        <div class="flex gap-gutter pr-gutter motion-reduce:hidden" aria-hidden="true" data-music-group>
+        <div class="flex gap-gutter pr-gutter motion-reduce:hidden" aria-hidden="true">
           {favorites.map((favorite) => <MusicCard favorite={favorite} duplicate />)}
         </div>
       </div>

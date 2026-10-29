@@ -1,30 +1,12 @@
 const REM_BASE = 10;
 const GRID_STEP = 4;
-const FLUID_MIN_WIDTH = 320;
-const FLUID_MAX_WIDTH = 1440;
-
-function formatNumber(value) {
-  return Number(value.toFixed(4));
-}
-
-function pixelsToRem(value) {
-  return `${formatNumber(value / REM_BASE)}rem`;
-}
-
-function createFluidClamp(min, max) {
-  const slope = ((max - min) / (FLUID_MAX_WIDTH - FLUID_MIN_WIDTH)) * 100;
-  const intercept = min - (slope * FLUID_MIN_WIDTH) / 100;
-
-  return `clamp(${pixelsToRem(min)}, calc(${pixelsToRem(intercept)} + ${formatNumber(slope)}vw), ${pixelsToRem(max)})`;
-}
-
-function createFluidText(minSize, maxSize, minLineHeight, maxLineHeight, letterSpacing, fontWeight) {
+function createFluidText(token, tracking, fontWeight) {
   return [
-    createFluidClamp(minSize, maxSize),
+    `var(--pag-text-${token}-size)`,
     {
-      lineHeight: createFluidClamp(minLineHeight, maxLineHeight),
-      letterSpacing,
-      fontWeight: String(fontWeight),
+      lineHeight: `var(--pag-text-${token}-line)`,
+      letterSpacing: tracking ? `var(--pag-tracking-${tracking})` : '0',
+      fontWeight: `var(--pag-font-weight-${fontWeight})`,
     },
   ];
 }
@@ -63,7 +45,6 @@ const spacing = {
   gutter: 'var(--pag-layout-gutter)',
   section: 'var(--pag-layout-section-space)',
   'header-offset': 'var(--pag-layout-header-offset)',
-  'header-height': 'var(--pag-layout-header-height)',
   'brand-slot': 'var(--pag-layout-brand-width)',
   'music-card': 'var(--pag-layout-music-card-width)',
   'stack-stage': 'var(--pag-layout-stack-stage-height)',
@@ -73,19 +54,19 @@ const spacing = {
   'project-image': 'var(--pag-layout-project-image-height)',
 };
 const fluidTypography = {
-  'fluid-overline': createFluidText(12, 16, 16, 20, '0.08rem', 700),
-  'fluid-caption': createFluidText(12, 16, 16, 20, '0.04rem', 400),
-  'fluid-body-small': createFluidText(12, 16, 20, 24, '0rem', 400),
-  'fluid-body': createFluidText(16, 20, 24, 28, '0rem', 400),
-  'fluid-body-large': createFluidText(16, 24, 24, 32, '-0.04rem', 400),
-  'fluid-lead': createFluidText(24, 48, 28, 52, '-0.08rem', 700),
-  'fluid-title-small': createFluidText(20, 32, 24, 36, '-0.02em', 700),
-  'fluid-title-medium': createFluidText(24, 40, 28, 44, '-0.03em', 700),
-  'fluid-title-large': createFluidText(28, 60, 32, 56, '-0.04em', 800),
-  'fluid-heading-small': createFluidText(40, 100, 40, 96, '-0.04em', 800),
-  'fluid-heading-medium': createFluidText(40, 116, 36, 108, '-0.05em', 800),
-  'fluid-heading-large': createFluidText(68, 208, 56, 184, '-0.055em', 900),
-  'fluid-display': createFluidText(56, 208, 48, 184, '-0.07em', 900),
+  'fluid-overline': createFluidText('overline', 'overline', 'bold'),
+  'fluid-caption': createFluidText('caption', 'caption', 'regular'),
+  'fluid-body-small': createFluidText('body-small', undefined, 'regular'),
+  'fluid-body': createFluidText('body', undefined, 'regular'),
+  'fluid-body-large': createFluidText('body-large', 'body-large', 'regular'),
+  'fluid-lead': createFluidText('lead', 'lead', 'bold'),
+  'fluid-title-small': createFluidText('title-small', 'title-small', 'bold'),
+  'fluid-title-medium': createFluidText('title-medium', 'title-medium', 'bold'),
+  'fluid-title-large': createFluidText('title-large', 'title-large', 'extra-bold'),
+  'fluid-heading-small': createFluidText('heading-small', 'heading-small', 'extra-bold'),
+  'fluid-heading-medium': createFluidText('heading-medium', 'heading-medium', 'extra-bold'),
+  'fluid-heading-large': createFluidText('heading-large', 'heading-large', 'black'),
+  'fluid-display': createFluidText('display', 'display', 'black'),
 };
 
 /** @type {import('tailwindcss').Config} */
@@ -117,7 +98,7 @@ export default {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-      white: '#ffffff',
+      white: 'var(--pag-color-white)',
       primary: 'var(--color-primary)',
       foreground: 'var(--color-foreground)',
       background: 'var(--color-background)',
@@ -127,15 +108,10 @@ export default {
       'border-inverse': 'var(--pag-color-border-inverse)',
       'muted-inverse': 'var(--pag-color-text-muted-inverse)',
       'music-overlay': 'var(--pag-color-music-overlay)',
-      'project-atelier': 'var(--pag-color-project-atelier)',
-      'project-cosoltec': 'var(--pag-color-project-cosoltec)',
-      'project-cegep': 'var(--pag-color-project-cegep)',
-      'project-chia': 'var(--pag-color-project-chia)',
-      'project-pylex': 'var(--pag-color-project-pylex)',
     },
     fontFamily: {
-      sans: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
-      mono: ['Courier New', 'Courier', 'Nimbus Mono PS', 'monospace'],
+      sans: ['var(--pag-font-family-sans)'],
+      mono: ['var(--pag-font-family-mono)'],
     },
     extend: {
       maxWidth: {
@@ -151,7 +127,6 @@ export default {
       transitionDuration: {
         fast: 'var(--pag-motion-duration-fast)',
         medium: 'var(--pag-motion-duration-medium)',
-        slow: 'var(--pag-motion-duration-slow)',
         project: 'var(--pag-motion-duration-project)',
       },
       transitionTimingFunction: {

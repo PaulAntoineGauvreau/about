@@ -6,14 +6,13 @@ import SectionHeading from '../SectionHeading.astro';
 
 <section id="methode" class="relative isolate overflow-clip bg-foreground px-gutter pt-section pb-0 text-surface" aria-labelledby="method-title">
   <SectionHeading
-    number="02"
     eyebrow="Travailler en gang"
     title="Faire des choses"
     id="method-title"
     class="sticky top-0 z-10 bg-foreground pt-4 bp:pt-6"
   />
-  <div data-method-stack>
-    <div class="min-h-stack-stage" data-method-stage>
+  <div>
+    <div class="min-h-stack-stage">
       {workPrinciples.map((principle, index) => <MethodCard principle={principle} index={index} />)}
     </div>
     <div class="pointer-events-none relative z-5 h-stack-card bg-foreground" aria-hidden="true"></div>

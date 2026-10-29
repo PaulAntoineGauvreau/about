@@ -46,7 +46,6 @@
   @page { size: letter; margin: 0.55in; }
   body { background: #fff; color: #000; font-size: 9.5pt; }
   [data-site-header],
-  [data-site-footer],
   [data-skip-link],
   [data-print-cv],
   [data-cv-back] { display: none !important; }

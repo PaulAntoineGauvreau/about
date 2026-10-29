@@ -11,7 +11,6 @@ import rolloutCyclingImage from '../assets/projects/rollout-cycling.png';
 import venitiennes83Image from '../assets/projects/venitiennes-83.png';
 
 export type ProjectCategory = 'application' | 'headless' | 'wordpress' | 'commerce';
-export type ProjectAccent = 'atelier' | 'cosoltec' | 'cegep' | 'chia' | 'pylex' | 'mc-waterloo' | 'accordeon' | 'humanify' | 'rollout' | 'v83';
 
 export interface ProjectTeam {
   name: string;
@@ -26,7 +25,6 @@ export interface Project {
   summary: string;
   category: ProjectCategory;
   image: ImageMetadata;
-  accent: ProjectAccent;
   team: ProjectTeam;
 }
 
@@ -58,7 +56,6 @@ export const projects: readonly Project[] = [
       'Une présence numérique centrée sur les soins et les contenus, alimentée par Craft en mode headless.',
     category: 'headless',
     image: atelierImage,
-    accent: 'atelier',
     team: teams.deuxHuitHuit,
   },
   {
@@ -70,7 +67,6 @@ export const projects: readonly Project[] = [
       'Un site corporatif qui organise une offre technique dense dans une expérience de consultation claire.',
     category: 'headless',
     image: cosoltecImage,
-    accent: 'cosoltec',
     team: teams.deuxHuitHuit,
   },
   {
@@ -82,7 +78,6 @@ export const projects: readonly Project[] = [
       'Un écosystème WordPress destiné à rendre accessibles programmes, services et nouvelles à plusieurs publics.',
     category: 'wordpress',
     image: cegepImage,
-    accent: 'cegep',
     team: teams.lesPretentieux,
   },
   {
@@ -94,7 +89,6 @@ export const projects: readonly Project[] = [
       'Une boutique en ligne pour une marque alimentaire, du contenu de marque jusqu’au parcours d’achat.',
     category: 'commerce',
     image: chiaImage,
-    accent: 'chia',
     team: teams.deuxHuitHuit,
   },
   {
@@ -106,7 +100,6 @@ export const projects: readonly Project[] = [
       'Un catalogue de produits bilingue avec filtres, pensé pour guider rapidement vers le bon produit.',
     category: 'commerce',
     image: pylexImage,
-    accent: 'pylex',
     team: teams.lesPretentieux,
   },
   {
@@ -118,7 +111,6 @@ export const projects: readonly Project[] = [
       'Une plateforme culturelle qui met en valeur la programmation, les promotions et la billetterie de la Maison de la culture de Waterloo.',
     category: 'wordpress',
     image: mcWaterlooImage,
-    accent: 'mc-waterloo',
     team: teams.chacha,
   },
   {
@@ -130,7 +122,6 @@ export const projects: readonly Project[] = [
       'Un portail vivant qui rassemble le festival, le musée et l’école internationale de musique de Montmagny.',
     category: 'wordpress',
     image: accordeonMontmagnyImage,
-    accent: 'accordeon',
     team: teams.lesPretentieux,
   },
   {
@@ -142,7 +133,6 @@ export const projects: readonly Project[] = [
       'Une présence numérique dédiée au recrutement humain, à la performance des équipes et aux solutions RH.',
     category: 'wordpress',
     image: humanifyImage,
-    accent: 'humanify',
     team: teams.lesPretentieux,
   },
   {
@@ -154,7 +144,6 @@ export const projects: readonly Project[] = [
       'Une application progressive pour créer, suivre et enregistrer des séances de vélo intérieur structurées avec un home trainer.',
     category: 'application',
     image: rolloutCyclingImage,
-    accent: 'rollout',
     team: teams.solo,
   },
   {
@@ -166,7 +155,6 @@ export const projects: readonly Project[] = [
       'Un site éditorial et commercial consacré aux toiles sur mesure, aux produits pour la maison et au design intérieur.',
     category: 'wordpress',
     image: venitiennes83Image,
-    accent: 'v83',
     team: teams.lesPretentieux,
   },
 ];

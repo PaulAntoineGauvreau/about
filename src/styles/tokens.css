@@ -6,23 +6,13 @@
     --pag-color-orange: #ff5a3d;
     --pag-color-blue: #c9d7ff;
     --pag-color-white: #ffffff;
-    --pag-color-black: #000000;
-    --pag-color-project-atelier: #fff3d7;
-    --pag-color-project-cosoltec: #dceeff;
-    --pag-color-project-cegep: #dff5ec;
-    --pag-color-project-chia: #ffe4eb;
-    --pag-color-project-pylex: #e3f0ff;
 
     --pag-color-brand: var(--pag-color-orange);
     --pag-color-canvas: var(--pag-color-paper);
     --pag-color-surface-default: var(--pag-color-surface);
-    --pag-color-surface-inverse: var(--pag-color-ink);
     --pag-color-text: var(--pag-color-ink);
-    --pag-color-text-inverse: var(--pag-color-surface);
-    --pag-color-text-muted: color-mix(in srgb, var(--pag-color-ink) 72%, transparent);
     --pag-color-text-muted-inverse: color-mix(in srgb, var(--pag-color-surface) 72%, transparent);
     --pag-color-border: color-mix(in srgb, var(--pag-color-ink) 28%, transparent);
-    --pag-color-border-strong: var(--pag-color-ink);
     --pag-color-border-inverse: color-mix(in srgb, var(--pag-color-surface) 28%, transparent);
     --pag-color-music-overlay: color-mix(in srgb, var(--pag-color-ink) 68%, transparent);
     --pag-color-focus: var(--pag-color-orange);
@@ -36,33 +26,17 @@
     --color-accent: var(--pag-color-blue);
 
     --pag-dimension-1: 0.4rem;
-    --pag-dimension-2: 0.8rem;
-    --pag-dimension-3: 1.2rem;
     --pag-dimension-4: 1.6rem;
     --pag-dimension-5: 2rem;
     --pag-dimension-6: 2.4rem;
-    --pag-dimension-8: 3.2rem;
-    --pag-dimension-10: 4rem;
     --pag-dimension-12: 4.8rem;
-    --pag-dimension-16: 6.4rem;
     --pag-dimension-20: 8rem;
-    --pag-dimension-24: 9.6rem;
-    --pag-dimension-30: 12rem;
     --pag-dimension-40: 16rem;
     --pag-dimension-50: 20rem;
-    --pag-dimension-60: 24rem;
-    --pag-border-1: 0.1rem;
     --pag-border-2: 0.2rem;
-    --pag-radius-small: 0.4rem;
-    --pag-radius-medium: 0.8rem;
     --pag-radius-shell: 1.2rem;
     --pag-radius-large: 1.6rem;
     --pag-radius-card: 2.8rem;
-    --pag-radius-full: 9999px;
-    --pag-icon-small: 2rem;
-    --pag-icon-medium: 3.2rem;
-    --pag-icon-large: 4.8rem;
-    --pag-content-wide: 144rem;
     --pag-content-copy: 84rem;
     --pag-content-method-copy: 72rem;
     --pag-content-heading: 96rem;
@@ -75,7 +49,6 @@
     --pag-layout-project-image-height: 18rem;
     --pag-layout-header-offset: var(--pag-dimension-4);
     --pag-layout-header-height: 13.6rem;
-    --pag-layout-header-shell-width: 88rem;
     --pag-layout-brand-width: 9.7rem;
     --pag-layout-stack-stage-height: 90svh;
     --pag-layout-stack-card-height: min(52rem, 56svh);
@@ -136,19 +109,10 @@
 
     --pag-motion-duration-fast: 150ms;
     --pag-motion-duration-medium: 240ms;
-    --pag-motion-duration-slow: 500ms;
     --pag-motion-duration-project: 300ms;
     --pag-motion-duration-marquee: 30s;
     --pag-motion-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
     --pag-motion-ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
-    --pag-motion-offset-card: 2.4rem;
-    --pag-motion-scale-card: 0.965;
-    --pag-motion-scale-card-enter: 0.985;
-    --pag-motion-rotation-enter: -1.25deg;
-    --pag-motion-rotation-exit: 0.75deg;
-    --pag-motion-stack-scrub: 0.6;
-    --pag-motion-stack-safe-area: 1.6rem;
-    --pag-motion-stack-card-gap: 16rem;
     --pag-roulette-line-height: 1.2em;
   }
 
@@ -167,7 +131,6 @@
       --pag-layout-static-card-height: 33.6rem;
       --pag-layout-music-card-width: 40rem;
       --pag-layout-marquee-gap: var(--pag-dimension-6);
-      --pag-motion-stack-card-gap: 24rem;
     }
   }
 }

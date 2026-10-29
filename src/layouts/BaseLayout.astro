@@ -70,14 +70,13 @@ const personSchema = {
 
     <title>{title}</title>
     <script type="application/ld+json" is:inline set:html={JSON.stringify(personSchema)}></script>
-    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body class="m-0 min-w-80 overflow-x-clip bg-background font-sans text-fluid-body text-foreground">
     <a class="fixed top-gutter left-gutter z-100 -translate-y-[200%] rounded-2 bg-surface px-4 py-3 font-mono text-fluid-caption font-bold uppercase text-foreground focus:translate-y-0" href="#contenu" data-skip-link>Aller au contenu</a>
 
     <header class="absolute top-header-offset right-gutter left-gutter z-20 flex flex-col items-start gap-2 text-foreground bp:right-auto" data-site-header>
       <div class="flex w-full items-center justify-between gap-3 rounded-shell bg-surface p-2 bp:w-auto">
-        <a class="inline-flex min-h-11 w-brand-slot flex-none items-center justify-center rounded-2 bg-foreground px-4 font-sans text-fluid-body font-black tracking-[-0.04em] text-surface no-underline" href="/" aria-label="PAG — Accueil de Paul-Antoine Gauvreau">
+        <a class="inline-flex min-h-11 w-brand-slot flex-none items-center justify-center rounded-2 bg-foreground px-4 font-sans text-fluid-body font-black tracking-[var(--pag-tracking-brand)] text-surface no-underline" href="/" aria-label="PAG — Accueil de Paul-Antoine Gauvreau">
           PAG
         </a>
         <nav class="flex min-w-0 items-center font-mono text-fluid-caption font-bold uppercase" aria-label="Navigation principale">
@@ -87,7 +86,7 @@ const personSchema = {
           <Button variant="primary" href="/#contact">Contact</Button>
         </nav>
       </div>
-      <div class="hidden w-full items-center justify-between gap-2 rounded-2 bg-surface px-3 py-2 font-mono text-fluid-caption font-bold uppercase bp:flex" data-header-meta>
+      <div class="hidden w-full items-center justify-between gap-2 rounded-2 bg-surface px-3 py-2 font-mono text-fluid-caption font-bold uppercase bp:flex">
         <p>Aujourd'hui</p>
         <span aria-hidden="true">·</span>
         <p>Montréal, QC</p>
@@ -114,23 +113,28 @@ const personSchema = {
       </div>
     </header>
     <slot />
-    <!-- <footer class="flex flex-col items-start justify-between gap-4 bg-foreground px-gutter py-5 font-mono text-fluid-caption uppercase text-surface bp:flex-row" data-site-footer>
-      <p class="m-0">Paul-Antoine Gauvreau <span aria-hidden="true">—</span> Montréal</p>
-      <a href="/typography/">Système typographique</a>
-      <p class="m-0">Conçu et développé avec Astro, sans CMS.</p>
-    </footer> -->
-
     <script>
       import '../scripts/web-components';
 
-      const loadMotion = () => {
-        window.requestAnimationFrame(() => void import('../scripts/motion'));
+      const loadSmoothScroll = () => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        window.requestAnimationFrame(() => {
+          void import('../scripts/smooth-scroll')
+            .then(({ setupSmoothScroll }) => {
+              const cleanup = setupSmoothScroll();
+              window.addEventListener('pagehide', cleanup, { once: true });
+            })
+            .catch(() => {
+              // Native scrolling remains available if the optional enhancement fails.
+            });
+        });
       };
 
       if (document.readyState === 'complete') {
-        loadMotion();
+        loadSmoothScroll();
       } else {
-        window.addEventListener('load', loadMotion, { once: true });
+        window.addEventListener('load', loadSmoothScroll, { once: true });
       }
     </script>
   </body>
