@@ -696,6 +696,17 @@ type MontrealWeatherResponse = {
   };
 };
 
+type CachedMontrealWeather = {
+  temperature: number;
+  weatherCode: number;
+  isDay: boolean;
+  savedAt: number;
+};
+
+const weatherCacheKey = 'pag:montreal-weather';
+const weatherCacheMaxAge = 6 * 60 * 60 * 1000;
+const weatherRequestTimeout = 6000;
+
 const getWeatherCondition = (code: number, isDay: boolean) => {
   if (code === 0) return { icon: isDay ? '☀️' : '🌙', label: 'Ciel dégagé' };
   if (code <= 2) return { icon: isDay ? '🌤️' : '☁️', label: 'Partiellement nuageux' };
@@ -747,6 +758,54 @@ class MontrealWeather extends HTMLElement {
 
     if (!weather || !temperature || !weatherIcon || !weatherLabel || !bike || !bikeLabel) return;
 
+    const renderWeather = (value: CachedMontrealWeather, cached = false) => {
+      const isSnowing =
+        (value.weatherCode >= 71 && value.weatherCode <= 77) ||
+        (value.weatherCode >= 85 && value.weatherCode <= 86);
+      const condition = getWeatherCondition(value.weatherCode, value.isDay);
+
+      temperature.textContent = `${new Intl.NumberFormat('fr-CA', { maximumFractionDigits: 0 }).format(value.temperature)} °C`;
+      weatherIcon.textContent = condition.icon;
+      weatherLabel.textContent = cached
+        ? ` ${condition.label}, dernière donnée enregistrée.`
+        : ` ${condition.label}.`;
+      bike.textContent = isSnowing ? '⛷️' : '🚴';
+      bikeLabel.textContent = isSnowing ? ' Ski alpin' : ' Vélo';
+      weather.setAttribute('aria-busy', 'false');
+    };
+
+    const renderFallback = () => {
+      try {
+        const cached = JSON.parse(window.localStorage.getItem(weatherCacheKey) ?? 'null') as Partial<CachedMontrealWeather> | null;
+        if (
+          cached &&
+          typeof cached.temperature === 'number' &&
+          Number.isFinite(cached.temperature) &&
+          typeof cached.weatherCode === 'number' &&
+          typeof cached.isDay === 'boolean' &&
+          typeof cached.savedAt === 'number' &&
+          Date.now() - cached.savedAt <= weatherCacheMaxAge
+        ) {
+          renderWeather(cached as CachedMontrealWeather, true);
+          return;
+        }
+      } catch {
+        // Storage can be unavailable in privacy-restricted browsing contexts.
+      }
+
+      temperature.textContent = 'N/D';
+      weatherIcon.textContent = '🌡️';
+      weatherLabel.textContent = ' Température indisponible.';
+      bike.textContent = '🚴';
+      bikeLabel.textContent = ' Vélo';
+      weather.setAttribute('aria-busy', 'false');
+    };
+
+    const requestController = new AbortController();
+    const abortRequest = () => requestController.abort();
+    this.controller?.signal.addEventListener('abort', abortRequest, { once: true });
+    const requestTimeout = window.setTimeout(abortRequest, weatherRequestTimeout);
+
     try {
       const parameters = new URLSearchParams({
         latitude: '45.5019',
@@ -755,7 +814,7 @@ class MontrealWeather extends HTMLElement {
         timezone: 'America/Toronto',
       });
       const response = await fetch(`https://api.open-meteo.com/v1/forecast?${parameters}`, {
-        signal: this.controller?.signal,
+        signal: requestController.signal,
       });
 
       if (!response.ok) throw new Error('Weather request failed');
@@ -764,28 +823,31 @@ class MontrealWeather extends HTMLElement {
       const current = data.current;
       if (
         typeof current?.temperature_2m !== 'number' ||
-        typeof current.weather_code !== 'number'
-      ) return;
+        !Number.isFinite(current.temperature_2m) ||
+        typeof current.weather_code !== 'number' ||
+        !Number.isFinite(current.weather_code)
+      ) throw new Error('Weather response is incomplete');
 
-      const isSnowing =
-        (current.weather_code >= 71 && current.weather_code <= 77) ||
-        (current.weather_code >= 85 && current.weather_code <= 86);
-      const condition = getWeatherCondition(current.weather_code, current.is_day !== 0);
+      const weatherValue: CachedMontrealWeather = {
+        temperature: current.temperature_2m,
+        weatherCode: current.weather_code,
+        isDay: current.is_day !== 0,
+        savedAt: Date.now(),
+      };
 
-      temperature.textContent = `${new Intl.NumberFormat('fr-CA', { maximumFractionDigits: 0 }).format(current.temperature_2m)} °C`;
-      weatherIcon.textContent = condition.icon;
-      weatherLabel.textContent = ` ${condition.label}.`;
-      bike.textContent = isSnowing ? '⛷️' : '🚴';
-      bikeLabel.textContent = isSnowing ? ' Ski alpin' : ' Vélo';
-      weather.setAttribute('aria-busy', 'false');
-    } catch (error) {
-      if (error instanceof DOMException && error.name === 'AbortError') return;
-      temperature.textContent = '-- °C';
-      weatherIcon.textContent = '🌡️';
-      weatherLabel.textContent = ' Météo indisponible.';
-      bike.textContent = '🚴';
-      bikeLabel.textContent = ' Vélo';
-      weather.setAttribute('aria-busy', 'false');
+      try {
+        window.localStorage.setItem(weatherCacheKey, JSON.stringify(weatherValue));
+      } catch {
+        // The live result remains usable when storage is unavailable.
+      }
+
+      renderWeather(weatherValue);
+    } catch {
+      if (!this.isConnected || this.controller?.signal.aborted) return;
+      renderFallback();
+    } finally {
+      window.clearTimeout(requestTimeout);
+      this.controller?.signal.removeEventListener('abort', abortRequest);
     }
   }
 

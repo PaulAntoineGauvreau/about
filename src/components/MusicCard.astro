@@ -14,7 +14,13 @@ const { favorite, duplicate = false } = Astro.props;
   data-music-card
   data-preview-url={favorite.previewUrl}
 >
-  <img class="absolute inset-0 -z-20 size-full object-cover" src={favorite.coverImage} alt="" loading="lazy" decoding="async" />
+  <img
+    class="absolute inset-0 -z-20 size-full object-cover"
+    src={favorite.coverImage}
+    alt={`Pochette associée à ${favorite.title} de ${favorite.artist}`}
+    loading="lazy"
+    decoding="async"
+  />
   <span class="absolute inset-0 -z-10 bg-music-overlay" aria-hidden="true"></span>
 
   <div class="flex w-full flex-col justify-between">

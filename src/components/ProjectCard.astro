@@ -22,7 +22,7 @@ const { project } = Astro.props;
         fallbackFormat="webp"
         widths={[320, 640, 656, 704, 960, 1440]}
         sizes="(min-width: 1024px) calc((100vw - 5.6rem) / 2), calc(100vw - 3.2rem)"
-        alt={`Aperçu du site ${project.name}`}
+        alt={project.imageAlt}
         loading="lazy"
         fetchpriority="auto"
         class="border-1 border-border block size-full rounded-2 grayscale object-cover object-top transition-project-image duration-project ease-expo-out group-hover/card:grayscale-0 w-full"
@@ -52,7 +52,14 @@ const { project } = Astro.props;
     }
   </p>
   <p class="mt-0 mb-4 max-w-[60ch] font-sans text-fluid-body-small">{project.summary}</p>
-  <ul class="flex list-none flex-wrap items-start gap-2" aria-label={`Technologies utilisées pour ${project.name}`}>
-    {project.stack.map((item) => <li class="inline-flex h-8 items-center justify-center rounded-full border border-border px-2 font-mono text-fluid-caption font-bold leading-100 uppercase">{item}</li>)}
+  <ul class="flex list-none flex-wrap items-baseline gap-y-1" aria-label={`Technologies utilisées pour ${project.name}`}>
+    {
+      project.stack.map((item, index) => (
+        <li class="inline-flex items-baseline font-mono text-fluid-caption font-bold uppercase">
+          {item}
+          {index < project.stack.length - 1 && <span class="mx-2 text-border" aria-hidden="true">·</span>}
+        </li>
+      ))
+    }
   </ul>
 </article>

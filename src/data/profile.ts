@@ -76,9 +76,9 @@ export const experiences = [
     title: 'Développeur front-end',
     period: 'Depuis 2022',
     organizations: [
-      'Atelier Deux Huit Huit — depuis 2025',
-      'Les Prétentieux, agence créative — 2023 à 2025',
-      'CHACHA communications — 2022 à 2023',
+      'Atelier Deux Huit Huit, depuis 2025',
+      'Les Prétentieux, agence créative, 2023 à 2025',
+      'CHACHA communications, 2022 à 2023',
     ],
     description:
       'Développement et intégration de sites web, gestion de contenu dans les CMS et maintenance. Collaboration avec les designers et les chargés de projet pour la réalisation, la validation et la mise en ligne.',
@@ -109,12 +109,12 @@ export const complementaryExperiences = [
 
 export const education = [
   {
-    title: 'AEC — Conception et programmation de sites web',
+    title: 'AEC en conception et programmation de sites web',
     organization: 'Collège de Maisonneuve',
     period: '2020–2022',
   },
   {
-    title: 'Baccalauréat — Design de l’environnement',
+    title: 'Baccalauréat en design de l’environnement',
     organization: 'Université du Québec à Montréal',
     period: '2008–2011',
   },

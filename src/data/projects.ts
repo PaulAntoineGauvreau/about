@@ -21,6 +21,7 @@ export interface Project {
   summary: string;
   category: ProjectCategory;
   image: ImageMetadata;
+  imageAlt: string;
   team: ProjectTeam;
 }
 
@@ -45,9 +46,10 @@ export const projects: readonly Project[] = [
     role: 'Design UI, développement PWA et intégration',
     stack: ['SvelteKit', 'PWA', 'Web Bluetooth'],
     summary:
-      'J’ai conçu l’interface et développé seul cette PWA avec SvelteKit. Le défi principal a été de connecter le home trainer en Web Bluetooth et de gérer la création ainsi que le suivi des séances.',
+      'J’ai conçu l’interface et développé seul cette PWA avec SvelteKit. La connexion Web Bluetooth au home trainer alimente la création et le suivi des séances.',
     category: 'application',
     image: rolloutCyclingImage,
+    imageAlt: 'Interface de séance cycliste Roll Out avec un graphique d’intervalles et des données de puissance',
     team: teams.solo,
   },
   {
@@ -56,9 +58,10 @@ export const projects: readonly Project[] = [
     role: 'Développement front-end et intégration',
     stack: ['Craft CMS', 'Svelte', 'GraphQL'],
     summary:
-      'J’ai intégré les maquettes et développé le front-end en Svelte. Le défi a été de décliner les interfaces en composants réutilisables, alimentés par Craft CMS via GraphQL.',
+      'J’ai intégré les maquettes et développé le front-end en Svelte. Les interfaces sont déclinées en composants réutilisables alimentés par Craft CMS via GraphQL.',
     category: 'headless',
     image: atelierImage,
+    imageAlt: 'Accueil d’Atelier du corps montrant un soin du visage et le titre Chirurgie esthétique et médecine du bien-être',
     team: teams.deuxHuitHuit,
   },
   {
@@ -70,6 +73,7 @@ export const projects: readonly Project[] = [
       'J’ai intégré le front-end et configuré WordPress ainsi que les extensions nécessaires. J’ai notamment développé des animations au défilement avec GSAP et ScrollTrigger.',
     category: 'wordpress',
     image: cegepImage,
+    imageAlt: 'Accueil du Cégep de Lanaudière avec la signature Ici, c’est toi sur un dégradé coloré',
     team: teams.lesPretentieux,
   },
   {
@@ -78,9 +82,10 @@ export const projects: readonly Project[] = [
     role: 'Développement WordPress et intégration',
     stack: ['WordPress', 'PHP', 'Swup'],
     summary:
-      'J’ai intégré le front-end et configuré WordPress ainsi que les extensions nécessaires. Le défi précis a été de créer les transitions de page avec Swup.',
+      'J’ai intégré le front-end et configuré WordPress ainsi que les extensions nécessaires. Les changements de page sont animés avec Swup.',
     category: 'wordpress',
     image: humanifyImage,
+    imageAlt: 'Accueil de Humanify avec le titre Le futur du recrutement est humain et une équipe en réunion',
     team: teams.lesPretentieux,
   },
   {
@@ -89,9 +94,10 @@ export const projects: readonly Project[] = [
     role: 'Développement Shopify et intégration',
     stack: ['Shopify', 'Liquid', 'JavaScript'],
     summary:
-      'J’ai développé les interactions front-end et participé à la mise en place de la boutique Shopify. Le défi a été de relier ces interactions aux contenus et aux fonctions natives de Shopify avec Liquid.',
+      'J’ai développé les interactions front-end et participé à la mise en place de la boutique Shopify. Avec Liquid, j’ai relié ces interactions aux contenus et aux fonctions natives de Shopify.',
     category: 'commerce',
     image: chiaImage,
+    imageAlt: 'Accueil de Chia Love montrant une personne au lit et le slogan The tastiest head start to your day',
     team: teams.deuxHuitHuit,
   },
   {
@@ -100,9 +106,10 @@ export const projects: readonly Project[] = [
     role: 'Développement front-end et intégration',
     stack: ['WooCommerce', 'WordPress', 'JavaScript'],
     summary:
-      'J’ai intégré le front-end et configuré WordPress, WooCommerce ainsi que les extensions nécessaires. Le défi a été de faire cohabiter l’intégration sur mesure avec le catalogue et les fonctions de commerce en ligne.',
+      'J’ai intégré le front-end et configuré WordPress, WooCommerce ainsi que les extensions nécessaires. L’intégration sur mesure cohabite avec le catalogue et les fonctions de commerce en ligne.',
     category: 'commerce',
     image: pylexImage,
+    imageAlt: 'Catalogue Pylex présentant des produits d’aménagement extérieur et leurs prix',
     team: teams.lesPretentieux,
   },
 ];
