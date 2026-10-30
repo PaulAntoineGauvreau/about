@@ -33,9 +33,9 @@ const { project } = Astro.props;
         <h3 class="m-0 whitespace-nowrap font-sans text-fluid-title-large">{project.name}</h3>
       </div>
       <div class="max-w-copy">
-        <project-role-highlight class="block">
-          <div class="pt-2 font-mono text-fluid-caption font-bold uppercase" data-project-role>{project.role}</div>
-        </project-role-highlight>
+        <div class="pt-2 font-mono text-fluid-caption font-bold uppercase">
+          <span class="_project-role-line">{project.role}</span>
+        </div>
       </div>
       <span class="sr-only">Visiter le site dans un nouvel onglet.</span>
     </div>

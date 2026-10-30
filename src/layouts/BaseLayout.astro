@@ -78,7 +78,7 @@ const personSchema = {
     <a class="fixed top-gutter left-gutter z-100 -translate-y-[200%] rounded-2 bg-surface px-4 py-3 font-mono text-fluid-caption font-bold uppercase text-foreground focus:translate-y-0" href="#contenu" data-skip-link>Aller au contenu</a>
 
     <header class="absolute top-header-offset right-gutter left-gutter z-20 flex flex-col items-start gap-2 text-foreground bp:right-auto" data-site-header>
-      <div class="flex w-full items-center justify-between gap-3 rounded-shell bg-surface p-2 bp:w-auto" data-hero-appear>
+      <div class="flex w-full items-center justify-between gap-3 rounded-shell bg-surface p-2 [--pag-hero-delay:350ms] bp:w-auto" data-hero-appear>
         <a class="inline-flex h-11 w-brand-slot flex-none items-center justify-center rounded-2 bg-foreground px-4 font-sans text-fluid-body font-black leading-100 tracking-[var(--pag-tracking-brand)] text-surface no-underline" href="/" aria-label="PAG, accueil de Paul-Antoine Gauvreau">
           <PagLogo class="h-[1em] w-auto" />
         </a>
@@ -89,7 +89,7 @@ const personSchema = {
           <Button variant="primary" href="/#footer">Contact</Button>
         </nav>
       </div>
-      <div class="hidden w-full items-center justify-between gap-2 rounded-2 bg-surface px-3 py-2 font-mono text-fluid-caption font-bold uppercase bp:flex" data-hero-appear>
+      <div class="hidden w-full items-center justify-between gap-2 rounded-2 bg-surface px-3 py-2 font-mono text-fluid-caption font-bold uppercase [--pag-hero-delay:450ms] bp:flex" data-hero-appear>
         <p>Aujourd'hui</p>
         <span aria-hidden="true">·</span>
         <p>Montréal, QC</p>
@@ -118,27 +118,6 @@ const personSchema = {
     <slot />
     <script>
       import '../scripts/web-components';
-
-      const loadSmoothScroll = () => {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-        window.requestAnimationFrame(() => {
-          void import('../scripts/smooth-scroll')
-            .then(({ setupSmoothScroll }) => {
-              const cleanup = setupSmoothScroll();
-              window.addEventListener('pagehide', cleanup, { once: true });
-            })
-            .catch(() => {
-              // Native scrolling remains available if the optional enhancement fails.
-            });
-        });
-      };
-
-      if (document.readyState === 'complete') {
-        loadSmoothScroll();
-      } else {
-        window.addEventListener('load', loadSmoothScroll, { once: true });
-      }
     </script>
   </body>
 </html>

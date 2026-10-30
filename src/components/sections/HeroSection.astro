@@ -6,11 +6,11 @@ import Button from '../Button.astro';
 <section class="flex min-h-svh flex-col overflow-hidden bg-foreground px-gutter pt-[calc(var(--pag-layout-header-height)+var(--pag-dimension-12))] pb-8 text-surface" aria-labelledby="hero-title">
   <div class="flex w-full flex-1 flex-col justify-center py-8">
     <h1 id="hero-title" class="m-0 font-sans text-fluid-display" aria-label={profile.name} data-hero-title>
-      <span class="block pr-1" data-hero-title-word data-hero-appear>Paul-Antoine</span>
-      <span class="block pr-1" data-hero-title-word data-hero-appear>Gauvreau</span>
+      <span class="block pr-1 [--pag-hero-delay:470ms]" data-hero-title-word data-hero-appear>Paul-Antoine</span>
+      <span class="block pr-1 [--pag-hero-delay:570ms]" data-hero-title-word data-hero-appear>Gauvreau</span>
     </h1>
 
-    <div class="mt-12 flex w-full max-w-heading-wide items-start gap-2 font-sans text-fluid-lead" data-hero-copy data-hero-appear>
+    <div class="mt-12 flex w-full max-w-heading-wide items-start gap-2 font-sans text-fluid-lead [--pag-hero-delay:680ms]" data-hero-copy data-hero-appear>
       <span aria-hidden="true">👋</span>
       <div class="min-w-0">
         <p>Bonjour, je suis développeur front-end.</p>
