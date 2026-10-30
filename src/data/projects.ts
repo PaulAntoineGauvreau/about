@@ -53,7 +53,7 @@ export const projects: readonly Project[] = [
     role: 'Développement front-end et intégration',
     stack: ['Craft CMS', 'Svelte', 'GraphQL'],
     summary:
-      'Une présence numérique centrée sur les soins et les contenus, alimentée par Craft en mode headless.',
+      'Pour ce projet, j’ai intégré les maquettes et développé les composants front-end en HTML et TypeScript, incluant les animations et les interactions.',
     category: 'headless',
     image: atelierImage,
     team: teams.deuxHuitHuit,
@@ -64,7 +64,7 @@ export const projects: readonly Project[] = [
     role: 'Développement front-end et intégration',
     stack: ['Craft CMS', 'Svelte', 'GraphQL'],
     summary:
-      'Un site corporatif qui organise une offre technique dense dans une expérience de consultation claire.',
+      'Pour ce projet, j’ai intégré les maquettes et développé les composants front-end en HTML et TypeScript, incluant les animations et les interactions.',
     category: 'headless',
     image: cosoltecImage,
     team: teams.deuxHuitHuit,
@@ -75,7 +75,7 @@ export const projects: readonly Project[] = [
     role: 'Développement front-end et intégration',
     stack: ['WordPress', 'PHP', 'JavaScript'],
     summary:
-      'Un écosystème WordPress destiné à rendre accessibles programmes, services et nouvelles à plusieurs publics.',
+      'Pour ce projet, j’ai intégré le front-end, développé les animations et les interactions, configuré WordPress, puis choisi, configuré et développé les extensions nécessaires.',
     category: 'wordpress',
     image: cegepImage,
     team: teams.lesPretentieux,
@@ -86,7 +86,7 @@ export const projects: readonly Project[] = [
     role: 'Développement Shopify et intégration',
     stack: ['Shopify', 'Liquid', 'JavaScript'],
     summary:
-      'Une boutique en ligne pour une marque alimentaire, du contenu de marque jusqu’au parcours d’achat.',
+      'Pour ce projet, j’ai développé les interactions front-end et participé à la mise en place ainsi qu’à la configuration de la boutique Shopify.',
     category: 'commerce',
     image: chiaImage,
     team: teams.deuxHuitHuit,
@@ -97,7 +97,7 @@ export const projects: readonly Project[] = [
     role: 'Développement front-end et intégration',
     stack: ['WooCommerce', 'WordPress', 'JavaScript'],
     summary:
-      'Un catalogue de produits bilingue avec filtres, pensé pour guider rapidement vers le bon produit.',
+      'Pour ce projet, j’ai intégré le front-end, développé les animations et les interactions, configuré WordPress et WooCommerce, puis choisi, configuré et développé les extensions nécessaires.',
     category: 'commerce',
     image: pylexImage,
     team: teams.lesPretentieux,
@@ -108,7 +108,7 @@ export const projects: readonly Project[] = [
     role: 'Développement WordPress et intégration',
     stack: ['WordPress', 'PHP', 'JavaScript'],
     summary:
-      'Une plateforme culturelle qui met en valeur la programmation, les promotions et la billetterie de la Maison de la culture de Waterloo.',
+      'Pour ce projet, j’ai intégré le front-end, développé les animations et les interactions, configuré WordPress, puis choisi, configuré et développé les extensions nécessaires.',
     category: 'wordpress',
     image: mcWaterlooImage,
     team: teams.chacha,
@@ -119,7 +119,7 @@ export const projects: readonly Project[] = [
     role: 'Développement WordPress et intégration',
     stack: ['WordPress', 'PHP', 'JavaScript'],
     summary:
-      'Un portail vivant qui rassemble le festival, le musée et l’école internationale de musique de Montmagny.',
+      'Pour ce projet, j’ai intégré le front-end, développé les animations et les interactions, configuré WordPress, puis choisi, configuré et développé les extensions nécessaires.',
     category: 'wordpress',
     image: accordeonMontmagnyImage,
     team: teams.lesPretentieux,
@@ -130,7 +130,7 @@ export const projects: readonly Project[] = [
     role: 'Développement WordPress et intégration',
     stack: ['WordPress', 'PHP', 'JavaScript'],
     summary:
-      'Une présence numérique dédiée au recrutement humain, à la performance des équipes et aux solutions RH.',
+      'Pour ce projet, j’ai intégré le front-end, développé les animations et les interactions, configuré WordPress, puis choisi, configuré et développé les extensions nécessaires.',
     category: 'wordpress',
     image: humanifyImage,
     team: teams.lesPretentieux,
@@ -141,7 +141,7 @@ export const projects: readonly Project[] = [
     role: 'Design UI, développement PWA et intégration',
     stack: ['SvelteKit', 'PWA', 'Web Bluetooth'],
     summary:
-      'Une application progressive pour créer, suivre et enregistrer des séances de vélo intérieur structurées avec un home trainer.',
+      'Pour ce projet, j’ai conçu l’interface et développé seul la PWA avec SvelteKit, incluant la création et le suivi des séances ainsi que la connexion Web Bluetooth au home trainer.',
     category: 'application',
     image: rolloutCyclingImage,
     team: teams.solo,
@@ -152,7 +152,7 @@ export const projects: readonly Project[] = [
     role: 'Développement WordPress et intégration',
     stack: ['WordPress', 'PHP', 'JavaScript'],
     summary:
-      'Un site éditorial et commercial consacré aux toiles sur mesure, aux produits pour la maison et au design intérieur.',
+      'Pour ce projet, j’ai intégré le front-end, développé les animations et les interactions, configuré WordPress, puis choisi, configuré et développé les extensions nécessaires.',
     category: 'wordpress',
     image: venitiennes83Image,
     team: teams.lesPretentieux,

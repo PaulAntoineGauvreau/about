@@ -84,6 +84,101 @@ async function animateHeroIntro() {
 
 void animateHeroIntro();
 
+function getRenderedTextLines(element: HTMLElement) {
+  const text = (element.textContent ?? '').replace(/\s+/g, ' ').trim();
+  if (!text) return [];
+
+  element.textContent = text;
+  const textNode = element.firstChild;
+  if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return [text];
+
+  const range = document.createRange();
+  const renderedLines: Array<{ text: string; top: number }> = [];
+
+  for (let start = 0; start < text.length;) {
+    const character = String.fromCodePoint(text.codePointAt(start) ?? 0);
+    const end = start + character.length;
+    range.setStart(textNode, start);
+    range.setEnd(textNode, end);
+    const rect = Array.from(range.getClientRects()).find((candidate) => candidate.width > 0 || candidate.height > 0);
+
+    if (rect) {
+      const currentLine = renderedLines.at(-1);
+      if (!currentLine || Math.abs(currentLine.top - rect.top) > 1) {
+        renderedLines.push({ text: character, top: rect.top });
+      } else {
+        currentLine.text += character;
+      }
+    }
+    start = end;
+  }
+
+  return renderedLines.map((line) => line.text.trim()).filter(Boolean);
+}
+
+class ProjectRoleHighlight extends HTMLElement {
+  private resizeObserver?: ResizeObserver;
+  private animationFrame?: number;
+  private sourceText = '';
+  private renderedWidth = 0;
+
+  async connectedCallback() {
+    const role = this.querySelector<HTMLElement>('[data-project-role]');
+    if (!role) return;
+
+    this.sourceText = (role.textContent ?? '').replace(/\s+/g, ' ').trim();
+    if (!this.sourceText) return;
+
+    if ('fonts' in document) await document.fonts.ready;
+    if (!this.isConnected) return;
+
+    this.renderLines(role);
+    if (typeof ResizeObserver === 'undefined') return;
+
+    this.resizeObserver = new ResizeObserver(([entry]) => {
+      const width = entry?.contentRect.width ?? 0;
+      if (width <= 0 || Math.abs(width - this.renderedWidth) < 1) return;
+      if (this.animationFrame !== undefined) window.cancelAnimationFrame(this.animationFrame);
+      this.animationFrame = window.requestAnimationFrame(() => {
+        this.animationFrame = undefined;
+        this.renderLines(role);
+      });
+    });
+    this.resizeObserver.observe(role);
+  }
+
+  private renderLines(role: HTMLElement) {
+    role.textContent = this.sourceText;
+    this.renderedWidth = role.getBoundingClientRect().width;
+    if (this.renderedWidth <= 0) return;
+
+    const lines = getRenderedTextLines(role);
+    if (lines.length === 0) return;
+
+    const accessibleText = document.createElement('span');
+    accessibleText.className = 'sr-only';
+    accessibleText.textContent = this.sourceText;
+    role.replaceChildren(accessibleText);
+    lines.forEach((line, index) => {
+      const visualLine = document.createElement('span');
+      visualLine.className = '_project-role-line';
+      visualLine.textContent = line;
+      visualLine.setAttribute('aria-hidden', 'true');
+      visualLine.style.setProperty('--pag-project-role-enter-delay', `${index * 110}ms`);
+      visualLine.style.setProperty('--pag-project-role-exit-delay', `${(lines.length - index - 1) * 90}ms`);
+      role.append(visualLine);
+      if (index < lines.length - 1) role.append(document.createElement('br'));
+    });
+  }
+
+  disconnectedCallback() {
+    this.resizeObserver?.disconnect();
+    if (this.animationFrame !== undefined) window.cancelAnimationFrame(this.animationFrame);
+    this.resizeObserver = undefined;
+    this.animationFrame = undefined;
+  }
+}
+
 class ClipLineReveal extends HTMLElement {
   private observer?: IntersectionObserver;
   private gsap?: Gsap;
@@ -109,44 +204,12 @@ class ClipLineReveal extends HTMLElement {
     this.observer.observe(this);
   }
 
-  private getRenderedLines(element: HTMLElement) {
-    const text = (element.textContent ?? '').replace(/\s+/g, ' ').trim();
-    if (!text) return [];
-
-    element.textContent = text;
-    const textNode = element.firstChild;
-    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return [text];
-
-    const range = document.createRange();
-    const renderedLines: Array<{ text: string; top: number }> = [];
-
-    for (let start = 0; start < text.length;) {
-      const character = String.fromCodePoint(text.codePointAt(start) ?? 0);
-      const end = start + character.length;
-      range.setStart(textNode, start);
-      range.setEnd(textNode, end);
-      const rect = Array.from(range.getClientRects()).find((candidate) => candidate.width > 0 || candidate.height > 0);
-
-      if (rect) {
-        const currentLine = renderedLines.at(-1);
-        if (!currentLine || Math.abs(currentLine.top - rect.top) > 1) {
-          renderedLines.push({ text: character, top: rect.top });
-        } else {
-          currentLine.text += character;
-        }
-      }
-      start = end;
-    }
-
-    return renderedLines.map((line) => line.text.trim()).filter(Boolean);
-  }
-
   private splitRenderedLines(element: HTMLElement) {
     const originalNodes = Array.from(element.childNodes, (node) => node.cloneNode(true));
     this.originalContent.set(element, originalNodes);
     const originalText = (element.textContent ?? '').replace(/\s+/g, ' ').trim();
     const width = element.getBoundingClientRect().width;
-    const renderedLines = this.getRenderedLines(element);
+    const renderedLines = getRenderedTextLines(element);
 
     element.replaceChildren();
     element.style.width = `${width}px`;
@@ -735,6 +798,7 @@ class MontrealWeather extends HTMLElement {
 }
 
 if (!customElements.get('project-filter')) customElements.define('project-filter', ProjectFilter);
+if (!customElements.get('project-role-highlight')) customElements.define('project-role-highlight', ProjectRoleHighlight);
 if (!customElements.get('clip-line-reveal')) customElements.define('clip-line-reveal', ClipLineReveal);
 if (!customElements.get('copy-email')) customElements.define('copy-email', CopyEmail);
 if (!customElements.get('montreal-weather')) customElements.define('montreal-weather', MontrealWeather);

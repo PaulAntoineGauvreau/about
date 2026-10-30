@@ -33,14 +33,14 @@ const { project } = Astro.props;
         <h3 class="m-0 whitespace-nowrap font-sans text-fluid-title-large">{project.name}</h3>
       </div>
       <div class="max-w-copy">
-        <div class="pt-2 pb-3 font-mono text-fluid-caption font-bold uppercase">
-          {project.role}
-        </div>
+        <project-role-highlight class="block">
+          <div class="pt-2 font-mono text-fluid-caption font-bold uppercase" data-project-role>{project.role}</div>
+        </project-role-highlight>
       </div>
-      <span class="sr-only">{project.summary} Visiter le site dans un nouvel onglet.</span>
+      <span class="sr-only">Visiter le site dans un nouvel onglet.</span>
     </div>
   </a>
-  <p class="mt-0 mb-3 font-mono text-fluid-caption font-bold uppercase">
+  <p class="font-mono text-fluid-caption font-bold uppercase">
     {
       project.team.url ? (
         <a class="-mx-2 inline-flex min-h-11 items-center rounded-2 px-2 underline decoration-1 underline-offset-4" href={project.team.url} target="_blank" rel="noopener noreferrer">
@@ -51,6 +51,7 @@ const { project } = Astro.props;
       )
     }
   </p>
+  <p class="mt-0 mb-4 max-w-[60ch] font-sans text-fluid-body-small">{project.summary}</p>
   <ul class="flex list-none flex-wrap items-start gap-2" aria-label={`Technologies utilisées pour ${project.name}`}>
     {project.stack.map((item) => <li class="inline-flex min-h-8 items-center justify-center rounded-full border border-border px-2 pt-1 pb-0 font-mono text-fluid-caption font-bold leading-100 uppercase">{item}</li>)}
   </ul>

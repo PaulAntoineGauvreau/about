@@ -30,7 +30,7 @@ export const workPrinciples = [
   {
     number: '04',
     title: 'Valider',
-    text: "Bien s’assurer que le projet colle aux objectifs de la maquette! Pour que la passe sur la palette devienne un but. 🏒",
+    text: "Bien s’assurer que le projet colle aux objectifs de la maquette, puis vérifier le responsive, le clavier, les navigateurs et la performance. Pour que la passe sur la palette devienne un but. 🏒",
   },
 ] as const;
 

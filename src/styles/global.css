@@ -20,6 +20,31 @@
     clip-path: inset(-100vmax 0 0 0);
   }
 
+  ._project-role-line {
+    display: inline-block;
+    margin-inline: -0.12em;
+    padding: 0.2em 0.12em 0.16em;
+    color: transparent;
+    background-image:
+      linear-gradient(to right, var(--pag-color-white) 0 50%, var(--pag-color-ink) 50% 100%),
+      linear-gradient(var(--pag-color-ink), var(--pag-color-ink));
+    background-position: 100% 0, 0 0;
+    background-size: 200% 100%, 0 100%;
+    background-repeat: no-repeat;
+    background-clip: text, border-box;
+    -webkit-background-clip: text, border-box;
+    transition:
+      background-position 620ms cubic-bezier(0.16, 1, 0.3, 1),
+      background-size 620ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--pag-project-role-exit-delay);
+  }
+
+  [data-project-card]:is(:hover, :focus-within) ._project-role-line {
+    background-position: 0 0, 0 0;
+    background-size: 200% 100%, 100% 100%;
+    transition-delay: var(--pag-project-role-enter-delay);
+  }
+
   ._method-card-sticky {
     position: sticky;
     top: calc(var(--pag-layout-stack-sticky-top) + var(--pag-method-card-offset, 0rem));
