@@ -11,10 +11,10 @@ interface Props {
 const { principle, index } = Astro.props;
 ---
 
-<article class="_method-card-sticky mb-4 flex min-h-stack-card flex-col justify-between rounded-card border border-border-inverse bg-foreground p-5 text-surface last:mb-0 motion-reduce:min-h-reduced-card bp:p-10" data-method-index={index}>
+<article class="_method-card-sticky mb-12 flex min-h-stack-card flex-col justify-between rounded-card border border-border-inverse bg-foreground p-5 text-surface last:mb-0 motion-reduce:min-h-reduced-card bp:mb-16 bp:p-10" data-method-index={index}>
   <div class="flex items-baseline gap-5 bp:gap-8">
     <p class="m-0 flex-none font-mono text-fluid-caption">{principle.number}</p>
     <h3 class="m-0 min-w-0 whitespace-nowrap font-sans text-fluid-title-medium">{principle.title}</h3>
   </div>
-  <p class="mt-8 mb-0 max-w-method-copy font-sans text-fluid-body text-muted-inverse">{principle.text}</p>
+  <p class="mt-8 ml-12 max-w-method-copy font-sans text-fluid-title-small text-muted-inverse">{principle.text}</p>
 </article>

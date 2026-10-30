@@ -14,23 +14,23 @@ export const profile = {
 export const workPrinciples = [
   {
     number: '01',
-    title: 'Cadrer',
-    text: 'Je découpe le mandat, clarifie les dépendances et estime le travail avant de commencer à produire.',
+    title: 'Débuter',
+    text: 'Annoter, découper, bien comprendre le projet et préparer le bon stack techno. Prendre connaissance du projet.',
   },
   {
     number: '02',
-    title: 'Collaborer',
-    text: 'Je garde un dialogue direct avec designers, producteurs et chargés de projet, du premier écran à la mise en ligne.',
+    title: 'Teamwork',
+    text: 'Entrer en dialogue direct avec designers, producteurs et chargés de projet, du début à la mise en ligne.',
   },
   {
     number: '03',
-    title: 'Construire',
-    text: 'J’intègre avec une attention particulière au rythme, aux détails, aux états d’interface et à la maintenabilité.',
+    title: 'Mettre les mains dedans',
+    text: 'Construire avec une attention particulière au rythme, aux détails, aux états d’interface et à la maintenabilité. Rendre le travail le plus efficace possible, réutiliser et optimiser ce qui peut l’être pour ce projet et les projets futurs.',
   },
   {
     number: '04',
-    title: 'Vérifier',
-    text: 'Je teste au clavier, sur plusieurs formats d’écran et avec les outils du navigateur avant la revue de code.',
+    title: 'Valider',
+    text: "Bien s’assurer que le projet colle aux objectifs de la maquette! Pour que la passe sur la palette devienne un but. 🏒",
   },
 ] as const;
 
