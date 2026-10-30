@@ -3,7 +3,7 @@ import { profile } from '../../data/profile';
 import Button from '../Button.astro';
 ---
 
-<section id="contact" class="sticky bottom-0 z-0 flex flex-col justify-between bg-foreground px-gutter pt-0 pb-8 text-surface" aria-labelledby="contact-title">
+<footer class="sticky bottom-0 z-0 flex flex-col justify-between bg-foreground px-gutter pt-0 pb-8 text-surface" aria-labelledby="contact-title">
   <p class="m-0 font-mono text-fluid-overline font-bold uppercase">Contact</p>
   <h2 id="contact-title" class="my-12 font-sans text-fluid-heading-large text-balance [overflow-wrap:anywhere]">Prenons un café ☕ !!!</h2>
   <div class="flex flex-col items-start justify-between gap-4 border-t border-border-inverse pt-5 bp:flex-row bp:flex-wrap bp:items-center">
@@ -14,4 +14,5 @@ import Button from '../Button.astro';
     </copy-email>
     <a class="font-sans text-fluid-body font-bold" href={`tel:${profile.phoneHref}`}>{profile.phoneDisplay}</a>
   </div>
-</section>
+</footer>
+<div id="footer" class="h-px bg-foreground" aria-hidden="true"></div>
