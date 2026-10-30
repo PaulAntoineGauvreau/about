@@ -56,11 +56,11 @@
   }
 
   .js clip-line-reveal:not([data-clip-revealed]) [data-clip-reveal-line] {
-    visibility: hidden;
+    clip-path: inset(0 0 100% 0);
   }
 
   .js clip-line-reveal[data-clip-ready] [data-clip-reveal-line] {
-    visibility: visible;
+    clip-path: inset(0 0 0 0);
   }
 
   .js clip-line-reveal:not([data-clip-revealed]) ._reveal-clip-line-inner {

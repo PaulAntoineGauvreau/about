@@ -14,7 +14,7 @@ const { project } = Astro.props;
   data-project-card
   data-category={project.category}
 >
-  <a class="block no-underline" href={project.url} target="_blank" rel="noopener noreferrer">
+  <a class="block min-h-11 rounded-2 no-underline" href={project.url} target="_blank" rel="noopener noreferrer">
     <div class="_clip-project-image relative h-project-image">
       <Picture
         src={project.image}
@@ -43,7 +43,7 @@ const { project } = Astro.props;
   <p class="mt-0 mb-3 font-mono text-fluid-caption font-bold uppercase">
     {
       project.team.url ? (
-        <a class="underline decoration-1 underline-offset-4" href={project.team.url} target="_blank" rel="noopener noreferrer">
+        <a class="-mx-2 inline-flex min-h-11 items-center rounded-2 px-2 underline decoration-1 underline-offset-4" href={project.team.url} target="_blank" rel="noopener noreferrer">
           {project.team.name}
         </a>
       ) : (

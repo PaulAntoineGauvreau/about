@@ -17,6 +17,7 @@ const {
 const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).href;
 const ogImageUrl = new URL('/og-cover.png', Astro.site ?? Astro.url.origin).href;
 const currentPath = Astro.url.pathname;
+const primaryNavLinkClass = 'relative hidden min-h-11 items-center justify-center rounded-2 px-4 pt-1 pb-0 leading-100 no-underline after:absolute after:right-4 after:bottom-2 after:left-4 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-project after:ease-expo-out hover:after:origin-left hover:after:scale-x-100 focus-visible:after:origin-left focus-visible:after:scale-x-100 bp:inline-flex';
 
 const personSchema = {
   '@context': 'https://schema.org',
@@ -81,9 +82,9 @@ const personSchema = {
           PAG
         </a>
         <nav class="flex min-w-0 items-center font-mono text-fluid-caption font-bold uppercase" aria-label="Navigation principale">
-          <a class="hidden min-h-11 items-center justify-center rounded-2 px-4 pt-1 pb-0 leading-100 no-underline bp:inline-flex" href="/#projets">Projets</a>
-          <a class="hidden min-h-11 items-center justify-center rounded-2 px-4 pt-1 pb-0 leading-100 no-underline bp:inline-flex" href="/#musique">Musique</a>
-          <a class:list={['hidden min-h-11 items-center justify-center rounded-2 px-4 pt-1 pb-0 leading-100 no-underline bp:inline-flex', currentPath.startsWith('/cv') && 'bg-accent']} href="/cv/" aria-current={currentPath.startsWith('/cv') ? 'page' : undefined}>CV</a>
+          <a class={primaryNavLinkClass} href="/#projets">Projets</a>
+          <a class={primaryNavLinkClass} href="/#musique">Musique</a>
+          <a class:list={[primaryNavLinkClass, currentPath.startsWith('/cv') && 'bg-accent']} href="/cv/" aria-current={currentPath.startsWith('/cv') ? 'page' : undefined}>CV</a>
           <Button variant="primary" href="/#contact">Contact</Button>
         </nav>
       </div>
