@@ -1,14 +1,10 @@
 import type { ImageMetadata } from 'astro';
 import atelierImage from '../assets/projects/atelier-du-corps.png';
-import cosoltecImage from '../assets/projects/cosoltec.png';
 import cegepImage from '../assets/projects/cegep-lanaudiere.png';
 import chiaImage from '../assets/projects/chia-love.png';
 import pylexImage from '../assets/projects/pylex.png';
-import mcWaterlooImage from '../assets/projects/mc-waterloo.png';
-import accordeonMontmagnyImage from '../assets/projects/accordeon-montmagny.png';
 import humanifyImage from '../assets/projects/humanify-360.png';
 import rolloutCyclingImage from '../assets/projects/rollout-cycling.png';
-import venitiennes83Image from '../assets/projects/venitiennes-83.png';
 
 export type ProjectCategory = 'application' | 'headless' | 'wordpress' | 'commerce';
 
@@ -37,10 +33,6 @@ const teams = {
     name: 'Les Prétentieux',
     url: 'https://lespretentieux.com/',
   },
-  chacha: {
-    name: 'CHACHA communications',
-    url: 'https://cha-cha.ca/',
-  },
   solo: {
     name: 'Projet solo aka Paul-Antoine',
   },
@@ -48,36 +40,47 @@ const teams = {
 
 export const projects: readonly Project[] = [
   {
+    name: 'Roll Out',
+    url: 'https://www.rolloutcycling.cc/',
+    role: 'Design UI, développement PWA et intégration',
+    stack: ['SvelteKit', 'PWA', 'Web Bluetooth'],
+    summary:
+      'J’ai conçu l’interface et développé seul cette PWA avec SvelteKit. Le défi principal a été de connecter le home trainer en Web Bluetooth et de gérer la création ainsi que le suivi des séances.',
+    category: 'application',
+    image: rolloutCyclingImage,
+    team: teams.solo,
+  },
+  {
     name: 'Atelier du corps',
     url: 'https://atelierducorps.ca/fr',
     role: 'Développement front-end et intégration',
     stack: ['Craft CMS', 'Svelte', 'GraphQL'],
     summary:
-      'Pour ce projet, j’ai intégré les maquettes et développé les composants front-end en HTML et TypeScript, incluant les animations et les interactions.',
+      'J’ai intégré les maquettes et développé le front-end en Svelte. Le défi a été de décliner les interfaces en composants réutilisables, alimentés par Craft CMS via GraphQL, et d’optimiser les médias avec des images responsives servies à la bonne dimension.',
     category: 'headless',
     image: atelierImage,
-    team: teams.deuxHuitHuit,
-  },
-  {
-    name: 'Cosoltec',
-    url: 'https://www.cosoltec.com/fr',
-    role: 'Développement front-end et intégration',
-    stack: ['Craft CMS', 'Svelte', 'GraphQL'],
-    summary:
-      'Pour ce projet, j’ai intégré les maquettes et développé les composants front-end en HTML et TypeScript, incluant les animations et les interactions.',
-    category: 'headless',
-    image: cosoltecImage,
     team: teams.deuxHuitHuit,
   },
   {
     name: 'Cégep de Lanaudière',
     url: 'https://cegep-lanaudiere.qc.ca/',
     role: 'Développement front-end et intégration',
-    stack: ['WordPress', 'PHP', 'JavaScript'],
+    stack: ['WordPress', 'GSAP', 'ScrollTrigger'],
     summary:
-      'Pour ce projet, j’ai intégré le front-end, développé les animations et les interactions, configuré WordPress, puis choisi, configuré et développé les extensions nécessaires.',
+      'J’ai intégré le front-end et configuré WordPress ainsi que les extensions nécessaires. J’ai notamment développé des animations au défilement avec GSAP et ScrollTrigger.',
     category: 'wordpress',
     image: cegepImage,
+    team: teams.lesPretentieux,
+  },
+  {
+    name: 'Humanify 360',
+    url: 'https://humanify360.com/',
+    role: 'Développement WordPress et intégration',
+    stack: ['WordPress', 'PHP', 'Swup'],
+    summary:
+      'J’ai intégré le front-end et configuré WordPress ainsi que les extensions nécessaires. Le défi précis a été de créer les transitions de page avec Swup.',
+    category: 'wordpress',
+    image: humanifyImage,
     team: teams.lesPretentieux,
   },
   {
@@ -86,7 +89,7 @@ export const projects: readonly Project[] = [
     role: 'Développement Shopify et intégration',
     stack: ['Shopify', 'Liquid', 'JavaScript'],
     summary:
-      'Pour ce projet, j’ai développé les interactions front-end et participé à la mise en place ainsi qu’à la configuration de la boutique Shopify.',
+      'J’ai développé les interactions front-end et participé à la mise en place de la boutique Shopify. Le défi a été de relier ces interactions aux contenus et aux fonctions natives de Shopify avec Liquid.',
     category: 'commerce',
     image: chiaImage,
     team: teams.deuxHuitHuit,
@@ -97,64 +100,9 @@ export const projects: readonly Project[] = [
     role: 'Développement front-end et intégration',
     stack: ['WooCommerce', 'WordPress', 'JavaScript'],
     summary:
-      'Pour ce projet, j’ai intégré le front-end, développé les animations et les interactions, configuré WordPress et WooCommerce, puis choisi, configuré et développé les extensions nécessaires.',
+      'J’ai intégré le front-end et configuré WordPress, WooCommerce ainsi que les extensions nécessaires. Le défi a été de faire cohabiter l’intégration sur mesure avec le catalogue et les fonctions de commerce en ligne.',
     category: 'commerce',
     image: pylexImage,
-    team: teams.lesPretentieux,
-  },
-  {
-    name: 'MC Waterloo',
-    url: 'https://mcwaterloo.com/',
-    role: 'Développement WordPress et intégration',
-    stack: ['WordPress', 'PHP', 'JavaScript'],
-    summary:
-      'Pour ce projet, j’ai intégré le front-end, développé les animations et les interactions, configuré WordPress, puis choisi, configuré et développé les extensions nécessaires.',
-    category: 'wordpress',
-    image: mcWaterlooImage,
-    team: teams.chacha,
-  },
-  {
-    name: 'Accordéon Montmagny',
-    url: 'https://accordeonmontmagny.com/',
-    role: 'Développement WordPress et intégration',
-    stack: ['WordPress', 'PHP', 'JavaScript'],
-    summary:
-      'Pour ce projet, j’ai intégré le front-end, développé les animations et les interactions, configuré WordPress, puis choisi, configuré et développé les extensions nécessaires.',
-    category: 'wordpress',
-    image: accordeonMontmagnyImage,
-    team: teams.lesPretentieux,
-  },
-  {
-    name: 'Humanify 360',
-    url: 'https://humanify360.com/',
-    role: 'Développement WordPress et intégration',
-    stack: ['WordPress', 'PHP', 'JavaScript'],
-    summary:
-      'Pour ce projet, j’ai intégré le front-end, développé les animations et les interactions, configuré WordPress, puis choisi, configuré et développé les extensions nécessaires.',
-    category: 'wordpress',
-    image: humanifyImage,
-    team: teams.lesPretentieux,
-  },
-  {
-    name: 'Roll Out',
-    url: 'https://www.rolloutcycling.cc/',
-    role: 'Design UI, développement PWA et intégration',
-    stack: ['SvelteKit', 'PWA', 'Web Bluetooth'],
-    summary:
-      'Pour ce projet, j’ai conçu l’interface et développé seul la PWA avec SvelteKit, incluant la création et le suivi des séances ainsi que la connexion Web Bluetooth au home trainer.',
-    category: 'application',
-    image: rolloutCyclingImage,
-    team: teams.solo,
-  },
-  {
-    name: 'Vénitiennes 83',
-    url: 'https://v83.ca/',
-    role: 'Développement WordPress et intégration',
-    stack: ['WordPress', 'PHP', 'JavaScript'],
-    summary:
-      'Pour ce projet, j’ai intégré le front-end, développé les animations et les interactions, configuré WordPress, puis choisi, configuré et développé les extensions nécessaires.',
-    category: 'wordpress',
-    image: venitiennes83Image,
     team: teams.lesPretentieux,
   },
 ];

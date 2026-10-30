@@ -53,6 +53,6 @@ const { project } = Astro.props;
   </p>
   <p class="mt-0 mb-4 max-w-[60ch] font-sans text-fluid-body-small">{project.summary}</p>
   <ul class="flex list-none flex-wrap items-start gap-2" aria-label={`Technologies utilisées pour ${project.name}`}>
-    {project.stack.map((item) => <li class="inline-flex min-h-8 items-center justify-center rounded-full border border-border px-2 pt-1 pb-0 font-mono text-fluid-caption font-bold leading-100 uppercase">{item}</li>)}
+    {project.stack.map((item) => <li class="inline-flex h-8 items-center justify-center rounded-full border border-border px-2 font-mono text-fluid-caption font-bold leading-100 uppercase">{item}</li>)}
   </ul>
 </article>

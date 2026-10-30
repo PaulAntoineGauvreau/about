@@ -1,6 +1,6 @@
 # Portfolio — Paul-Antoine Gauvreau
 
-Portfolio statique en français construit avec Astro, sans CMS. Le projet présente cinq réalisations front-end, une méthode de travail, la stack et un CV imprimable.
+Portfolio statique en français construit avec Astro, sans CMS. Le projet présente six réalisations front-end, une méthode de travail, la stack et un CV imprimable.
 
 Ce site est mon premier projet Astro. Il a été conçu pour apprendre l’outil en produisant une preuve concrète : transitions de page, composants Web natifs, animations mesurées, accessibilité et SEO.
 
