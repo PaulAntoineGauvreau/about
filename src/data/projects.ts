@@ -56,7 +56,7 @@ export const projects: readonly Project[] = [
     role: 'Développement front-end et intégration',
     stack: ['Craft CMS', 'Svelte', 'GraphQL'],
     summary:
-      'J’ai intégré les maquettes et développé le front-end en Svelte. Le défi a été de décliner les interfaces en composants réutilisables, alimentés par Craft CMS via GraphQL, et d’optimiser les médias avec des images responsives servies à la bonne dimension.',
+      'J’ai intégré les maquettes et développé le front-end en Svelte. Le défi a été de décliner les interfaces en composants réutilisables, alimentés par Craft CMS via GraphQL.',
     category: 'headless',
     image: atelierImage,
     team: teams.deuxHuitHuit,
