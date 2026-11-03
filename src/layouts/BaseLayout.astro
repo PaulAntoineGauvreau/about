@@ -18,7 +18,7 @@ const {
 const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).href;
 const ogImageUrl = new URL('/og-cover.png', Astro.site ?? Astro.url.origin).href;
 const currentPath = Astro.url.pathname;
-const primaryNavLinkClass = 'relative hidden min-h-11 items-center justify-center rounded-2 px-4 pt-1 pb-0 leading-100 no-underline after:absolute after:right-4 after:bottom-2 after:left-4 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-project after:ease-expo-out hover:after:origin-left hover:after:scale-x-100 focus-visible:after:origin-left focus-visible:after:scale-x-100 bp:inline-flex';
+const primaryNavLinkClass = 'relative hidden min-h-11 items-center justify-center rounded-2 border border-transparent px-4 pt-1 pb-0 leading-100 no-underline after:absolute after:right-4 after:bottom-2 after:left-4 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-project after:ease-expo-out hover:after:origin-left hover:after:scale-x-100 focus-visible:after:origin-left focus-visible:after:scale-x-100 bp:inline-flex';
 
 const personSchema = {
   '@context': 'https://schema.org',
@@ -83,9 +83,9 @@ const personSchema = {
           <PagLogo class="h-[1em] w-auto" />
         </a>
         <nav class="flex min-w-0 items-center font-mono text-fluid-caption font-bold uppercase" aria-label="Navigation principale">
-          <a class={primaryNavLinkClass} href="/#projets">Projets</a>
-          <a class={primaryNavLinkClass} href="/#musique">Musique</a>
-          <a class:list={[primaryNavLinkClass, currentPath.startsWith('/cv') && 'bg-accent']} href="/cv/" aria-current={currentPath.startsWith('/cv') ? 'page' : undefined}>CV</a>
+          <a class={primaryNavLinkClass} href="/#projets" data-primary-nav-link data-nav-section="projets">Projets</a>
+          <a class={primaryNavLinkClass} href="/#musique" data-primary-nav-link data-nav-section="musique">Musique</a>
+          <a class:list={[primaryNavLinkClass, currentPath.startsWith('/cv') && 'is-selected']} href="/cv/" aria-current={currentPath.startsWith('/cv') ? 'page' : undefined} data-primary-nav-link data-nav-section="cv">CV</a>
           <Button variant="primary" href="/#footer">Contact</Button>
         </nav>
       </div>
@@ -118,6 +118,26 @@ const personSchema = {
     <slot />
     <script>
       import '../scripts/web-components';
+
+      const syncPrimaryNavigation = () => {
+        const currentSection = window.location.pathname.startsWith('/cv')
+          ? 'cv'
+          : window.location.hash.slice(1);
+
+        document.querySelectorAll<HTMLElement>('[data-primary-nav-link]').forEach((link) => {
+          const isSelected = link.dataset.navSection === currentSection;
+          link.classList.toggle('is-selected', isSelected);
+
+          if (isSelected) {
+            link.setAttribute('aria-current', currentSection === 'cv' ? 'page' : 'location');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+      };
+
+      syncPrimaryNavigation();
+      window.addEventListener('hashchange', syncPrimaryNavigation);
     </script>
   </body>
 </html>

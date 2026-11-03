@@ -45,11 +45,11 @@ export const cvVersions: readonly CvVersion[] = [
   {
     slug: 'developpement',
     label: 'Développement',
-    role: 'Développeur front-end intermédiaire',
+    role: 'Développeur front-end',
     path: '/cv/',
     pdfHref: '/cv/paul-antoine-gauvreau-cv-developpeur.pdf',
     profile:
-      'Développeur front-end intermédiaire avec plus de quatre ans d’expérience en agence et une formation universitaire en design. Je réalise des sites et des interfaces avec Svelte, Craft CMS, WordPress et Shopify, de l’intégration de maquettes Figma aux animations et à la mise en ligne. Mon parcours en design et en communication numérique nourrit une approche attentive à la qualité visuelle, à l’expérience utilisateur et aux objectifs du projet.',
+      'Développeur front-end avec plus de quatre ans d’expérience en agence et une formation universitaire en design. Je réalise des sites et des interfaces avec Svelte, Craft CMS, WordPress et Shopify, de l’intégration de maquettes Figma aux animations et à la mise en ligne. Mon parcours en design et en communication numérique nourrit une approche attentive à la qualité visuelle, à l’expérience utilisateur et aux objectifs du projet.',
     experiences: [
       {
         title: 'Développeur front-end en agence',

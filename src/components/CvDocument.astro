@@ -7,7 +7,6 @@ interface Props {
 }
 
 const { document } = Astro.props;
-const githubUrl = 'https://github.com/PaulAntoineGauvreau';
 const experienceSections = [
   { title: 'Expérience', id: 'experience-title', items: document.experiences },
   ...(document.projects?.length
@@ -38,7 +37,6 @@ const languagesNumber = String(experienceSections.length + 3).padStart(2, '0');
       <a href={`tel:${profile.phoneHref}`}>{profile.phoneDisplay}</a>
       <a href={`mailto:${profile.email}`}>{profile.email}</a>
       <a href={profile.website}>pagauvreau.com</a>
-      <a href={githubUrl}>GitHub</a>
     </address>
     <div class="mt-8 flex flex-wrap gap-3" data-cv-actions>
       <a class="rounded-2 border border-foreground bg-surface px-4 py-3 font-mono text-fluid-caption font-bold uppercase no-underline" href={document.pdfHref} download>Télécharger le PDF</a>

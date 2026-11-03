@@ -27,15 +27,18 @@
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
     color: var(--pag-color-ink);
-    background-color: transparent;
+    background-image: linear-gradient(var(--pag-color-ink), var(--pag-color-ink));
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 0% 100%;
     transition:
-      color 240ms cubic-bezier(0.16, 1, 0.3, 1),
-      background-color 240ms cubic-bezier(0.16, 1, 0.3, 1);
+      color 120ms var(--pag-motion-ease-expo-out) 120ms,
+      background-size 600ms var(--pag-motion-ease-expo-out);
   }
 
   [data-project-card]:is(:hover, :focus-within) ._project-role-line {
     color: var(--pag-color-white);
-    background-color: var(--pag-color-ink);
+    background-size: 100% 100%;
   }
 
   ._method-card-sticky {
@@ -113,6 +116,11 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+[data-primary-nav-link].is-selected {
+  border-color: currentColor;
+  background: transparent;
 }
 
 @media print {
