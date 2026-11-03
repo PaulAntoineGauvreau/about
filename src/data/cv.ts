@@ -14,7 +14,7 @@ export interface CvEducation {
 }
 
 export interface CvVersion {
-  slug: 'developpement' | 'gestion-vente';
+  slug: 'developpement' | 'gestion-vente' | 'ecommerce';
   label: string;
   role: string;
   path: string;
@@ -157,7 +157,56 @@ export const cvVersions: readonly CvVersion[] = [
     education,
     languages: ['Français — langue maternelle', 'Anglais — fonctionnel'],
   },
+  {
+    slug: 'ecommerce',
+    label: 'E-commerce',
+    role: 'Responsable e-commerce · Gestion de projets',
+    path: '/cv/ecommerce/',
+    pdfHref: '/cv/paul-antoine-gauvreau-cv-ecommerce.pdf',
+    profile:
+      'Profil hybride en commerce de détail, design et développement web. Expérience en gestion des opérations d’un magasin et de son site transactionnel, achats, stocks, campagnes numériques, SEO et infolettres. Depuis 2022, je développe et maintiens des interfaces en agence avec Craft CMS, Shopify, WooCommerce et WordPress.',
+    experiences: [
+      {
+        title: 'Directeur de magasin',
+        organization: 'Cycles Campus Verdun',
+        period: '2017–2020',
+        bullets: [
+          'Direction des opérations quotidiennes et supervision d’une équipe de 10 à 20 employés.',
+          'Gestion des achats, des commandes et des stocks dans Acomba (ERP), relié au site transactionnel par Workstand.',
+          'Participation aux campagnes Google Ads et Facebook Ads, au suivi des ventes en ligne et des sources de trafic, au SEO et aux infolettres.',
+          'Conception du site web, de l’identité visuelle et des espaces commerciaux en soutien aux ventes et à l’expérience client.',
+        ],
+      },
+      {
+        title: 'Développeur front-end en agence',
+        organization:
+          'Atelier Deux Huit Huit · Les Prétentieux · CHACHA communications',
+        period: 'Depuis 2022',
+        bullets: [
+          'Développement et intégration avec Craft CMS, Shopify, WooCommerce et WordPress; gestion de contenu, maintenance et mises en ligne.',
+          'Tests des interfaces, formulaires et parcours transactionnels, documentation des problèmes et coordination des correctifs avec designers, producteurs et développeurs.',
+        ],
+      },
+      {
+        title: 'Designer indépendant',
+        organization: 'Mandats en design d’espace',
+        period: 'Depuis 2011',
+        bullets: [
+          'Gestion de projets commerciaux et résidentiels, de l’analyse des besoins à la livraison, en collaboration avec clients et fournisseurs.',
+        ],
+      },
+    ],
+    skills: [
+      'E-commerce : Craft CMS, Shopify, WooCommerce, WordPress, HTML et CSS',
+      'Acquisition et contenu : SEO, Google Ads, Meta Ads et infolettres',
+      'Opérations : Acomba (ERP), Workstand, achats, commandes et stocks',
+      'Coordination de projets, suivi des ventes, sources de trafic et expérience client',
+    ],
+    education,
+    languages: ['Français — langue maternelle', 'Anglais — fonctionnel'],
+  },
 ] as const;
 
 export const developmentCv = cvVersions[0];
 export const managementSalesCv = cvVersions[1];
+export const ecommerceCv = cvVersions[2];

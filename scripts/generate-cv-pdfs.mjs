@@ -17,6 +17,12 @@ const documents = [
     screenScreenshot: '/tmp/paul-antoine-gauvreau-cv-gestion-vente-screen.png',
     screenshot: '/tmp/paul-antoine-gauvreau-cv-gestion-vente.png',
   },
+  {
+    route: '/cv/ecommerce/',
+    filename: 'paul-antoine-gauvreau-cv-ecommerce.pdf',
+    screenScreenshot: '/tmp/paul-antoine-gauvreau-cv-ecommerce-screen.png',
+    screenshot: '/tmp/paul-antoine-gauvreau-cv-ecommerce.png',
+  },
 ];
 
 await mkdir(outputDirectory, { recursive: true });

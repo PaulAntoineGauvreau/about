@@ -60,7 +60,7 @@ export const career = [
     detail: 'Atelier Deux Huit Huit · Les Prétentieux · CHACHA communications',
   },
   {
-    period: '2015–2020',
+    period: '2017–2020',
     title: 'Directeur de magasin',
     detail: 'Cycles Campus Verdun · opérations, équipe, identité visuelle, site web et espaces commerciaux',
   },

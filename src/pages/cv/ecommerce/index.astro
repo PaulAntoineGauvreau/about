@@ -1,0 +1,13 @@
+---
+import CvDocument from '../../../components/CvDocument.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { ecommerceCv } from '../../../data/cv';
+---
+
+<BaseLayout
+  title="CV responsable e-commerce | Paul-Antoine Gauvreau"
+  description="CV de Paul-Antoine Gauvreau pour des postes en e-commerce, opérations numériques et gestion de projets."
+  canonicalPath="/cv/ecommerce/"
+>
+  <CvDocument document={ecommerceCv} />
+</BaseLayout>
