@@ -3,13 +3,23 @@ import { getMusicFavorites } from '../../data/portfolio';
 import MusicCard from '../MusicCard.astro';
 
 const favorites = getMusicFavorites();
+const musicTitle = 'Dans mes écouteurs live !';
+const musicTitleWords = musicTitle.split(' ');
 ---
 
 <section id="musique" class="overflow-hidden bg-foreground py-section text-surface" aria-labelledby="music-title">
   <div class="px-gutter">
     <p class="m-0 font-mono text-fluid-overline font-bold uppercase">Coups de cœur musicaux</p>
-    <clip-line-reveal class="block">
-      <h2 id="music-title" class="mt-4 mb-0 max-w-heading-wide text-balance font-sans text-fluid-heading-medium" data-clip-reveal-line>Dans mes écouteurs live !
+    <clip-line-reveal class="block" data-section-heading-reveal>
+      <h2 id="music-title" class="mt-4 mb-0 max-w-heading-wide text-balance font-sans text-fluid-heading-medium" aria-label={musicTitle} data-heading-lines>
+        {
+          musicTitleWords.map((word, index) => (
+            <>
+              <span class="inline-block" data-clip-reveal-line data-heading-word aria-hidden="true">{word}</span>
+              {index < musicTitleWords.length - 1 && ' '}
+            </>
+          ))
+        }
       </h2>
     </clip-line-reveal>
   </div>

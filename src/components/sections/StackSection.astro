@@ -7,12 +7,23 @@ import SectionHeading from '../SectionHeading.astro';
   <SectionHeading eyebrow="Stack" title="Ce portfolio est fait avec Astro." id="stack-title" centered />
   <div class="grid grid-cols-1 border-t border-l border-border bp:grid-cols-4">
     {
-      stackGroups.map((group) => (
+      stackGroups.map((group, index) => (
         <article class="bp:min-h-static-card min-h-none border-r border-b border-border p-5 bp:p-8">
           <h3 class="mt-0 bp:mb-12 mb-4 font-mono text-fluid-caption font-bold uppercase">{group.title}</h3>
-          <clip-line-reveal class="block">
+          <clip-line-reveal
+            class="block"
+            data-stack-reveal
+            data-clip-stagger="0.085"
+            data-clip-entrance-delay={String(0.08 + index * 0.055)}
+          >
             <ul class="m-0 list-none p-0 grid grid-cols-2 bp:grid-cols-1">
-              {group.items.map((item) => <li class="font-sans text-fluid-title-medium" data-clip-reveal-line>{item}</li>)}
+              {
+                group.items.map((item) => (
+                  <li class="_reveal-clip">
+                    <span class="block font-sans text-fluid-title-medium" data-clip-reveal-line>{item}</span>
+                  </li>
+                ))
+              }
             </ul>
           </clip-line-reveal>
         </article>

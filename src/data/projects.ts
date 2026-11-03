@@ -41,18 +41,6 @@ const teams = {
 
 export const projects: readonly Project[] = [
   {
-    name: 'Roll Out',
-    url: 'https://www.rolloutcycling.cc/',
-    role: 'Design UI, développement PWA et intégration',
-    stack: ['SvelteKit', 'PWA', 'Web Bluetooth'],
-    summary:
-      'J’ai conçu l’interface et développé seul cette PWA avec SvelteKit. La connexion Web Bluetooth au home trainer alimente la création et le suivi des séances.',
-    category: 'application',
-    image: rolloutCyclingImage,
-    imageAlt: 'Interface de séance cycliste Roll Out avec un graphique d’intervalles et des données de puissance',
-    team: teams.solo,
-  },
-  {
     name: 'Atelier du corps',
     url: 'https://atelierducorps.ca/fr',
     role: 'Développement front-end et intégration',
@@ -111,6 +99,18 @@ export const projects: readonly Project[] = [
     image: pylexImage,
     imageAlt: 'Catalogue Pylex présentant des produits d’aménagement extérieur et leurs prix',
     team: teams.lesPretentieux,
+  },
+  {
+    name: 'Roll Out',
+    url: 'https://www.rolloutcycling.cc/',
+    role: 'Design UI, développement PWA et intégration',
+    stack: ['SvelteKit', 'PWA', 'Web Bluetooth'],
+    summary:
+      'J’ai conçu l’interface et développé seul cette PWA avec SvelteKit. La connexion Web Bluetooth au home trainer alimente la création et le suivi des séances.',
+    category: 'application',
+    image: rolloutCyclingImage,
+    imageAlt: 'Interface de séance cycliste Roll Out avec un graphique d’intervalles et des données de puissance',
+    team: teams.solo,
   },
 ];
 

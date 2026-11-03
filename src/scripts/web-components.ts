@@ -2,9 +2,56 @@ export {};
 
 class ViewportReveal extends HTMLElement {
   private observer?: IntersectionObserver;
+  private resizeObserver?: ResizeObserver;
 
   connectedCallback() {
     this.dataset.clipReady = '';
+    const lines = Array.from(this.querySelectorAll<HTMLElement>('[data-clip-reveal-line]'));
+    const borders = Array.from(this.querySelectorAll<HTMLElement>('[data-clip-reveal-border]'));
+    const toMilliseconds = (value: string | undefined, fallback: number) => {
+      if (value === undefined) return fallback;
+      const seconds = Number.parseFloat(value);
+      return Number.isFinite(seconds) && seconds >= 0 ? seconds * 1000 : fallback;
+    };
+    const lineStagger = toMilliseconds(
+      this.dataset.clipStagger,
+      lines.length > 6 ? 85 : 150,
+    );
+    const borderStagger = toMilliseconds(this.dataset.clipBorderStagger, 130);
+    const entranceDelay = toMilliseconds(this.dataset.clipEntranceDelay, 80);
+
+    const applyLineDelays = () => {
+      let delayIndex = 0;
+      let previousHeadingTop: number | undefined;
+
+      lines.forEach((line) => {
+        if (line.hasAttribute('data-heading-word')) {
+          const currentHeadingTop = Math.round(line.offsetTop);
+          if (previousHeadingTop !== undefined && currentHeadingTop !== previousHeadingTop) {
+            delayIndex += 1;
+          }
+          previousHeadingTop = currentHeadingTop;
+        } else {
+          previousHeadingTop = undefined;
+        }
+
+        line.style.setProperty('--pag-clip-delay', `${entranceDelay + delayIndex * lineStagger}ms`);
+
+        if (!line.hasAttribute('data-heading-word')) delayIndex += 1;
+      });
+    };
+
+    applyLineDelays();
+    if (typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(applyLineDelays);
+      this.querySelectorAll<HTMLElement>('[data-heading-lines]').forEach((heading) => {
+        this.resizeObserver?.observe(heading);
+      });
+    }
+    borders.forEach((border, index) => {
+      border.style.setProperty('--pag-clip-border-delay', `${60 + index * borderStagger}ms`);
+    });
+
     if (
       window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
       typeof IntersectionObserver === 'undefined'
@@ -16,18 +63,24 @@ class ViewportReveal extends HTMLElement {
     this.observer = new IntersectionObserver(
       (entries) => {
         if (!entries.some((entry) => entry.isIntersecting)) return;
-        this.dataset.clipRevealed = '';
+        window.requestAnimationFrame(() => {
+          this.dataset.clipRevealed = '';
+          this.resizeObserver?.disconnect();
+          this.resizeObserver = undefined;
+        });
         this.observer?.disconnect();
         this.observer = undefined;
       },
-      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+      { threshold: 0.1, rootMargin: '0px 0px -20% 0px' },
     );
     this.observer.observe(this);
   }
 
   disconnectedCallback() {
     this.observer?.disconnect();
+    this.resizeObserver?.disconnect();
     this.observer = undefined;
+    this.resizeObserver = undefined;
   }
 }
 
@@ -46,10 +99,6 @@ class LightweightProjectFilter extends HTMLElement {
     controls?.classList.remove('hidden');
     controls?.classList.add('flex');
 
-    cards.forEach((card, index) => {
-      card.style.setProperty('--pag-project-delay', `${(index % 2) * 80}ms`);
-    });
-
     if (
       window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
       typeof IntersectionObserver === 'undefined'
@@ -60,14 +109,24 @@ class LightweightProjectFilter extends HTMLElement {
     } else {
       this.observer = new IntersectionObserver(
         (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
+          const enteringCards = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((first, second) => {
+              const firstRect = first.boundingClientRect;
+              const secondRect = second.boundingClientRect;
+              return Math.abs(firstRect.top - secondRect.top) > 8
+                ? firstRect.top - secondRect.top
+                : firstRect.left - secondRect.left;
+            });
+
+          enteringCards.forEach((entry, index) => {
             const card = entry.target as HTMLElement;
+            card.style.setProperty('--pag-project-delay', `${index * 160}ms`);
             card.dataset.projectVisible = '';
             this.observer?.unobserve(card);
           });
         },
-        { threshold: 0.12, rootMargin: '0px 0px -5% 0px' },
+        { threshold: 0.1, rootMargin: '0px 0px -18% 0px' },
       );
       cards.forEach((card) => this.observer?.observe(card));
     }
