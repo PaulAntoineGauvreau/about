@@ -1,0 +1,117 @@
+---
+import type { CvVersion } from '../data/cv';
+import { profile } from '../data/profile';
+
+interface Props {
+  document: CvVersion;
+}
+
+const { document } = Astro.props;
+const githubUrl = 'https://github.com/PaulAntoineGauvreau';
+const experienceSections = [
+  { title: 'Expérience', id: 'experience-title', items: document.experiences },
+  ...(document.projects?.length
+    ? [{ title: 'Projets', id: 'projects-title', items: document.projects }]
+    : []),
+  ...(document.complementaryExperiences?.length
+    ? [{
+        title: 'Expériences complémentaires',
+        id: 'complementary-experience-title',
+        items: document.complementaryExperiences,
+      }]
+    : []),
+];
+const educationNumber = String(experienceSections.length + 1).padStart(2, '0');
+const skillsNumber = String(experienceSections.length + 2).padStart(2, '0');
+const languagesNumber = String(experienceSections.length + 3).padStart(2, '0');
+---
+
+<main id="contenu" class="mx-auto w-full max-w-380 px-4 pt-28 pb-20 bp:px-12 bp:pt-44 bp:pb-32" data-cv tabindex="-1">
+  <header class="pb-16 bp:pb-32" data-cv-hero>
+    <p class="mt-0 mb-8 font-mono text-fluid-overline font-bold uppercase" data-cv-kicker>CV · 2026</p>
+    <h1 class="m-0 font-sans text-fluid-display">{profile.name}</h1>
+    <p class="mt-8 mb-0 font-sans text-fluid-lead bp:mt-16" data-cv-role>{document.role}</p>
+    <h2 class="sr-only">Profil</h2>
+    <p class="mt-6 mb-0 max-w-248 font-sans text-fluid-body-large" data-cv-summary>{document.profile}</p>
+    <address class="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-sans text-fluid-body font-bold not-italic" data-cv-contact>
+      <span>{profile.location}</span>
+      <a href={`tel:${profile.phoneHref}`}>{profile.phoneDisplay}</a>
+      <a href={`mailto:${profile.email}`}>{profile.email}</a>
+      <a href={profile.website}>pagauvreau.com</a>
+      <a href={githubUrl}>GitHub</a>
+    </address>
+    <div class="mt-8 flex flex-wrap gap-3" data-cv-actions>
+      <a class="rounded-2 border border-foreground bg-surface px-4 py-3 font-mono text-fluid-caption font-bold uppercase no-underline" href={document.pdfHref} download>Télécharger le PDF</a>
+      <button class="cursor-pointer rounded-2 border border-foreground bg-foreground px-4 py-3 font-mono text-fluid-caption font-bold uppercase text-surface" type="button" data-print-cv>Imprimer / PDF</button>
+    </div>
+  </header>
+
+  {
+    experienceSections.map((section, sectionIndex) => (
+      <section class="grid grid-cols-1 gap-8 border-t-2 border-foreground py-12 bp:grid-cols-4 bp:gap-28 bp:py-24" data-cv-section aria-labelledby={section.id}>
+        <h2 class="m-0 font-sans text-fluid-title-small bp:col-span-1" id={section.id}><span class="mb-3 block font-mono text-fluid-caption">{String(sectionIndex + 1).padStart(2, '0')}</span> {section.title}</h2>
+        <div class="bp:col-span-3">
+          {section.items.map((experience) => (
+            <article class="mb-10 grid grid-cols-1 gap-3 border-b border-foreground/25 pb-10 last:mb-0 last:border-b-0 bp:grid-cols-3 bp:gap-6" data-cv-entry>
+              <p class="m-0 font-mono text-fluid-caption font-bold uppercase bp:col-span-1">{experience.period}</p>
+              <div class="bp:col-span-2">
+                <h3 class="mt-0 mb-2 font-sans text-fluid-title-medium">{experience.title}</h3>
+                {experience.organization && <p class="m-0 font-bold">{experience.organization}</p>}
+                {experience.url && (
+                  <p class="mt-2 mb-0 font-bold">
+                    <a href={experience.url} target="_blank" rel="noreferrer">{experience.urlLabel ?? experience.url}</a>
+                  </p>
+                )}
+                <div class="mt-5 max-w-248 font-sans text-fluid-body text-foreground/75" data-cv-description>
+                  {experience.bullets.map((bullet) => <p class="mt-0 mb-3 last:mb-0">{bullet}</p>)}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="grid grid-cols-1 gap-8 border-t-2 border-foreground py-12 bp:grid-cols-4 bp:gap-28 bp:py-24" data-cv-section aria-labelledby="education-title">
+    <h2 class="m-0 font-sans text-fluid-title-small bp:col-span-1" id="education-title"><span class="mb-3 block font-mono text-fluid-caption">{educationNumber}</span> Formation</h2>
+    <div class="bp:col-span-3">
+      {
+        document.education.map((item) => (
+          <article class="mb-6 grid grid-cols-1 gap-3 border-b border-foreground/25 pb-6 last:mb-0 last:border-b-0 bp:grid-cols-3 bp:gap-6" data-cv-entry>
+            <p class="m-0 font-mono text-fluid-caption font-bold uppercase bp:col-span-1">{item.period}</p>
+            <div class="bp:col-span-2">
+              <h3 class="mt-0 mb-2 font-sans text-fluid-title-medium">{item.credential}</h3>
+              <p class="m-0 font-bold">{item.institution}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="grid grid-cols-1 gap-8 border-t-2 border-foreground py-12 bp:grid-cols-4 bp:gap-28 bp:py-24" data-cv-section aria-labelledby="skills-title">
+    <h2 class="m-0 font-sans text-fluid-title-small bp:col-span-1" id="skills-title"><span class="mb-3 block font-mono text-fluid-caption">{skillsNumber}</span> Compétences</h2>
+    <div class="grid border-t border-l border-foreground/25 bp:col-span-3 bp:grid-cols-2" data-cv-skills>
+      {
+        document.skills.map((skill, index) => (
+          <article class="border-r border-b border-foreground/25 p-6">
+            <h3 class="mt-0 mb-4 font-mono text-fluid-caption font-bold uppercase">{String(index + 1).padStart(2, '0')}</h3>
+            <p class="m-0 font-sans text-fluid-body-large">{skill}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="grid grid-cols-1 gap-8 border-t-2 border-foreground py-12 bp:grid-cols-4 bp:gap-28 bp:py-24" data-cv-section aria-labelledby="languages-title">
+    <h2 class="m-0 font-sans text-fluid-title-small bp:col-span-1" id="languages-title"><span class="mb-3 block font-mono text-fluid-caption">{languagesNumber}</span> Langues</h2>
+    <p class="m-0 font-sans text-fluid-body-large bp:col-span-3">{document.languages.join(' · ')}</p>
+  </section>
+
+  <p class="mt-16 mb-0 font-sans text-fluid-body font-bold" data-cv-back><a href="/">← Retour au portfolio</a></p>
+</main>
+
+<script>
+  document.querySelector('[data-print-cv]')?.addEventListener('click', () => window.print());
+</script>

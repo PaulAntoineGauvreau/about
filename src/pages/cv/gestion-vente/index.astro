@@ -1,0 +1,13 @@
+---
+import CvDocument from '../../../components/CvDocument.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { managementSalesCv } from '../../../data/cv';
+---
+
+<BaseLayout
+  title="CV gestion de projets et vente | Paul-Antoine Gauvreau"
+  description="CV de Paul-Antoine Gauvreau pour des postes en gestion de projets, opérations et vente à Montréal."
+  canonicalPath="/cv/gestion-vente/"
+>
+  <CvDocument document={managementSalesCv} />
+</BaseLayout>

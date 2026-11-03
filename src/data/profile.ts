@@ -85,7 +85,7 @@ export const experiences = [
   },
   {
     title: 'Directeur de magasin',
-    period: '2015–2020',
+    period: '2017–2020',
     organizations: ['Cycles Campus Verdun'],
     description:
       'Gestion d’un commerce et d’une équipe de 10 à 20 employés. Direction des opérations et conception de l’identité visuelle, du site web et des espaces commerciaux.',
