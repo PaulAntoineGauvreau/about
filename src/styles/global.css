@@ -127,15 +127,17 @@
   }
 
   .js project-filter[data-project-ready] [data-project-card] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
     transition:
-      opacity 1000ms cubic-bezier(0.22, 0.61, 0.36, 1),
-      transform 1300ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      opacity 750ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 1100ms cubic-bezier(0.2, 0.8, 0.2, 1);
     transition-delay: var(--pag-project-delay, 0ms);
   }
 
   .js project-filter[data-project-ready] [data-project-card]:not([data-project-visible]) {
     opacity: 0;
-    transform: translateY(2.4rem);
+    transform: translateY(1.6rem) scale(0.982);
   }
 }
 
