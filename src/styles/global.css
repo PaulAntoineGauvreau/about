@@ -56,6 +56,12 @@
     contain: paint;
   }
 
+  ._heading-reveal-clip,
+  [data-section-heading-reveal] [data-heading-word] {
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+  }
+
   [data-method-index="0"] { --pag-method-card-offset: 0rem; z-index: 1; }
   [data-method-index="1"] { --pag-method-card-offset: var(--pag-layout-stack-title-offset); z-index: 2; }
   [data-method-index="2"] { --pag-method-card-offset: calc(var(--pag-layout-stack-title-offset) + var(--pag-layout-stack-title-offset)); z-index: 3; }

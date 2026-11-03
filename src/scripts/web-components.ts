@@ -60,6 +60,10 @@ class ViewportReveal extends HTMLElement {
       return;
     }
 
+    const revealRootMargin = window.matchMedia('(max-width: 1023px)').matches
+      ? '0px 0px -28% 0px'
+      : '0px 0px -20% 0px';
+
     this.observer = new IntersectionObserver(
       (entries) => {
         if (!entries.some((entry) => entry.isIntersecting)) return;
@@ -71,7 +75,7 @@ class ViewportReveal extends HTMLElement {
         this.observer?.disconnect();
         this.observer = undefined;
       },
-      { threshold: 0.1, rootMargin: '0px 0px -20% 0px' },
+      { threshold: 0.1, rootMargin: revealRootMargin },
     );
     this.observer.observe(this);
   }
@@ -107,6 +111,10 @@ class LightweightProjectFilter extends HTMLElement {
         card.dataset.projectVisible = '';
       });
     } else {
+      const projectRootMargin = window.matchMedia('(max-width: 1023px)').matches
+        ? '0px 0px -26% 0px'
+        : '0px 0px -18% 0px';
+
       this.observer = new IntersectionObserver(
         (entries) => {
           const enteringCards = entries
@@ -126,7 +134,7 @@ class LightweightProjectFilter extends HTMLElement {
             this.observer?.unobserve(card);
           });
         },
-        { threshold: 0.1, rootMargin: '0px 0px -18% 0px' },
+        { threshold: 0.1, rootMargin: projectRootMargin },
       );
       cards.forEach((card) => this.observer?.observe(card));
     }
