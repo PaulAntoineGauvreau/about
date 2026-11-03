@@ -26,19 +26,22 @@
     padding: 0.2em 0.12em 0.16em;
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
-    color: var(--pag-color-ink);
-    background-image: linear-gradient(var(--pag-color-ink), var(--pag-color-ink));
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    background-image:
+      linear-gradient(var(--pag-color-white), var(--pag-color-white)),
+      linear-gradient(var(--pag-color-ink), var(--pag-color-ink)),
+      linear-gradient(var(--pag-color-ink), var(--pag-color-ink));
     background-repeat: no-repeat;
-    background-position: left center;
-    background-size: 0% 100%;
-    transition:
-      color 120ms var(--pag-motion-ease-expo-out) 120ms,
-      background-size 600ms var(--pag-motion-ease-expo-out);
+    background-position: left center, left center, left center;
+    background-size: 0% 100%, 0% 100%, 100% 100%;
+    background-clip: text, border-box, text;
+    -webkit-background-clip: text, border-box, text;
+    transition: background-size 600ms var(--pag-motion-ease-expo-out);
   }
 
   [data-project-card]:is(:hover, :focus-within) ._project-role-line {
-    color: var(--pag-color-white);
-    background-size: 100% 100%;
+    background-size: 100% 100%, 100% 100%, 100% 100%;
   }
 
   ._method-card-sticky {
@@ -135,20 +138,21 @@
   [data-cv] p { line-height: 1.15; }
   [data-cv-hero] { padding-bottom: 0.12in; }
   [data-cv] h1 { max-width: none; font-size: 26pt; line-height: 0.9; }
-  [data-cv-kicker] { margin-bottom: 0.04in; }
+  [data-cv-kicker] { margin-bottom: 0.1in; }
   [data-cv-role] { margin-top: 0.06in; font-size: 10pt; }
   [data-cv-summary],
   [data-cv-contact] { margin-top: 0.05in; }
   [data-cv-summary] { max-width: none; font-size: 7.6pt; }
   [data-cv-contact] { gap: 0.1in; font-size: 7.3pt; }
-  [data-cv-section] { display: block; padding: 0.065in 0; break-inside: auto; }
-  [data-cv-section] > h2 { margin-bottom: 0.04in; font-size: 8.5pt; line-height: 1.1; }
+  [data-cv-section] { display: block; padding: 0.16in 0; break-inside: auto; }
+  [data-cv-section] > h2 { margin-bottom: 0.075in; font-size: 8.5pt; line-height: 1.1; }
   [data-cv-section] > h2 span { display: inline; margin-right: 0.08in; }
-  [data-cv-entry] { grid-template-columns: 0.82in 1fr; gap: 0.07in; padding-bottom: 0.03in; margin-bottom: 0.03in; break-inside: avoid; }
+  [data-cv-entry] { grid-template-columns: 0.82in 1fr; gap: 0.07in; padding-bottom: 0.045in; margin-bottom: 0.045in; break-inside: avoid; }
   [data-cv-entry] h3 { margin-bottom: 0.015in; font-size: 9.2pt; line-height: 1.1; }
   [data-cv-entry] p { font-size: 7.1pt; }
-  [data-cv-description] { margin-top: 0.02in; }
-  [data-cv-description] p { margin-bottom: 0.015in; }
+  [data-cv-description] { margin-top: 0.035in; }
+  [data-cv-description] p { margin-bottom: 0.025in; }
+  [data-cv-description] p:last-child { margin-bottom: 0; }
   [data-cv-skills] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   [data-cv-skills] article { padding: 0.055in; }
   [data-cv-skills] article h3 { margin-bottom: 0.02in; }
