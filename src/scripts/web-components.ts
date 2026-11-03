@@ -129,7 +129,7 @@ class LightweightProjectFilter extends HTMLElement {
 
           enteringCards.forEach((entry, index) => {
             const card = entry.target as HTMLElement;
-            card.style.setProperty('--pag-project-delay', `${index * 100}ms`);
+            card.style.setProperty('--pag-project-delay', `${index * 120}ms`);
             card.dataset.projectVisible = '';
             this.observer?.unobserve(card);
           });
